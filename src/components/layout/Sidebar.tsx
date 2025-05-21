@@ -1,15 +1,30 @@
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Home, Library, Activity, Utensils, Gift, User, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Sidebar() {
   const [expanded, setExpanded] = useState(true);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setExpanded(!expanded);
   };
+
+  // Ajusta o sidebar para ser recolhido automaticamente no mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setExpanded(false);
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navItems = [
     { icon: Home, label: 'Dashboard', href: '/' },
@@ -51,21 +66,26 @@ export function Sidebar() {
         
         <nav className="flex-1 pt-6">
           <ul className="space-y-1 px-2">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  to={item.href}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-3 rounded-md transition-colors",
-                    "hover:bg-movebem-purple-light/20 text-gray-600 hover:text-movebem-purple-dark",
-                    "location.pathname === item.href && 'bg-movebem-purple-light/30 text-movebem-purple-dark font-medium'"
-                  )}
-                >
-                  <item.icon size={20} />
-                  {expanded && <span>{item.label}</span>}
-                </Link>
-              </li>
-            ))}
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.href || 
+                (item.href !== '/' && location.pathname.startsWith(item.href));
+              
+              return (
+                <li key={item.href}>
+                  <Link
+                    to={item.href}
+                    className={cn(
+                      "flex items-center gap-3 px-3 py-3 rounded-md transition-colors",
+                      "hover:bg-movebem-purple-light/20 text-gray-600 hover:text-movebem-purple-dark",
+                      isActive && "bg-movebem-purple-light/30 text-movebem-purple-dark font-medium"
+                    )}
+                  >
+                    <item.icon size={20} />
+                    {expanded && <span>{item.label}</span>}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
         
