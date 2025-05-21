@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { ExerciseCard } from "@/components/ui/exercise-card";
 import { YogaIllustration } from "@/components/illustrations/YogaIllustration";
@@ -7,9 +8,17 @@ import { CategoryBadge } from "@/components/ui/category-badge";
 import { CategoryIllustration } from "@/components/illustrations/CategoryIllustration";
 import { Search, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 const ExercisesPage = () => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { toast } = useToast();
+  
+  // Check if there's a category in URL parameters
+  const categoryParam = searchParams.get('category');
+  
+  const [activeCategory, setActiveCategory] = useState<string | null>(categoryParam || null);
   const [searchQuery, setSearchQuery] = useState("");
   const [favorites, setFavorites] = useState<number[]>([1, 4]);
 
@@ -41,6 +50,11 @@ const ExercisesPage = () => {
         ? prev.filter(item => item !== id) 
         : [...prev, id]
     );
+    
+    toast({
+      title: favorites.includes(id) ? "Removido dos favoritos" : "Adicionado aos favoritos",
+      description: `O exercício foi ${favorites.includes(id) ? "removido dos" : "adicionado aos"} seus favoritos.`,
+    });
   };
 
   const filteredExercises = exercises.filter(exercise => {
@@ -50,10 +64,14 @@ const ExercisesPage = () => {
     
     return matchesCategory && matchesSearch;
   });
+  
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategory(prev => prev === categoryId ? null : categoryId);
+  };
 
   return (
     <AppLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto animate-fade-in">
         <header className="mb-8">
           <h1 className="font-quicksand text-2xl md:text-3xl font-bold text-gray-800 mb-2">
             Biblioteca de Exercícios
@@ -64,7 +82,7 @@ const ExercisesPage = () => {
         </header>
 
         {/* Search and filters */}
-        <div className="bg-white rounded-xl p-4 mb-6 border shadow-sm">
+        <div className="bg-white rounded-xl p-4 mb-6 border shadow-sm hover:shadow-md transition-shadow">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
@@ -89,7 +107,7 @@ const ExercisesPage = () => {
                 icon={category.icon}
                 label={category.label}
                 active={activeCategory === category.id}
-                onClick={() => setActiveCategory(prev => prev === category.id ? null : category.id)}
+                onClick={() => handleCategoryClick(category.id)}
               />
             ))}
           </div>
@@ -106,7 +124,7 @@ const ExercisesPage = () => {
                 completed={exercise.completed}
                 favorite={favorites.includes(exercise.id)}
                 onFavoriteToggle={() => toggleFavorite(exercise.id)}
-                onClick={() => console.log(`Navigate to exercise ${exercise.id}`)}
+                onClick={() => navigate(`/exercises/${exercise.id}`)}
                 image={<YogaIllustration pose={exercise.pose as any} />}
               />
             ))

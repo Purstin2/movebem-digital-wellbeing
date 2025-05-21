@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { ExerciseCard } from "@/components/ui/exercise-card";
 import { ProgressCard } from "@/components/ui/progress-card";
@@ -8,8 +8,11 @@ import { CategoryIllustration } from "@/components/illustrations/CategoryIllustr
 import { Calendar, Clock, Award, Flame, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [exercises] = useState([
     { id: 1, title: "Alongamento de Pescoço", duration: "5 min", pose: "default", completed: false },
     { id: 2, title: "Rotação de Ombros", duration: "7 min", pose: "arms-up", completed: true },
@@ -24,6 +27,14 @@ const Dashboard = () => {
         ? prev.filter(item => item !== id) 
         : [...prev, id]
     );
+  };
+
+  const startDailyExercise = () => {
+    navigate("/exercises/4"); // Navigate to the "Torção Suave" exercise
+    toast({
+      title: "Exercício Diário",
+      description: "Iniciando seu exercício diário de hoje!",
+    });
   };
 
   const quickAccessCategories = [
@@ -47,13 +58,17 @@ const Dashboard = () => {
               </h1>
               <p className="text-gray-500 mt-1">Segunda-feira, 20 de Maio</p>
             </div>
-            <Button variant="default" className="bg-movebem-purple hover:bg-movebem-purple-dark w-full md:w-auto">
+            <Button 
+              variant="default" 
+              className="bg-movebem-purple hover:bg-movebem-purple-dark w-full md:w-auto animate-pulse-subtle"
+              onClick={startDailyExercise}
+            >
               Iniciar Exercício Diário
             </Button>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border overflow-hidden">
+            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
               <div className="p-4 bg-movebem-purple-light/20 border-b">
                 <div className="flex items-center justify-between">
                   <h2 className="font-quicksand font-semibold text-lg text-movebem-purple-dark">
@@ -103,7 +118,10 @@ const Dashboard = () => {
                     </ul>
 
                     <div className="mt-6">
-                      <Button className="bg-movebem-purple hover:bg-movebem-purple-dark w-full sm:w-auto">
+                      <Button 
+                        className="bg-movebem-purple hover:bg-movebem-purple-dark w-full sm:w-auto transition-transform hover:scale-105"
+                        onClick={startDailyExercise}
+                      >
                         Iniciar Agora
                       </Button>
                     </div>
@@ -128,7 +146,7 @@ const Dashboard = () => {
                 icon={<Clock size={20} />} 
               />
               
-              <div className="bg-white rounded-xl p-4 shadow-sm border">
+              <div className="bg-white rounded-xl p-4 shadow-sm border hover:shadow-md transition-shadow">
                 <h3 className="font-quicksand font-semibold text-gray-800">Próxima Conquista</h3>
                 <div className="mt-3 flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full bg-movebem-purple-light/30 flex items-center justify-center">
@@ -160,7 +178,7 @@ const Dashboard = () => {
               <Link 
                 key={category.id} 
                 to={`/exercises?category=${category.id}`}
-                className="flex flex-col items-center justify-center p-4 bg-white rounded-xl border transition-all hover:border-movebem-purple hover:shadow-sm"
+                className="flex flex-col items-center justify-center p-4 bg-white rounded-xl border transition-all hover:border-movebem-purple hover:shadow-sm hover:scale-105"
               >
                 <div className="h-12 w-12 rounded-full bg-movebem-purple-light/20 flex items-center justify-center text-movebem-purple-dark mb-2">
                   {category.icon}
@@ -191,7 +209,7 @@ const Dashboard = () => {
                 completed={exercise.completed}
                 favorite={favorites.includes(exercise.id)}
                 onFavoriteToggle={() => toggleFavorite(exercise.id)}
-                onClick={() => console.log(`Navigate to exercise ${exercise.id}`)}
+                onClick={() => navigate(`/exercises/${exercise.id}`)}
                 image={<YogaIllustration pose={exercise.pose as any} />}
               />
             ))}

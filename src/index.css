@@ -127,6 +127,39 @@
       transform: translateY(0);
     }
   }
+  
+  /* Scale animations */
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+  
+  /* Pulse animation for important buttons */
+  @keyframes pulse-subtle {
+    0% {
+      box-shadow: 0 0 0 0 rgba(155, 81, 224, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 6px rgba(155, 81, 224, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(155, 81, 224, 0);
+    }
+  }
+  
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s infinite;
+  }
 
   /* Fix for iOS overscrolling */
   html, body {
@@ -164,4 +197,26 @@
   .dropdown-menu {
     max-width: calc(100vw - 2rem);
   }
+}
+
+/* Transition effects */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+/* Button animation */
+button, a {
+  transition-property: transform, background-color, box-shadow, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }

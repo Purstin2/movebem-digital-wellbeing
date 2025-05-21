@@ -19,12 +19,13 @@ export function StepIndicator({
           key={index}
           onClick={() => onStepClick?.(index + 1)}
           className={cn(
-            "h-2.5 rounded-full transition-all",
+            "h-2.5 rounded-full transition-all duration-300",
             currentStep === index + 1 
               ? "w-8 bg-movebem-purple" 
-              : "w-2.5 bg-gray-200 hover:bg-movebem-purple-light/50"
+              : "w-2.5 bg-gray-200 hover:bg-movebem-purple-light/50 hover:scale-110"
           )}
           aria-label={`Ir para o passo ${index + 1}`}
+          style={{ animationDelay: `${index * 100}ms` }}
         />
       ))}
     </div>

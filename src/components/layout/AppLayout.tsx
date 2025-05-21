@@ -50,7 +50,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           {children}
         </main>
         
-        <footer className="p-4 border-t text-center text-sm text-gray-500">
+        <footer className="p-4 border-t text-center text-sm text-gray-500 animate-fade-in">
           © 2025 MoveBem - Todos os direitos reservados
         </footer>
       </div>

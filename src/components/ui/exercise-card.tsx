@@ -27,15 +27,17 @@ export function ExerciseCard({
       onClick={onClick}
       className={cn(
         "relative bg-white rounded-xl overflow-hidden shadow-sm border transition-all",
-        "hover:shadow-md hover:border-movebem-purple-light cursor-pointer",
-        "flex flex-col"
+        "hover:shadow-md hover:border-movebem-purple-light cursor-pointer hover:scale-105",
+        "flex flex-col transform transition-transform duration-300 active:scale-95"
       )}
     >
       <div className="relative aspect-[4/3] bg-movebem-purple-light/20">
-        {image}
+        <div className="w-full h-full transition-transform hover:scale-105 duration-300">
+          {image}
+        </div>
         
         {completed && (
-          <div className="absolute top-2 left-2 bg-movebem-green text-white text-xs font-medium px-2 py-0.5 rounded-full">
+          <div className="absolute top-2 left-2 bg-movebem-green text-white text-xs font-medium px-2 py-0.5 rounded-full animate-fade-in">
             Concluído
           </div>
         )}
@@ -45,7 +47,7 @@ export function ExerciseCard({
             e.stopPropagation();
             onFavoriteToggle?.();
           }}
-          className="absolute top-2 right-2 h-8 w-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+          className="absolute top-2 right-2 h-8 w-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors hover:scale-110 active:scale-95"
         >
           <BookmarkIcon 
             size={18} 
