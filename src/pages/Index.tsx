@@ -47,7 +47,7 @@ const Dashboard = () => {
               </h1>
               <p className="text-gray-500 mt-1">Segunda-feira, 20 de Maio</p>
             </div>
-            <Button variant="default" className="bg-movebem-purple hover:bg-movebem-purple-dark">
+            <Button variant="default" className="bg-movebem-purple hover:bg-movebem-purple-dark w-full md:w-auto">
               Iniciar Exercício Diário
             </Button>
           </div>
@@ -103,7 +103,7 @@ const Dashboard = () => {
                     </ul>
 
                     <div className="mt-6">
-                      <Button className="bg-movebem-purple hover:bg-movebem-purple-dark">
+                      <Button className="bg-movebem-purple hover:bg-movebem-purple-dark w-full sm:w-auto">
                         Iniciar Agora
                       </Button>
                     </div>
@@ -155,7 +155,7 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {quickAccessCategories.map((category) => (
               <Link 
                 key={category.id} 

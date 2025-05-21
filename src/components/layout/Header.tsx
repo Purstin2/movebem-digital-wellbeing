@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bell, Calendar, Award } from 'lucide-react';
+import { Bell, Calendar, Award, Menu } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { 
   DropdownMenu, 
@@ -10,8 +10,10 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { useSidebar } from "@/context/SidebarContext";
 
 export function Header() {
+  const { toggleSidebar } = useSidebar();
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -44,6 +46,15 @@ export function Header() {
   
   return (
     <header className="sticky top-0 z-10 w-full px-4 md:px-6 py-3 bg-white border-b flex items-center justify-between">
+      <div className="md:hidden">
+        <button 
+          className="p-1.5 rounded-md hover:bg-gray-100"
+          onClick={toggleSidebar}
+        >
+          <Menu size={22} className="text-gray-600" />
+        </button>
+      </div>
+      
       <h1 className="text-lg md:text-2xl font-quicksand font-semibold hidden md:block">
         <span className="text-movebem-purple-dark">Movendo-se com o </span> 
         <span className="text-movebem-purple">MoveBem</span>
@@ -61,7 +72,7 @@ export function Header() {
               )}
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80">
+          <DropdownMenuContent align="end" className="w-80 max-w-[calc(100vw-2rem)]">
             <div className="flex items-center justify-between px-4 py-3 font-medium border-b">
               <span>Notificações</span>
               {notificationCount > 0 && (

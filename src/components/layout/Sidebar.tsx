@@ -1,30 +1,12 @@
 
-import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Library, Activity, Utensils, Gift, User, Menu, X } from 'lucide-react';
+import { Home, Library, Activity, Utensils, Gift, User, X, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSidebar } from '@/context/SidebarContext';
 
 export function Sidebar() {
-  const [expanded, setExpanded] = useState(true);
+  const { expanded, toggleSidebar, setExpanded } = useSidebar();
   const location = useLocation();
-
-  const toggleSidebar = () => {
-    setExpanded(!expanded);
-  };
-
-  // Ajusta o sidebar para ser recolhido automaticamente no mobile
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setExpanded(false);
-      }
-    };
-    
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const navItems = [
     { icon: Home, label: 'Dashboard', href: '/' },
@@ -64,7 +46,7 @@ export function Sidebar() {
           </button>
         </div>
         
-        <nav className="flex-1 pt-6">
+        <nav className="flex-1 pt-6 overflow-y-auto">
           <ul className="space-y-1 px-2">
             {navItems.map((item) => {
               const isActive = location.pathname === item.href || 
@@ -79,6 +61,7 @@ export function Sidebar() {
                       "hover:bg-movebem-purple-light/20 text-gray-600 hover:text-movebem-purple-dark",
                       isActive && "bg-movebem-purple-light/30 text-movebem-purple-dark font-medium"
                     )}
+                    onClick={() => window.innerWidth < 768 && setExpanded(false)}
                   >
                     <item.icon size={20} />
                     {expanded && <span>{item.label}</span>}

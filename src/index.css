@@ -97,6 +97,46 @@
   .animate-in {
     @apply animate-fade-in;
   }
+
+  /* Fixed tap highlight on mobile */
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better mobile form inputs */
+  input, 
+  textarea, 
+  button, 
+  select, 
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent content shift on page transitions */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Fix for iOS overscrolling */
+  html, body {
+    @apply overscroll-none;
+  }
+
+  /* Fix mobile scrolling issues */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Custom scrollbar styles */
@@ -117,4 +157,11 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #9747FF;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    max-width: calc(100vw - 2rem);
+  }
 }

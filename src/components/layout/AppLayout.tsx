@@ -44,7 +44,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 w-full">
         <Header />
         <main className="flex-1 p-4 md:p-6 overflow-auto animate-fade-in">
           {children}
