@@ -1,115 +1,131 @@
-
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Home, Library, Activity, Utensils, Gift, User, X, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/context/SidebarContext';
 import { UserProfile } from '@/types/onboarding';
+import { HelpCircle } from 'lucide-react';
+import { Icons } from '@/components/icons';
 
 interface SidebarProps {
-  userProfile?: UserProfile | null;
+  className?: string;
+  user?: UserProfile;
 }
 
-export function Sidebar({ userProfile }: SidebarProps) {
-  const { expanded, toggleSidebar, setExpanded } = useSidebar();
-  const location = useLocation();
-
-  const navItems = [
-    { icon: Home, label: 'Minha Jornada', href: '/' },
-    { icon: Library, label: 'Momentos de Liberdade', href: '/momentos-de-liberdade' },
-    { icon: Activity, label: 'Conquistas Diárias', href: '/conquistas' },
-    { icon: Utensils, label: 'Alimentos que Curam', href: '/alimentos-que-curam' },
-    { icon: Gift, label: 'Tesouros Exclusivos', href: '/tesouros-exclusivos' },
-    { icon: User, label: 'Evolução Pessoal', href: '/evolucao-pessoal' },
-  ];
-
-  // Calculate current day for progress bar
-  const currentDay = userProfile?.currentDay || 4;
-  const progressPercentage = (currentDay / 21) * 100;
-
+export function Sidebar({ className, user }: SidebarProps) {
+  const { expanded, toggleSidebar } = useSidebar();
+  
   return (
-    <>
-      {/* Mobile overlay */}
-      {expanded && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-20 md:hidden animate-fade-in" 
-          onClick={toggleSidebar}
-        />
-      )}
-    
-      <aside className={cn(
-        "fixed md:sticky top-0 left-0 h-screen bg-white z-30 transition-all duration-300 flex flex-col shadow-md",
-        expanded ? "w-64" : "w-0 md:w-16 overflow-hidden"
-      )}>
-        <div className="flex items-center justify-between p-4">
-          <div className={cn("flex items-center gap-2", !expanded && "md:hidden")}>
-            <div className="bg-fenjes-purple h-8 w-8 rounded-md flex items-center justify-center">
-              <span className="text-white font-quicksand font-bold">FJ</span>
-            </div>
-            {expanded && <span className="font-quicksand font-bold text-lg text-fenjes-purple-dark animate-fade-in">Fenjes</span>}
+    <div className={cn("pb-12", className)}>
+      <div className="space-y-4 py-4">
+        <div className="px-3 py-2">
+          <Link to="/">
+            <h2 className="mb-2 px-4 text-xl font-semibold tracking-tight text-fenjes-purple">
+              Fenjes
+            </h2>
+          </Link>
+          <div className="space-y-1">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.home className="mr-2 h-4 w-4" />
+              <span>Início</span>
+            </NavLink>
+            <NavLink
+              to="/chair-yoga"
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.chairYoga className="mr-2 h-4 w-4" />
+              <span>Yoga na Cadeira</span>
+            </NavLink>
+            <NavLink
+              to="/nutrition"
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.nutrition className="mr-2 h-4 w-4" />
+              <span>Nutrição Curativa</span>
+            </NavLink>
+            <NavLink
+              to="/diary"
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.diary className="mr-2 h-4 w-4" />
+              <span>Diário de Alívio</span>
+            </NavLink>
           </div>
-          <button 
-            onClick={toggleSidebar} 
-            className="p-1 rounded-full hover:bg-gray-100 transition-colors text-gray-500 hover:scale-110 active:scale-95"
-            aria-label={expanded ? "Fechar menu" : "Abrir menu"}
-          >
-            {expanded ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
-        
-        <nav className="flex-1 pt-6 overflow-y-auto">
-          <ul className="space-y-1 px-2">
-            {navItems.map((item, index) => {
-              const isActive = location.pathname === item.href || 
-                (item.href !== '/' && location.pathname.startsWith(item.href));
-              
-              return (
-                <li key={item.href} style={{ animationDelay: `${index * 50}ms` }} className="animate-fade-in">
-                  <Link
-                    to={item.href}
-                    className={cn(
-                      "flex items-center gap-3 px-3 py-3 rounded-md transition-all",
-                      "hover:bg-fenjes-purple-light/20 text-gray-600 hover:text-fenjes-purple-dark",
-                      isActive && "bg-fenjes-purple-light/30 text-fenjes-purple-dark font-medium",
-                      "hover:scale-105 active:scale-95"
-                    )}
-                    onClick={() => window.innerWidth < 768 && setExpanded(false)}
-                  >
-                    <item.icon size={20} className={isActive ? "text-fenjes-purple" : ""} />
-                    {expanded && <span>{item.label}</span>}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-        
-        <div className="p-4">
-          {expanded && userProfile ? (
-            <div className="bg-fenjes-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
-              <p className="font-medium text-fenjes-purple-dark">
-                {userProfile.trackAssigned === 'therapeutic' ? 'Trilha Terapêutica' :
-                 userProfile.trackAssigned === 'adaptive' ? 'Trilha Adaptativa' :
-                 'Trilha Bem-Estar'}
-              </p>
-              <p className="text-gray-600 text-xs mt-1">Dia {currentDay} de 21</p>
-              <div className="h-1.5 bg-gray-200 rounded-full mt-2">
-                <div 
-                  className="h-full bg-fenjes-purple rounded-full animate-progress-fill" 
-                  style={{ width: `${progressPercentage}%` }}
-                ></div>
-              </div>
-            </div>
-          ) : expanded ? (
-            <div className="bg-fenjes-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
-              <p className="font-medium text-fenjes-purple-dark">Plano 21 dias</p>
-              <p className="text-gray-600 text-xs mt-1">Dia 4 de 21</p>
-              <div className="h-1.5 bg-gray-200 rounded-full mt-2">
-                <div className="h-full bg-fenjes-purple rounded-full animate-progress-fill" style={{ width: '19%' }}></div>
-              </div>
-            </div>
-          ) : null}
+        <div className="px-3 py-2">
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-fenjes-purple">
+            Minha Jornada
+          </h2>
+          <div className="space-y-1">
+            <NavLink
+              to="/evolucao-pessoal"
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.progress className="mr-2 h-4 w-4" />
+              <span>Conquistas de Cura</span>
+            </NavLink>
+            <NavLink
+              to="/perfil"
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.profile className="mr-2 h-4 w-4" />
+              <span>Meu Perfil</span>
+            </NavLink>
+          </div>
         </div>
-      </aside>
-    </>
+        <div className="px-3 py-2">
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-fenjes-purple">
+            Ajuda
+          </h2>
+          <div className="space-y-1">
+            <NavLink
+              to="/help"
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "bg-accent" : "transparent"
+                )
+              }
+            >
+              <Icons.help className="mr-2 h-4 w-4" />
+              <span>Suporte Terapêutico</span>
+            </NavLink>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

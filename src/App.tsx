@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,8 @@ import BonusPage from "./pages/BonusPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import OnboardingPage from "./pages/OnboardingPage";
+import HomePage from "./pages/HomePage";
+import ChairYogaPage from "./pages/ChairYogaPage";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/momentos-de-liberdade" element={<ExercisesPage />} />
             <Route path="/exercises/:id" element={<ExerciseDetailPage />} />
             <Route path="/conquistas" element={<ProgressPage />} />
@@ -33,6 +34,8 @@ const App = () => (
             <Route path="/tesouros-exclusivos" element={<BonusPage />} />
             <Route path="/evolucao-pessoal" element={<ProfilePage />} />
             <Route path="/onboarding" element={<OnboardingPage />} />
+            <Route path="/nutrition" element={<NutritionPage />} />
+            <Route path="/chair-yoga" element={<ChairYogaPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
