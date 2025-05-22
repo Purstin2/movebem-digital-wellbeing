@@ -11,6 +11,61 @@ export interface TrackWeek {
   personalizedTips?: string[]; // Optional property for generated tips
 }
 
+// Define Exercise interface that was missing
+export interface Exercise {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  category: string;
+  targetAreas: string[];
+  conditions: string[];
+  contraindications: string[];
+  steps: ExerciseStep[];
+  adaptations: Adaptation[];
+  benefits: string[];
+  safetyTips: string[];
+}
+
+// Define ExerciseStep and Adaptation interfaces
+export interface ExerciseStep {
+  step: number;
+  title: string;
+  instruction: string;
+  duration?: string;
+  breathingPattern?: string;
+  commonMistakes?: string[];
+  pose: string;
+  adaptations?: {
+    easy: string;
+    normal: string;
+    challenging: string;
+  };
+  safetyWarnings?: string[];
+}
+
+export interface Adaptation {
+  condition: string;
+  modification: string;
+  visualCue?: string;
+}
+
+// Define Track interface that was missing
+export interface Track {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  targetConditions: string[];
+  weeks: TrackWeek[];
+  nutritionFocus: string[];
+  mindfulnessComponent: string[];
+  focusAreas: string[];
+  weeklyGoal: number;
+  sessionDuration: number;
+}
+
 // BANCO DE EXERCÍCIOS ESPECIALIZADOS
 export const specializedExercises: Exercise[] = [
   // TRILHA TERAPÊUTICA - PESCOÇO
