@@ -1,14 +1,18 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { ExerciseCard } from "@/components/ui/exercise-card";
 import { YogaIllustration } from "@/components/illustrations/YogaIllustration";
 import { CategoryBadge } from "@/components/ui/category-badge";
 import { CategoryIllustration } from "@/components/illustrations/CategoryIllustration";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, Heart, CheckCircle2, Zap } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { UserProfile } from "@/types/onboarding";
+import { specializedExercises, trackSystem, getTrackInfo } from "@/utils/trackSystem";
 
 const ExercisesPage = () => {
   const navigate = useNavigate();
@@ -21,6 +25,19 @@ const ExercisesPage = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(categoryParam || null);
   const [searchQuery, setSearchQuery] = useState("");
   const [favorites, setFavorites] = useState<number[]>([1, 4]);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+  // Load user profile from session storage
+  useEffect(() => {
+    try {
+      const storedProfile = sessionStorage.getItem('userProfile');
+      if (storedProfile) {
+        setUserProfile(JSON.parse(storedProfile));
+      }
+    } catch (error) {
+      console.error("Error loading profile:", error);
+    }
+  }, []);
 
   const categories = [
     { id: 'all', label: 'Todos', icon: null },
@@ -32,17 +49,36 @@ const ExercisesPage = () => {
     { id: 'relaxation', label: 'Relaxamento', icon: <CategoryIllustration category="relaxation" size={16} /> },
   ];
 
-  const exercises = [
-    { id: 1, title: "Alongamento de Pescoço", duration: "5 min", pose: "default", completed: false, category: "neck" },
-    { id: 2, title: "Rotação de Ombros", duration: "7 min", pose: "arms-up", completed: true, category: "shoulders" },
-    { id: 3, title: "Inclinação Lateral", duration: "8 min", pose: "side-bend", completed: false, category: "back" },
-    { id: 4, title: "Torção Suave", duration: "10 min", pose: "twist", completed: false, category: "back" },
-    { id: 5, title: "Alongamento de Quadril", duration: "6 min", pose: "default", completed: true, category: "hips" },
-    { id: 6, title: "Exercício de Foco", duration: "12 min", pose: "default", completed: false, category: "focus" },
-    { id: 7, title: "Relaxamento Profundo", duration: "15 min", pose: "default", completed: false, category: "relaxation" },
-    { id: 8, title: "Alongamento de Punhos", duration: "3 min", pose: "arms-up", completed: false, category: "shoulders" },
-    { id: 9, title: "Mobilidade de Coluna", duration: "9 min", pose: "twist", completed: false, category: "back" },
+  // Convert specialized exercises to match the local exercise format
+  const specializedExercisesMapped = specializedExercises.map((exercise, index) => ({
+    id: index + 1,
+    originalId: exercise.id,
+    title: exercise.title,
+    duration: exercise.duration,
+    pose: exercise.steps[0].pose,
+    completed: false,
+    category: exercise.category,
+    difficulty: exercise.difficulty,
+    isSpecialized: true,
+    description: exercise.description,
+  }));
+
+  // Combine with existing exercises
+  const defaultExercises = [
+    { id: 1, title: "Alongamento de Pescoço", duration: "5 min", pose: "default", completed: false, category: "neck", difficulty: "beginner" },
+    { id: 2, title: "Rotação de Ombros", duration: "7 min", pose: "arms-up", completed: true, category: "shoulders", difficulty: "beginner" },
+    { id: 3, title: "Inclinação Lateral", duration: "8 min", pose: "side-bend", completed: false, category: "back", difficulty: "beginner" },
+    { id: 4, title: "Torção Suave", duration: "10 min", pose: "twist", completed: false, category: "back", difficulty: "intermediate" },
+    { id: 5, title: "Alongamento de Quadril", duration: "6 min", pose: "default", completed: true, category: "hips", difficulty: "beginner" },
+    { id: 6, title: "Exercício de Foco", duration: "12 min", pose: "default", completed: false, category: "focus", difficulty: "intermediate" },
+    { id: 7, title: "Relaxamento Profundo", duration: "15 min", pose: "default", completed: false, category: "relaxation", difficulty: "beginner" },
+    { id: 8, title: "Alongamento de Punhos", duration: "3 min", pose: "arms-up", completed: false, category: "shoulders", difficulty: "beginner" },
+    { id: 9, title: "Mobilidade de Coluna", duration: "9 min", pose: "twist", completed: false, category: "back", difficulty: "intermediate" },
   ];
+
+  // Get all exercises, prioritizing the specialized ones
+  const allExercises = [...specializedExercisesMapped, ...defaultExercises.filter(e => 
+    !specializedExercisesMapped.some(se => se.title === e.title))];
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev => 
@@ -57,7 +93,7 @@ const ExercisesPage = () => {
     });
   };
 
-  const filteredExercises = exercises.filter(exercise => {
+  const filteredExercises = allExercises.filter(exercise => {
     const matchesCategory = activeCategory === null || activeCategory === "all" || exercise.category === activeCategory;
     const matchesSearch = searchQuery === "" || 
       exercise.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -67,6 +103,45 @@ const ExercisesPage = () => {
   
   const handleCategoryClick = (categoryId: string) => {
     setActiveCategory(prev => prev === categoryId ? null : categoryId);
+  };
+
+  const getTrackExercises = () => {
+    if (!userProfile?.trackAssigned) return [];
+    
+    const trackId = userProfile.trackAssigned;
+    const track = trackSystem.find(t => t.id === trackId);
+    
+    if (!track) return [];
+    
+    // Get exercise IDs from the current week (based on currentDay)
+    const currentWeek = Math.ceil((userProfile.currentDay || 1) / 7);
+    const weekData = track.weeks[Math.min(currentWeek - 1, track.weeks.length - 1)];
+    
+    if (!weekData) return [];
+    
+    // Get the exercises for the current week
+    return allExercises.filter(exercise => 
+      specializedExercises.some(specEx => 
+        specEx.id === (exercise.originalId || "") && 
+        weekData.exercises.includes(specEx.id)
+      )
+    );
+  };
+
+  const trackExercises = getTrackExercises();
+  const trackInfo = userProfile?.trackAssigned ? getTrackInfo(userProfile.trackAssigned) : null;
+
+  const getTrackIcon = (trackId?: string) => {
+    switch(trackId) {
+      case 'therapeutic':
+        return <Heart className="text-red-500" />;
+      case 'adaptive':
+        return <CheckCircle2 className="text-blue-500" />;
+      case 'wellness':
+        return <Zap className="text-green-500" />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -80,6 +155,49 @@ const ExercisesPage = () => {
             Explore exercícios específicos para cada parte do corpo ou necessidade
           </p>
         </header>
+
+        {/* User Track Section */}
+        {userProfile?.trackAssigned && trackInfo && trackExercises.length > 0 && (
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <div className={`p-1.5 rounded-full ${trackInfo.color.replace('bg-', 'bg-opacity-20 bg-')}`}>
+                {getTrackIcon(userProfile.trackAssigned)}
+              </div>
+              <h2 className="font-quicksand text-xl font-semibold">
+                Sua Trilha {trackInfo.name}
+              </h2>
+            </div>
+            
+            <Card className="mb-6 bg-gradient-to-r from-white to-gray-50">
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg">Exercícios Recomendados</CardTitle>
+                  <Badge variant="outline">
+                    Dia {userProfile.currentDay || 1}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {trackExercises.slice(0, 3).map((exercise) => (
+                    <ExerciseCard
+                      key={exercise.id}
+                      title={exercise.title}
+                      duration={exercise.duration}
+                      completed={exercise.completed}
+                      favorite={favorites.includes(exercise.id)}
+                      onFavoriteToggle={() => toggleFavorite(exercise.id)}
+                      onClick={() => navigate(`/exercises/${exercise.id}`)}
+                      image={<YogaIllustration pose={exercise.pose as any} />}
+                      badge={exercise.difficulty}
+                      className="border-l-4 border-l-movebem-purple"
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Search and filters */}
         <div className="bg-white rounded-xl p-4 mb-6 border shadow-sm hover:shadow-md transition-shadow">
@@ -126,6 +244,7 @@ const ExercisesPage = () => {
                 onFavoriteToggle={() => toggleFavorite(exercise.id)}
                 onClick={() => navigate(`/exercises/${exercise.id}`)}
                 image={<YogaIllustration pose={exercise.pose as any} />}
+                badge={exercise.difficulty}
               />
             ))
           ) : (

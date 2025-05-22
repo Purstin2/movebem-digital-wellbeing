@@ -39,10 +39,14 @@ export function AppLayout({ children }: AppLayoutProps) {
       toast({
         title: "Personalização recomendada",
         description: "Complete o quiz de onboarding para uma experiência personalizada",
-        action: {
-          label: 'Ir para Quiz',
-          onClick: () => navigate('/onboarding')
-        }
+        action: (
+          <button
+            onClick={() => navigate('/onboarding')}
+            className="bg-movebem-purple text-white px-3 py-1 rounded text-xs hover:bg-movebem-purple-dark"
+          >
+            Ir para Quiz
+          </button>
+        )
       });
     }
   }, [userProfile, location.pathname, navigate, toast]);

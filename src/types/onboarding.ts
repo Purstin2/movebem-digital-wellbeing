@@ -22,3 +22,64 @@ export interface UserProfile {
     adaptationLevel: 'easy' | 'normal' | 'challenging';
   };
 }
+
+export interface ExerciseStep {
+  step: number;
+  title: string;
+  instruction: string;
+  duration?: string;
+  breathingPattern?: string;
+  commonMistakes?: string[];
+  pose: string;
+  adaptations?: {
+    easy: string;
+    normal: string;
+    challenging: string;
+  };
+  safetyWarnings?: string[];
+}
+
+export interface Adaptation {
+  condition: string;
+  modification: string;
+  visualCue?: string;
+}
+
+export interface Exercise {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  category: string;
+  targetAreas: string[];
+  conditions: string[];
+  contraindications: string[];
+  steps: ExerciseStep[];
+  adaptations: Adaptation[];
+  benefits: string[];
+  safetyTips: string[];
+}
+
+export interface Track {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  targetConditions: string[];
+  weeks: TrackWeek[];
+  nutritionFocus: string[];
+  mindfulnessComponent: string[];
+  focusAreas: string[];
+  weeklyGoal: number;
+  sessionDuration: number;
+}
+
+export interface TrackWeek {
+  week: number;
+  theme: string;
+  goals: string[];
+  exercises: string[];
+  nutritionTips: string[];
+  mindfulnessPractice: string;
+}
