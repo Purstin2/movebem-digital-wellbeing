@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bell, Calendar, Award, Menu } from 'lucide-react';
+import { Bell, Calendar, Award, Menu, CheckCircle } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { 
   DropdownMenu, 
@@ -27,14 +27,16 @@ export function Header({ userProfile }: HeaderProps) {
       title: "Exercício Diário",
       message: "Seu exercício de hoje está aguardando você!",
       read: false,
-      time: "Agora"
+      time: "Agora",
+      icon: <Calendar size={16} className="text-fenjes-purple" />
     },
     {
       id: 2,
       title: "Nova Conquista",
       message: "Você desbloqueou a conquista \"Persistente\"",
       read: false,
-      time: "1h atrás"
+      time: "1h atrás",
+      icon: <Award size={16} className="text-fenjes-purple" />
     }
   ]);
   
@@ -58,7 +60,7 @@ export function Header({ userProfile }: HeaderProps) {
     navigate('/onboarding');
     toast({
       title: "Quiz de Perfil",
-      description: "Vamos personalizar sua experiência com o MoveBem",
+      description: "Vamos personalizar sua experiência com o Fenjes",
     });
   };
   
@@ -74,19 +76,19 @@ export function Header({ userProfile }: HeaderProps) {
       </div>
       
       <h1 className="text-lg md:text-2xl font-quicksand font-semibold hidden md:block">
-        <span className="text-movebem-purple-dark">Movendo-se com o </span> 
-        <span className="text-movebem-purple">MoveBem</span>
+        <span className="text-fenjes-purple-dark">Liberte-se com </span> 
+        <span className="text-fenjes-purple">Fenjes</span>
       </h1>
       
       <div className="ml-auto flex items-center gap-2 md:gap-4">
         {!userProfile && (
           <Button 
             variant="outline" 
-            className="hidden md:flex items-center gap-2 text-movebem-purple border-movebem-purple hover:bg-movebem-purple/10 animate-pulse-subtle"
+            className="hidden md:flex items-center gap-2 text-fenjes-purple border-fenjes-purple hover:bg-fenjes-purple/10"
             onClick={handleQuizClick}
           >
             <span>Personalize sua experiência</span>
-            <span className="text-xs bg-movebem-purple text-white px-2 py-0.5 rounded">Novo</span>
+            <span className="text-xs bg-fenjes-purple text-white px-2 py-0.5 rounded">Novo</span>
           </Button>
         )}
         
@@ -95,7 +97,7 @@ export function Header({ userProfile }: HeaderProps) {
             <button className="relative p-2 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors">
               <Bell size={20} className="text-gray-600" />
               {notificationCount > 0 && (
-                <span className="absolute top-1 right-1 h-4 w-4 bg-movebem-green rounded-full flex items-center justify-center text-white text-xs animate-pulse">
+                <span className="absolute top-1 right-1 h-4 w-4 bg-fenjes-green rounded-full flex items-center justify-center text-white text-xs">
                   {notificationCount}
                 </span>
               )}
@@ -106,7 +108,7 @@ export function Header({ userProfile }: HeaderProps) {
               <span>Notificações</span>
               {notificationCount > 0 && (
                 <button 
-                  className="text-xs text-movebem-purple hover:underline"
+                  className="text-xs text-fenjes-purple hover:underline"
                   onClick={markAllAsRead}
                 >
                   Marcar todas como lidas
@@ -121,13 +123,9 @@ export function Header({ userProfile }: HeaderProps) {
                     <div className="flex gap-3 w-full">
                       <div className={`
                         h-10 w-10 rounded-full flex items-center justify-center shrink-0
-                        ${notification.read ? 'bg-gray-100' : 'bg-movebem-purple-light/30'}
+                        ${notification.read ? 'bg-gray-100' : 'bg-fenjes-purple-light/30'}
                       `}>
-                        {notification.title.includes('Exercício') ? (
-                          <Calendar className={notification.read ? 'text-gray-400' : 'text-movebem-purple'} size={20} />
-                        ) : (
-                          <Award className={notification.read ? 'text-gray-400' : 'text-movebem-purple'} size={20} />
-                        )}
+                        {notification.icon}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
@@ -141,13 +139,13 @@ export function Header({ userProfile }: HeaderProps) {
                         </p>
                       </div>
                       {!notification.read && (
-                        <div className="h-2 w-2 mt-1 bg-movebem-green rounded-full shrink-0"></div>
+                        <div className="h-2 w-2 mt-1 bg-fenjes-green rounded-full shrink-0"></div>
                       )}
                     </div>
                   </DropdownMenuItem>
                 ))}
                 <div className="p-2 text-center">
-                  <button className="text-sm text-movebem-purple hover:underline">
+                  <button className="text-sm text-fenjes-purple hover:underline">
                     Ver todas
                   </button>
                 </div>
@@ -164,7 +162,7 @@ export function Header({ userProfile }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 rounded-full hover:bg-gray-100 active:bg-gray-200 pr-2 pl-1 py-1 transition-colors">
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-movebem-purple-light text-movebem-purple-dark font-medium">
+                <AvatarFallback className="bg-fenjes-purple-light text-fenjes-purple-dark font-medium">
                   {userInitials}
                 </AvatarFallback>
               </Avatar>
@@ -178,10 +176,10 @@ export function Header({ userProfile }: HeaderProps) {
               </DropdownMenuItem>
             )}
             <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to="/profile">Meu Perfil</Link>
+              <Link to="/evolucao-pessoal">Meu Perfil</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to="/profile?tab=configuracoes">Configurações</Link>
+              <Link to="/evolucao-pessoal?tab=configuracoes">Configurações</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">Ajuda</DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer text-red-500">Sair</DropdownMenuItem>

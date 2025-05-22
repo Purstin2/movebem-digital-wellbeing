@@ -42,7 +42,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         action: (
           <button
             onClick={() => navigate('/onboarding')}
-            className="bg-movebem-purple text-white px-3 py-1 rounded text-xs hover:bg-movebem-purple-dark"
+            className="bg-fenjes-purple text-white px-3 py-1 rounded text-xs hover:bg-fenjes-purple-dark"
           >
             Ir para Quiz
           </button>
@@ -59,16 +59,16 @@ export function AppLayout({ children }: AppLayoutProps) {
     // Mensagem de boas vindas para novas seções
     if (location.pathname !== '/' && !sessionStorage.getItem(`visited-${location.pathname}`)) {
       const messages: Record<string, string> = {
-        '/exercises': 'Biblioteca completa de exercícios para você começar',
-        '/progress': 'Acompanhe sua evolução e conquistas',
-        '/nutrition': 'Dicas nutricionais para complementar seus exercícios',
-        '/bonus': 'Materiais exclusivos para membros',
-        '/profile': 'Gerencie seu perfil e configurações',
+        '/momentos-de-liberdade': 'Biblioteca completa de exercícios para sua jornada de transformação',
+        '/conquistas': 'Acompanhe sua evolução e conquistas na jornada de 21 dias',
+        '/alimentos-que-curam': 'Dicas nutricionais que complementam sua jornada de cura',
+        '/tesouros-exclusivos': 'Materiais exclusivos para membros Fenjes',
+        '/evolucao-pessoal': 'Gerencie seu perfil e veja seu progresso',
       };
       
       if (messages[location.pathname]) {
         toast({
-          title: `Bem-vindo à seção ${location.pathname.substring(1)}`,
+          title: `Bem-vindo à seção ${location.pathname.substring(1).replace('-', ' ')}`,
           description: messages[location.pathname],
           duration: 5000,
         });
@@ -96,15 +96,15 @@ export function AppLayout({ children }: AppLayoutProps) {
   const personalizedTrack = getPersonalizedGreeting();
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-fenjes-bg-light">
       <Sidebar userProfile={userProfile} />
       <div className="flex flex-col flex-1 w-full">
         <Header userProfile={userProfile} />
         
         {personalizedTrack && location.pathname === "/" && (
-          <div className="bg-movebem-purple-light/20 p-3 text-center border-b text-movebem-purple-dark animate-fade-in">
+          <div className="bg-fenjes-purple-light/20 p-3 text-center border-b text-fenjes-purple-dark animate-fade-in">
             <span className="font-medium">
-              Você está na {personalizedTrack} • Dia {userProfile?.currentDay || 1} de 21
+              Você está na {personalizedTrack} • Dia {userProfile?.currentDay || 4} de 21
             </span>
           </div>
         )}
@@ -114,7 +114,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         </main>
         
         <footer className="p-4 border-t text-center text-sm text-gray-500 animate-fade-in">
-          © 2025 MoveBem - Todos os direitos reservados
+          © 2025 Fenjes - Todos os direitos reservados
         </footer>
       </div>
     </div>

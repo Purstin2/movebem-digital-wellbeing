@@ -5,9 +5,9 @@ import { ExerciseCard } from "@/components/ui/exercise-card";
 import { ProgressCard } from "@/components/ui/progress-card";
 import { YogaIllustration } from "@/components/illustrations/YogaIllustration";
 import { CategoryIllustration } from "@/components/illustrations/CategoryIllustration";
-import { Calendar, Clock, Award, Flame, ArrowRight } from "lucide-react";
+import { Calendar, Clock, Award, Flame, ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { GlassCard } from "@/components/ui/glass-card";
 
@@ -21,6 +21,22 @@ const Dashboard = () => {
   ]);
 
   const [favorites, setFavorites] = useState<number[]>([1, 4]);
+  const [minutesInvested, setMinutesInvested] = useState<number>(0);
+  const [currentDay, setCurrentDay] = useState<number>(4);
+
+  // Simular minutos investidos de acordo com exercícios completados
+  useEffect(() => {
+    // Em uma aplicação real, isso viria do backend
+    const completedExercises = exercises.filter(ex => ex.completed);
+    const totalMinutes = completedExercises.reduce((acc, ex) => {
+      // Extrai apenas o número de minutos da string "X min de autocuidado"
+      const minutes = parseInt(ex.duration.split(' ')[0]);
+      return acc + (isNaN(minutes) ? 0 : minutes);
+    }, 0);
+    
+    // Adicionar alguns minutos fixos para demonstração
+    setMinutesInvested(totalMinutes + 73);
+  }, [exercises]);
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev => 
@@ -47,6 +63,12 @@ const Dashboard = () => {
     { id: 'relaxation', label: 'Relaxamento', icon: <CategoryIllustration category="relaxation" size={18} /> },
   ];
 
+  // Formatar data atual
+  const getCurrentDate = () => {
+    const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+    return new Date().toLocaleDateString('pt-BR', options);
+  };
+
   return (
     <AppLayout>
       <div className="max-w-7xl mx-auto">
@@ -55,16 +77,17 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
               <h1 className="font-quicksand text-2xl md:text-3xl font-bold text-fenjes-text-warm">
-                🌅 Bom dia, guerreira Marina!
+                <Calendar size={24} className="inline-block mr-2 text-fenjes-purple" /> 
+                Bom dia, guerreira Marina!
               </h1>
-              <p className="text-gray-500 mt-1">Segunda-feira, 20 de Maio</p>
+              <p className="text-gray-500 mt-1">{getCurrentDate()}</p>
             </div>
             <Button 
               variant="default" 
-              className="bg-gradient-to-r from-fenjes-yellow to-fenjes-yellow-dark text-fenjes-text-warm font-medium w-full md:w-auto animate-pulse-subtle"
+              className="bg-gradient-to-r from-fenjes-yellow to-fenjes-yellow-dark text-fenjes-text-warm font-medium w-full md:w-auto"
               onClick={startDailyExercise}
             >
-              ✨ Começar Meu Momento de Cura
+              <Heart size={16} className="mr-2" /> Começar Meu Momento de Cura
             </Button>
           </div>
 
@@ -123,7 +146,7 @@ const Dashboard = () => {
                         className="bg-fenjes-purple hover:bg-fenjes-purple-dark text-white w-full sm:w-auto transition-transform hover:scale-105"
                         onClick={startDailyExercise}
                       >
-                        ✨ Iniciar Agora
+                        <Heart size={16} className="mr-2" /> Iniciar Agora
                       </Button>
                     </div>
                   </div>
@@ -134,19 +157,19 @@ const Dashboard = () => {
             <div className="space-y-6">
               <ProgressCard 
                 title="Sua Jornada de Transformação" 
-                currentValue={4} 
+                currentValue={currentDay} 
                 maxValue={21} 
                 icon={<Calendar size={20} />}
-                message="✨ 19% mais próxima da sua liberdade"
+                message={`${Math.round((currentDay/21)*100)}% mais próxima da sua liberdade`}
               />
               
               <ProgressCard 
                 title="Minutos Investidos em Você" 
-                currentValue={85} 
+                currentValue={minutesInvested} 
                 maxValue={210} 
                 color="bg-fenjes-green" 
                 icon={<Clock size={20} />}
-                message="💪 85 minutos para sua melhor versão"
+                message={`${minutesInvested} minutos para sua melhor versão`}
               />
               
               <GlassCard variant="hover" className="p-4">
@@ -157,7 +180,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-700">7 Dias de Autocuidado</p>
-                    <p className="text-sm text-gray-500">4 de 7 dias conquistados</p>
+                    <p className="text-sm text-gray-500">{currentDay} de 7 dias conquistados</p>
                   </div>
                 </div>
               </GlassCard>

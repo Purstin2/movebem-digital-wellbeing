@@ -14,12 +14,12 @@ export function Sidebar({ userProfile }: SidebarProps) {
   const location = useLocation();
 
   const navItems = [
-    { icon: Home, label: 'Dashboard', href: '/' },
-    { icon: Library, label: 'Exercícios', href: '/exercises' },
-    { icon: Activity, label: 'Progresso', href: '/progress' },
-    { icon: Utensils, label: 'Nutrição', href: '/nutrition' },
-    { icon: Gift, label: 'Bônus', href: '/bonus' },
-    { icon: User, label: 'Perfil', href: '/profile' },
+    { icon: Home, label: 'Minha Jornada', href: '/' },
+    { icon: Library, label: 'Momentos de Liberdade', href: '/momentos-de-liberdade' },
+    { icon: Activity, label: 'Conquistas Diárias', href: '/conquistas' },
+    { icon: Utensils, label: 'Alimentos que Curam', href: '/alimentos-que-curam' },
+    { icon: Gift, label: 'Tesouros Exclusivos', href: '/tesouros-exclusivos' },
+    { icon: User, label: 'Evolução Pessoal', href: '/evolucao-pessoal' },
   ];
 
   // Calculate current day for progress bar
@@ -42,10 +42,10 @@ export function Sidebar({ userProfile }: SidebarProps) {
       )}>
         <div className="flex items-center justify-between p-4">
           <div className={cn("flex items-center gap-2", !expanded && "md:hidden")}>
-            <div className="bg-movebem-purple h-8 w-8 rounded-md flex items-center justify-center">
-              <span className="text-white font-quicksand font-bold">MB</span>
+            <div className="bg-fenjes-purple h-8 w-8 rounded-md flex items-center justify-center">
+              <span className="text-white font-quicksand font-bold">FJ</span>
             </div>
-            {expanded && <span className="font-quicksand font-bold text-lg text-movebem-purple-dark animate-fade-in">MoveBem</span>}
+            {expanded && <span className="font-quicksand font-bold text-lg text-fenjes-purple-dark animate-fade-in">Fenjes</span>}
           </div>
           <button 
             onClick={toggleSidebar} 
@@ -68,13 +68,13 @@ export function Sidebar({ userProfile }: SidebarProps) {
                     to={item.href}
                     className={cn(
                       "flex items-center gap-3 px-3 py-3 rounded-md transition-all",
-                      "hover:bg-movebem-purple-light/20 text-gray-600 hover:text-movebem-purple-dark",
-                      isActive && "bg-movebem-purple-light/30 text-movebem-purple-dark font-medium",
+                      "hover:bg-fenjes-purple-light/20 text-gray-600 hover:text-fenjes-purple-dark",
+                      isActive && "bg-fenjes-purple-light/30 text-fenjes-purple-dark font-medium",
                       "hover:scale-105 active:scale-95"
                     )}
                     onClick={() => window.innerWidth < 768 && setExpanded(false)}
                   >
-                    <item.icon size={20} className={isActive ? "text-movebem-purple" : ""} />
+                    <item.icon size={20} className={isActive ? "text-fenjes-purple" : ""} />
                     {expanded && <span>{item.label}</span>}
                   </Link>
                 </li>
@@ -85,8 +85,8 @@ export function Sidebar({ userProfile }: SidebarProps) {
         
         <div className="p-4">
           {expanded && userProfile ? (
-            <div className="bg-movebem-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
-              <p className="font-medium text-movebem-purple-dark">
+            <div className="bg-fenjes-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
+              <p className="font-medium text-fenjes-purple-dark">
                 {userProfile.trackAssigned === 'therapeutic' ? 'Trilha Terapêutica' :
                  userProfile.trackAssigned === 'adaptive' ? 'Trilha Adaptativa' :
                  'Trilha Bem-Estar'}
@@ -94,17 +94,17 @@ export function Sidebar({ userProfile }: SidebarProps) {
               <p className="text-gray-600 text-xs mt-1">Dia {currentDay} de 21</p>
               <div className="h-1.5 bg-gray-200 rounded-full mt-2">
                 <div 
-                  className="h-full bg-movebem-purple rounded-full animate-progress-fill" 
+                  className="h-full bg-fenjes-purple rounded-full animate-progress-fill" 
                   style={{ width: `${progressPercentage}%` }}
                 ></div>
               </div>
             </div>
           ) : expanded ? (
-            <div className="bg-movebem-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
-              <p className="font-medium text-movebem-purple-dark">Plano 21 dias</p>
+            <div className="bg-fenjes-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
+              <p className="font-medium text-fenjes-purple-dark">Plano 21 dias</p>
               <p className="text-gray-600 text-xs mt-1">Dia 4 de 21</p>
               <div className="h-1.5 bg-gray-200 rounded-full mt-2">
-                <div className="h-full bg-movebem-purple rounded-full animate-progress-fill" style={{ width: '19%' }}></div>
+                <div className="h-full bg-fenjes-purple rounded-full animate-progress-fill" style={{ width: '19%' }}></div>
               </div>
             </div>
           ) : null}

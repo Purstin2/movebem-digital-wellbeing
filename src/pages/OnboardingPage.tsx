@@ -1,6 +1,7 @@
 
 import OnboardingQuiz from '@/components/onboarding/OnboardingQuiz';
 import { FenjesLogo } from '@/components/brand/FenjesLogo';
+import { GlassCard } from '@/components/ui/glass-card';
 
 const OnboardingPage = () => {
   return (
@@ -17,7 +18,9 @@ const OnboardingPage = () => {
         </p>
       </div>
       
-      <OnboardingQuiz />
+      <GlassCard className="max-w-3xl mx-auto p-6 md:p-8">
+        <OnboardingQuiz />
+      </GlassCard>
     </div>
   );
 };
