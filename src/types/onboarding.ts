@@ -1,4 +1,3 @@
-
 export interface QuizAnswer {
   questionId: string;
   value: string;
@@ -6,6 +5,7 @@ export interface QuizAnswer {
 }
 
 export interface UserProfile {
+  firstName?: string;
   painLevel: 'low' | 'medium' | 'high';
   primaryPain: 'neck' | 'shoulders' | 'back' | 'hips' | 'general';
   mobilityLevel: 'limited' | 'moderate' | 'good';
