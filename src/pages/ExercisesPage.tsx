@@ -49,8 +49,22 @@ const ExercisesPage = () => {
     { id: 'relaxation', label: 'Relaxamento', icon: <CategoryIllustration category="relaxation" size={16} /> },
   ];
 
+  // Update the interface for mapped exercises to include originalId
+  interface MappedExercise {
+    id: number;
+    originalId?: string; // Add this property as optional
+    title: string;
+    duration: string;
+    pose: string;
+    completed: boolean;
+    category: string;
+    difficulty: string;
+    isSpecialized?: boolean;
+    description?: string;
+  }
+
   // Convert specialized exercises to match the local exercise format
-  const specializedExercisesMapped = specializedExercises.map((exercise, index) => ({
+  const specializedExercisesMapped: MappedExercise[] = specializedExercises.map((exercise, index) => ({
     id: index + 1,
     originalId: exercise.id,
     title: exercise.title,
@@ -64,7 +78,7 @@ const ExercisesPage = () => {
   }));
 
   // Combine with existing exercises
-  const defaultExercises = [
+  const defaultExercises: MappedExercise[] = [
     { id: 1, title: "Alongamento de Pescoço", duration: "5 min", pose: "default", completed: false, category: "neck", difficulty: "beginner" },
     { id: 2, title: "Rotação de Ombros", duration: "7 min", pose: "arms-up", completed: true, category: "shoulders", difficulty: "beginner" },
     { id: 3, title: "Inclinação Lateral", duration: "8 min", pose: "side-bend", completed: false, category: "back", difficulty: "beginner" },
@@ -189,7 +203,6 @@ const ExercisesPage = () => {
                       onFavoriteToggle={() => toggleFavorite(exercise.id)}
                       onClick={() => navigate(`/exercises/${exercise.id}`)}
                       image={<YogaIllustration pose={exercise.pose as any} />}
-                      badge={exercise.difficulty}
                       className="border-l-4 border-l-movebem-purple"
                     />
                   ))}
@@ -244,7 +257,6 @@ const ExercisesPage = () => {
                 onFavoriteToggle={() => toggleFavorite(exercise.id)}
                 onClick={() => navigate(`/exercises/${exercise.id}`)}
                 image={<YogaIllustration pose={exercise.pose as any} />}
-                badge={exercise.difficulty}
               />
             ))
           ) : (

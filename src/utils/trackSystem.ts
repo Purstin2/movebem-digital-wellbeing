@@ -1,5 +1,15 @@
+import { UserProfile } from '../types/onboarding';
 
-import { UserProfile, Track, Exercise } from '../types/onboarding';
+// Define TrackWeek interface that was missing
+export interface TrackWeek {
+  week: number;
+  theme: string;
+  goals: string[];
+  exercises: string[];
+  nutritionTips: string[];
+  mindfulnessPractice: string;
+  personalizedTips?: string[]; // Optional property for generated tips
+}
 
 // BANCO DE EXERCÍCIOS ESPECIALIZADOS
 export const specializedExercises: Exercise[] = [

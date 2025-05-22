@@ -11,6 +11,8 @@ interface ExerciseCardProps {
   favorite?: boolean;
   onFavoriteToggle?: () => void;
   onClick?: () => void;
+  badge?: string; // Added badge prop
+  className?: string; // Added className prop
 }
 
 export function ExerciseCard({ 
@@ -20,7 +22,9 @@ export function ExerciseCard({
   completed = false, 
   favorite = false,
   onFavoriteToggle,
-  onClick
+  onClick,
+  badge,
+  className
 }: ExerciseCardProps) {
   return (
     <div 
@@ -28,7 +32,8 @@ export function ExerciseCard({
       className={cn(
         "relative bg-white rounded-xl overflow-hidden shadow-sm border transition-all",
         "hover:shadow-md hover:border-movebem-purple-light cursor-pointer hover:scale-105",
-        "flex flex-col transform transition-transform duration-300 active:scale-95"
+        "flex flex-col transform transition-transform duration-300 active:scale-95",
+        className
       )}
     >
       <div className="relative aspect-[4/3] bg-movebem-purple-light/20">
@@ -39,6 +44,12 @@ export function ExerciseCard({
         {completed && (
           <div className="absolute top-2 left-2 bg-movebem-green text-white text-xs font-medium px-2 py-0.5 rounded-full animate-fade-in">
             Concluído
+          </div>
+        )}
+        
+        {badge && (
+          <div className="absolute bottom-2 left-2 bg-white/80 text-gray-800 text-xs font-medium px-2 py-0.5 rounded-full">
+            {badge}
           </div>
         )}
         
