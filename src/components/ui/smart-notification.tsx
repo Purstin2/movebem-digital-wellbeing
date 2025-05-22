@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
+import { X } from "lucide-react";
 
 interface SmartNotificationProps extends React.HTMLAttributes<HTMLDivElement> {
   notification: ContextualNotification;
@@ -75,13 +76,19 @@ export const SmartNotification = React.forwardRef<HTMLDivElement, SmartNotificat
       }
     };
 
+    // Determina se a notificação tem imagem e como ela deve ser exibida
+    const hasImage = Boolean(notification.image);
+    const imageUrl = notification.image?.startsWith('http') 
+      ? notification.image 
+      : notification.image ? `/images/notifications/${notification.image}` : '';
+
     return (
       <div
         ref={ref}
         className={cn(
-          "rounded-lg p-4 mb-3",
+          "rounded-lg overflow-hidden shadow-sm",
           !disableAnimations ? "animate-fade-in" : "",
-          toneStyles[notification.tone],
+          !hasImage ? toneStyles[notification.tone] : "",
           urgencyEffects[notification.urgency],
           className
         )}
@@ -89,55 +96,77 @@ export const SmartNotification = React.forwardRef<HTMLDivElement, SmartNotificat
         aria-live="polite"
         {...props}
       >
-        <div className="flex items-start gap-3">
-          {notification.icon && (
-            <div className="text-2xl mt-1" aria-hidden="true">{notification.icon}</div>
-          )}
-          
-          <div className="flex-1">
-            <h4 className="font-semibold text-fenjes-text-warm text-base">
-              {notification.title}
-            </h4>
-            
-            <p className="text-gray-600 text-sm mt-1">
-              {notification.body}
-            </p>
-
-            <div className="flex justify-between items-center mt-3">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="text-fenjes-purple hover:text-fenjes-purple-dark hover:bg-fenjes-purple-light/10"
-                onClick={handleAction}
-              >
-                {notification.action}
-              </Button>
-              
-              {onDismiss && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={onDismiss}
-                  className="text-gray-400 hover:text-gray-600"
-                  aria-label="Dispensar notificação"
-                >
-                  Dispensar
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {notification.image && (
-          <div className="mt-3">
+        {/* Imagem da notificação (quando disponível) - altura menor em mobile */}
+        {hasImage && (
+          <div className="w-full h-24 sm:h-28 md:h-32 overflow-hidden">
             <img 
-              src={`/images/notifications/${notification.image}`} 
+              src={imageUrl}
               alt="" 
-              className="w-full h-32 object-cover rounded-md"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
           </div>
         )}
+        
+        {/* Conteúdo da notificação - padding menor em mobile */}
+        <div className={cn(
+          "p-3 md:p-4 relative",
+          !hasImage && notification.read ? "opacity-75" : "",
+          hasImage ? toneStyles[notification.tone].replace("border-l-4 ", "") : ""
+        )}>
+          <div className="flex items-start gap-2 md:gap-3">
+            {notification.icon && (
+              <div className="text-xl md:text-2xl flex-shrink-0" aria-hidden="true">{notification.icon}</div>
+            )}
+            
+            <div className="flex-1 pr-6">
+              <h4 className="font-semibold text-fenjes-text-warm text-sm md:text-base">
+                {notification.title}
+                {!notification.read && (
+                  <span className="inline-block ml-2 w-2 h-2 rounded-full bg-fenjes-yellow"></span>
+                )}
+              </h4>
+              
+              <p className="text-xs md:text-sm text-gray-600 mt-0.5 md:mt-1 line-clamp-3">
+                {notification.body}
+              </p>
+
+              <div className="flex flex-wrap justify-between items-center gap-2 mt-2 md:mt-3">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-fenjes-purple hover:text-fenjes-purple-dark hover:bg-fenjes-purple-light/10 text-xs h-7 md:text-sm md:h-8"
+                  onClick={handleAction}
+                >
+                  {notification.action}
+                </Button>
+                
+                {onDismiss && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onDismiss}
+                    className="text-gray-400 hover:text-gray-600 text-xs h-7 md:text-sm md:h-8 sm:ml-auto"
+                    aria-label="Dispensar notificação"
+                  >
+                    Dispensar
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Botão de fechar absoluto - mais fácil para mobile */}
+            {onDismiss && (
+              <button 
+                onClick={onDismiss}
+                className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 rounded-full p-0.5 hover:bg-gray-100 transition-colors"
+                aria-label="Fechar notificação"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     );
   }

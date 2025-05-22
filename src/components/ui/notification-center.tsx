@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Bell, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Bell, CheckCircle, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SmartNotification } from './smart-notification';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './sheet';
@@ -8,6 +8,7 @@ import { useSmartNotifications } from '@/hooks/use-smart-notifications';
 import { ContextualNotification, CurrentUserState, UserJourney } from '@/types/notification';
 import { EmptyState } from './empty-state';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { Badge } from './badge';
 
 interface NotificationCenterProps extends React.HTMLAttributes<HTMLDivElement> {
   userState?: CurrentUserState;
@@ -52,21 +53,13 @@ export function NotificationCenter({ userState, userJourney, className }: Notifi
     setOpen(newOpenState);
   };
 
-  const handleDismiss = (notification: ContextualNotification) => {
+  const handleDismiss = useCallback((notification: ContextualNotification) => {
     dismissNotification(notification.id);
-  };
+  }, [dismissNotification]);
 
-  // Agrupa notificações por tipo para uma melhor organização
-  const groupedNotifications = notifications.reduce<Record<string, ContextualNotification[]>>((acc, notification) => {
-    const group = notification.tone;
-    if (!acc[group]) acc[group] = [];
-    acc[group].push(notification);
-    return acc;
-  }, {});
+  // Conta notificações não lidas
+  const unreadCount = notifications.filter(n => !n.read).length;
 
-  // Ordena grupos conforme prioridade
-  const priorityOrder = ['celebratory', 'encouraging', 'supportive', 'welcoming', 'informative'];
-  
   return (
     <div className={cn('relative', className)}>
       <Sheet open={open} onOpenChange={handleOpen}>
@@ -74,83 +67,86 @@ export function NotificationCenter({ userState, userJourney, className }: Notifi
           <Button 
             variant="outline" 
             size="icon"
-            className="relative h-8 w-8 rounded-full"
-            aria-label={hasUnread ? "Notificações não lidas" : "Notificações"}
+            className={cn(
+              "relative h-8 w-8 md:h-9 md:w-9 rounded-full bg-white", 
+              hasUnread && !prefersReducedMotion && "animate-pulse-subtle"
+            )}
+            aria-label={hasUnread ? `${unreadCount} notificações não lidas` : "Notificações"}
           >
-            <Bell size={18} className="text-fenjes-text-warm" />
+            <Bell size={16} className="md:size-18 text-fenjes-purple" />
             {hasUnread && (
-              <span 
-                className={cn(
-                  "absolute top-0 right-0 h-3 w-3 rounded-full bg-fenjes-yellow",
-                  !prefersReducedMotion && "animate-pulse-subtle"
-                )}
-                aria-hidden="true"
-              />
+              <Badge 
+                variant="destructive" 
+                className="absolute -top-1 -right-1 md:-top-2 md:-right-2 h-4 w-4 md:h-5 md:w-5 p-0 flex items-center justify-center rounded-full text-[9px] md:text-[10px]"
+              >
+                {unreadCount}
+              </Badge>
             )}
           </Button>
         </SheetTrigger>
         <SheetContent 
           side={isMobile ? "bottom" : "right"} 
           className={cn(
-            isMobile ? "h-[80vh] rounded-t-xl" : "w-[350px] sm:w-[400px] px-4"
+            isMobile ? "h-[85vh] rounded-t-xl" : "w-[350px] sm:w-[400px] px-4"
           )}
         >
-          <SheetHeader className="mb-4">
-            <SheetTitle className="flex items-center justify-center">
-              Notificações
+          <SheetHeader className="mb-4 bg-fenjes-purple text-white mx-[-24px] px-4 md:px-6 py-3 md:py-4 rounded-t-lg shadow-sm">
+            <SheetTitle className="flex items-center justify-between text-white">
+              <span className="flex items-center gap-1.5 md:gap-2 text-base md:text-lg">
+                <Bell size={18} className="md:size-20" />
+                Notificações
+              </span>
               {hasUnread && (
-                <span className="ml-2 bg-fenjes-yellow text-xs rounded-full px-2 py-0.5">
-                  {notifications.filter(n => !n.read).length} não lida(s)
-                </span>
+                <Badge variant="secondary" className="bg-white text-fenjes-purple text-[10px] md:text-xs py-0 px-1.5 md:px-2">
+                  {unreadCount} {unreadCount === 1 ? 'nova' : 'novas'}
+                </Badge>
               )}
             </SheetTitle>
-            {notifications.length > 0 && (
-              <div className="text-center">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={markAllAsRead} 
-                  className="text-sm text-fenjes-purple"
-                  disabled={!hasUnread}
-                >
-                  <CheckCircle size={14} className="mr-1" />
-                  Marcar todas como lidas
-                </Button>
-              </div>
-            )}
           </SheetHeader>
           
+          {/* Barra de ações */}
+          {notifications.length > 0 && (
+            <div className="flex justify-between items-center border-b pb-2 mb-4">
+              <span className="text-xs md:text-sm text-gray-500">
+                {notifications.length} {notifications.length === 1 ? 'mensagem' : 'mensagens'}
+              </span>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={markAllAsRead} 
+                className="text-xs md:text-sm text-fenjes-purple h-7 md:h-8"
+                disabled={!hasUnread}
+              >
+                <CheckCircle size={12} className="md:size-14 mr-1" />
+                Marcar lidas
+              </Button>
+            </div>
+          )}
+          
           <div className={cn(
-            "space-y-2 mt-6", 
-            isMobile ? "max-h-[calc(80vh-100px)] overflow-y-auto pb-16" : "max-h-[calc(100vh-200px)] overflow-y-auto pr-2"
+            "mt-2", 
+            isMobile ? "max-h-[calc(85vh-140px)] overflow-y-auto pb-16" : "max-h-[calc(100vh-240px)] overflow-y-auto pr-1"
           )}>
             {isInitialized && notifications.length > 0 ? (
-              <>
-                {/* Renderiza notificações por grupos em ordem de prioridade */}
-                {priorityOrder.map(group => 
-                  groupedNotifications[group] && groupedNotifications[group].length > 0 ? (
-                    <div key={group} className="mb-4">
-                      {groupedNotifications[group].map(notification => (
-                        <SmartNotification
-                          key={notification.id}
-                          notification={notification}
-                          onDismiss={() => handleDismiss(notification)}
-                          disableAnimations={prefersReducedMotion}
-                        />
-                      ))}
-                    </div>
-                  ) : null
-                )}
-              </>
+              <div className="space-y-2 md:space-y-3">
+                {notifications.map(notification => (
+                  <SmartNotification
+                    key={notification.id}
+                    notification={notification}
+                    onDismiss={() => handleDismiss(notification)}
+                    disableAnimations={prefersReducedMotion}
+                  />
+                ))}
+              </div>
             ) : isInitialized ? (
               <EmptyState
-                icon={<Bell size={40} className="text-gray-300" />}
+                icon={<Bell size={30} className="md:size-40 text-gray-300" />}
                 title="Sem notificações"
                 description="Você não possui notificações no momento"
               />
             ) : (
               <div className="flex justify-center items-center h-32">
-                <div className="w-8 h-8 rounded-full border-2 border-fenjes-purple border-t-transparent animate-spin"></div>
+                <div className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-fenjes-purple border-t-transparent animate-spin"></div>
               </div>
             )}
           </div>

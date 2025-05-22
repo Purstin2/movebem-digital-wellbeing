@@ -9,7 +9,7 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Componente para exibir estados vazios com uma mensagem amigável
+ * Componente para exibir estados vazios com uma mensagem amigável - Responsivo
  */
 export function EmptyState({
   icon,
@@ -22,26 +22,26 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center text-center py-12 px-4",
+        "flex flex-col items-center justify-center text-center py-6 md:py-12 px-3 md:px-4",
         className
       )}
       {...props}
     >
       {icon && (
-        <div className="mb-4 text-gray-300" aria-hidden="true">
+        <div className="mb-3 md:mb-4 text-gray-300" aria-hidden="true">
           {icon}
         </div>
       )}
       
-      <h3 className="font-quicksand font-semibold text-lg text-gray-700 mb-1">
+      <h3 className="font-quicksand font-semibold text-base md:text-lg text-gray-700 mb-0.5 md:mb-1">
         {title}
       </h3>
       
-      <p className="text-sm text-gray-500 mb-4 max-w-xs">
+      <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4 max-w-[250px] md:max-w-xs">
         {description}
       </p>
       
-      {action && <div className="mt-2">{action}</div>}
+      {action && <div className="mt-1 md:mt-2">{action}</div>}
     </div>
   );
 } 

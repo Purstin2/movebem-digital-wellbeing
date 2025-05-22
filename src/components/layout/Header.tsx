@@ -112,67 +112,71 @@ export function Header({ userProfile }: HeaderProps) {
   }, [navigate, toast]);
   
   return (
-    <header className="sticky top-0 z-10 w-full px-4 md:px-6 py-3 bg-white border-b flex items-center justify-between">
-      <div className="md:hidden">
-        <button 
-          className="p-1.5 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors"
-          onClick={toggleSidebar}
-          aria-label="Abrir menu lateral"
-        >
-          <Menu size={22} className="text-gray-600" />
-        </button>
-      </div>
-      
-      <h1 className="text-lg md:text-2xl font-quicksand font-semibold hidden md:block">
-        <span className="text-fenjes-purple-dark">Liberte-se com </span> 
-        <span className="text-fenjes-purple">Fenjes</span>
-      </h1>
-      
-      <div className="ml-auto flex items-center gap-2 md:gap-4">
-        {!userProfile && (
-          <BreathingButton 
-            variant="outline" 
-            className="hidden md:flex items-center gap-2 text-fenjes-purple border-fenjes-purple hover:bg-fenjes-purple/10"
-            onClick={handleQuizClick}
-            lowPerformanceMode={isMobile || prefersReducedMotion}
+    <header className="sticky top-0 z-10 w-full px-4 md:px-6 py-3 bg-fenjes-purple text-white shadow-md">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center">
+          <button 
+            className="md:hidden p-1.5 rounded-md hover:bg-fenjes-purple-dark active:bg-fenjes-purple-dark/80 transition-colors mr-2"
+            onClick={toggleSidebar}
+            aria-label="Abrir menu lateral"
           >
-            <span>Personalize sua experiência</span>
-            <span className="text-xs bg-fenjes-purple text-white px-2 py-0.5 rounded">Novo</span>
-          </BreathingButton>
-        )}
+            <Menu size={22} className="text-white" />
+          </button>
+          
+          <Link to="/" className="flex items-center">
+            <div className="h-10 w-40 bg-white rounded flex items-center justify-center">
+              {/* Placeholder para a logo - substituir pelo componente de imagem real */}
+              <span className="text-fenjes-purple font-semibold">LOGO FENJES</span>
+            </div>
+          </Link>
+        </div>
         
-        <NotificationCenter userState={userState} userJourney={userJourney} />
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button 
-              className="flex items-center gap-2 rounded-full hover:bg-gray-100 active:bg-gray-200 pr-2 pl-1 py-1 transition-colors"
-              aria-label={`Menu do usuário: ${userName}`}
+        <div className="flex items-center gap-2 md:gap-4">
+          {!userProfile && (
+            <BreathingButton 
+              variant="secondary" 
+              className="hidden md:flex items-center gap-2 bg-white text-fenjes-purple hover:bg-fenjes-purple-light"
+              onClick={handleQuizClick}
+              lowPerformanceMode={isMobile || prefersReducedMotion}
             >
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-fenjes-purple-light text-fenjes-purple-dark font-medium">
-                  {userInitials}
-                </AvatarFallback>
-              </Avatar>
-              <span className="hidden md:inline text-sm font-medium text-gray-700">{userName}</span>
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {!userProfile && (
-              <DropdownMenuItem className="cursor-pointer" onClick={handleQuizClick}>
-                Fazer Quiz de Perfil
+              <span>Personalize sua experiência</span>
+              <span className="text-xs bg-fenjes-purple text-white px-2 py-0.5 rounded">Novo</span>
+            </BreathingButton>
+          )}
+          
+          <NotificationCenter userState={userState} userJourney={userJourney} />
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button 
+                className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 pr-2 pl-1 py-1 transition-colors"
+                aria-label={`Menu do usuário: ${userName}`}
+              >
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback className="bg-white text-fenjes-purple font-medium">
+                    {userInitials}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="hidden md:inline text-sm font-medium text-white">{userName}</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {!userProfile && (
+                <DropdownMenuItem className="cursor-pointer" onClick={handleQuizClick}>
+                  Fazer Quiz de Perfil
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link to="/evolucao-pessoal">Meu Perfil</Link>
               </DropdownMenuItem>
-            )}
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to="/evolucao-pessoal">Meu Perfil</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to="/evolucao-pessoal?tab=configuracoes">Configurações</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">Ajuda</DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer text-red-500">Sair</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link to="/evolucao-pessoal?tab=configuracoes">Configurações</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Ajuda</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer text-red-500">Sair</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   );
