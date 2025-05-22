@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Bell, Calendar, Award, Menu } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { 
@@ -11,8 +11,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import { useSidebar } from "@/context/SidebarContext";
+import { UserProfile } from '@/types/onboarding';
+import { Button } from '@/components/ui/button';
 
-export function Header() {
+interface HeaderProps {
+  userProfile?: UserProfile | null;
+}
+
+export function Header({ userProfile }: HeaderProps) {
+  const navigate = useNavigate();
   const { toggleSidebar } = useSidebar();
   const [notifications, setNotifications] = useState([
     {
@@ -44,11 +51,22 @@ export function Header() {
 
   const notificationCount = notifications.filter(n => !n.read).length;
   
+  const userName = userProfile ? "Marina" : "Visitante";
+  const userInitials = userName.substring(0, 2).toUpperCase();
+
+  const handleQuizClick = () => {
+    navigate('/onboarding');
+    toast({
+      title: "Quiz de Perfil",
+      description: "Vamos personalizar sua experiência com o MoveBem",
+    });
+  };
+  
   return (
     <header className="sticky top-0 z-10 w-full px-4 md:px-6 py-3 bg-white border-b flex items-center justify-between">
       <div className="md:hidden">
         <button 
-          className="p-1.5 rounded-md hover:bg-gray-100"
+          className="p-1.5 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors"
           onClick={toggleSidebar}
         >
           <Menu size={22} className="text-gray-600" />
@@ -60,13 +78,24 @@ export function Header() {
         <span className="text-movebem-purple">MoveBem</span>
       </h1>
       
-      <div className="ml-auto flex items-center gap-4">
+      <div className="ml-auto flex items-center gap-2 md:gap-4">
+        {!userProfile && (
+          <Button 
+            variant="outline" 
+            className="hidden md:flex items-center gap-2 text-movebem-purple border-movebem-purple hover:bg-movebem-purple/10 animate-pulse-subtle"
+            onClick={handleQuizClick}
+          >
+            <span>Personalize sua experiência</span>
+            <span className="text-xs bg-movebem-purple text-white px-2 py-0.5 rounded">Novo</span>
+          </Button>
+        )}
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+            <button className="relative p-2 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors">
               <Bell size={20} className="text-gray-600" />
               {notificationCount > 0 && (
-                <span className="absolute top-1 right-1 h-4 w-4 bg-movebem-green rounded-full flex items-center justify-center text-white text-xs">
+                <span className="absolute top-1 right-1 h-4 w-4 bg-movebem-green rounded-full flex items-center justify-center text-white text-xs animate-pulse">
                   {notificationCount}
                 </span>
               )}
@@ -133,16 +162,21 @@ export function Header() {
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 rounded-full hover:bg-gray-100 pr-2 pl-1 py-1 transition-colors">
+            <button className="flex items-center gap-2 rounded-full hover:bg-gray-100 active:bg-gray-200 pr-2 pl-1 py-1 transition-colors">
               <Avatar className="h-8 w-8">
                 <AvatarFallback className="bg-movebem-purple-light text-movebem-purple-dark font-medium">
-                  MS
+                  {userInitials}
                 </AvatarFallback>
               </Avatar>
-              <span className="hidden md:inline text-sm font-medium text-gray-700">Marina</span>
+              <span className="hidden md:inline text-sm font-medium text-gray-700">{userName}</span>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            {!userProfile && (
+              <DropdownMenuItem className="cursor-pointer" onClick={handleQuizClick}>
+                Fazer Quiz de Perfil
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem className="cursor-pointer" asChild>
               <Link to="/profile">Meu Perfil</Link>
             </DropdownMenuItem>

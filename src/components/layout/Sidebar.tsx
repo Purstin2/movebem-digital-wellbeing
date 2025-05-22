@@ -3,8 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, Library, Activity, Utensils, Gift, User, X, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/context/SidebarContext';
+import { UserProfile } from '@/types/onboarding';
 
-export function Sidebar() {
+interface SidebarProps {
+  userProfile?: UserProfile | null;
+}
+
+export function Sidebar({ userProfile }: SidebarProps) {
   const { expanded, toggleSidebar, setExpanded } = useSidebar();
   const location = useLocation();
 
@@ -16,6 +21,10 @@ export function Sidebar() {
     { icon: Gift, label: 'Bônus', href: '/bonus' },
     { icon: User, label: 'Perfil', href: '/profile' },
   ];
+
+  // Calculate current day for progress bar
+  const currentDay = userProfile?.currentDay || 4;
+  const progressPercentage = (currentDay / 21) * 100;
 
   return (
     <>
@@ -41,6 +50,7 @@ export function Sidebar() {
           <button 
             onClick={toggleSidebar} 
             className="p-1 rounded-full hover:bg-gray-100 transition-colors text-gray-500 hover:scale-110 active:scale-95"
+            aria-label={expanded ? "Fechar menu" : "Abrir menu"}
           >
             {expanded ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -74,7 +84,22 @@ export function Sidebar() {
         </nav>
         
         <div className="p-4">
-          {expanded && (
+          {expanded && userProfile ? (
+            <div className="bg-movebem-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
+              <p className="font-medium text-movebem-purple-dark">
+                {userProfile.trackAssigned === 'therapeutic' ? 'Trilha Terapêutica' :
+                 userProfile.trackAssigned === 'adaptive' ? 'Trilha Adaptativa' :
+                 'Trilha Bem-Estar'}
+              </p>
+              <p className="text-gray-600 text-xs mt-1">Dia {currentDay} de 21</p>
+              <div className="h-1.5 bg-gray-200 rounded-full mt-2">
+                <div 
+                  className="h-full bg-movebem-purple rounded-full animate-progress-fill" 
+                  style={{ width: `${progressPercentage}%` }}
+                ></div>
+              </div>
+            </div>
+          ) : expanded ? (
             <div className="bg-movebem-purple-light/20 rounded-md p-3 text-sm animate-fade-in">
               <p className="font-medium text-movebem-purple-dark">Plano 21 dias</p>
               <p className="text-gray-600 text-xs mt-1">Dia 4 de 21</p>
@@ -82,7 +107,7 @@ export function Sidebar() {
                 <div className="h-full bg-movebem-purple rounded-full animate-progress-fill" style={{ width: '19%' }}></div>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </aside>
     </>
