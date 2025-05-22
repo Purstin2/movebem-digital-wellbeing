@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,7 +62,29 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-                // MoveBem Colors
+                // Fenjes Colors (replacing MoveBem colors)
+                fenjes: {
+                    purple: {
+                        light: '#E9D5FF',
+                        DEFAULT: '#9747FF',
+                        dark: '#7432B4',
+                    },
+                    yellow: {
+                        light: '#FEF7CD',
+                        DEFAULT: '#FCD34D',
+                        dark: '#E9B949',
+                    },
+                    green: {
+                        DEFAULT: '#10B981',
+                    },
+                    bg: {
+                        light: '#F7F3FF',
+                    },
+                    text: {
+                        warm: '#4A3F35',
+                    }
+                },
+                // Keeping MoveBem colors for backward compatibility but we'll replace their usage
                 movebem: {
                     purple: {
                         light: '#E9D5FF',
@@ -110,17 +131,33 @@ export default {
                 'progress-fill': {
                     '0%': { width: '0%' },
                     '100%': { width: '100%' }
+                },
+                'glass-hover': {
+                    '0%': { 
+                        backdropFilter: 'blur(10px)', 
+                        background: 'rgba(255,255,255,0.15)' 
+                    },
+                    '100%': { 
+                        backdropFilter: 'blur(12px)', 
+                        background: 'rgba(255,255,255,0.2)' 
+                    }
                 }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
                 'fade-in': 'fade-in 0.6s ease-out',
-                'progress-fill': 'progress-fill 1.2s ease-out'
+                'progress-fill': 'progress-fill 1.2s ease-out',
+                'glass-hover': 'glass-hover 0.3s ease-out forwards'
 			},
             fontFamily: {
                 'montserrat': ['Montserrat', 'sans-serif'],
-                'quicksand': ['Quicksand', 'sans-serif']
+                'quicksand': ['Quicksand', 'sans-serif'],
+                'playfair': ['Playfair Display', 'serif']
+            },
+            backgroundImage: {
+                'hero-gradient': 'linear-gradient(135deg, #7432B4 0%, #9747FF 100%)',
+                'glass-gradient': 'linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
             }
 		}
 	},

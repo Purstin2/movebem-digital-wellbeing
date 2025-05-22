@@ -26,12 +26,12 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/exercises" element={<ExercisesPage />} />
+            <Route path="/momentos-de-liberdade" element={<ExercisesPage />} />
             <Route path="/exercises/:id" element={<ExerciseDetailPage />} />
-            <Route path="/progress" element={<ProgressPage />} />
-            <Route path="/nutrition" element={<NutritionPage />} />
-            <Route path="/bonus" element={<BonusPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/conquistas" element={<ProgressPage />} />
+            <Route path="/alimentos-que-curam" element={<NutritionPage />} />
+            <Route path="/tesouros-exclusivos" element={<BonusPage />} />
+            <Route path="/evolucao-pessoal" element={<ProfilePage />} />
             <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

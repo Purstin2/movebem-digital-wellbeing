@@ -9,17 +9,18 @@ import { Calendar, Clock, Award, Flame, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { GlassCard } from "@/components/ui/glass-card";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [exercises] = useState([
-    { id: 1, title: "Alongamento de Pescoço", duration: "5 min", pose: "default", completed: false },
-    { id: 2, title: "Rotação de Ombros", duration: "7 min", pose: "arms-up", completed: true },
-    { id: 3, title: "Inclinação Lateral", duration: "8 min", pose: "side-bend", completed: false },
+    { id: 1, title: "Libertação Cervical Suave", duration: "5 min de autocuidado", pose: "default", completed: false },
+    { id: 2, title: "Desbloqueio dos Ombros", duration: "7 min de autocuidado", pose: "arms-up", completed: true },
+    { id: 3, title: "Abertura Lateral Regenerativa", duration: "8 min de autocuidado", pose: "side-bend", completed: false },
   ]);
 
-  const [favorites, setFavorites] = useState<number[]>([1]);
+  const [favorites, setFavorites] = useState<number[]>([1, 4]);
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev => 
@@ -30,10 +31,10 @@ const Dashboard = () => {
   };
 
   const startDailyExercise = () => {
-    navigate("/exercises/4"); // Navigate to the "Torção Suave" exercise
+    navigate("/exercises/4"); // Navigate to the exercise
     toast({
-      title: "Exercício Diário",
-      description: "Iniciando seu exercício diário de hoje!",
+      title: "Momento de Autocuidado",
+      description: "Iniciando seu momento de transformação de hoje!",
     });
   };
 
@@ -53,64 +54,64 @@ const Dashboard = () => {
         <section className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="font-quicksand text-2xl md:text-3xl font-bold text-gray-800">
-                Olá, Marina!
+              <h1 className="font-quicksand text-2xl md:text-3xl font-bold text-fenjes-text-warm">
+                🌅 Bom dia, guerreira Marina!
               </h1>
               <p className="text-gray-500 mt-1">Segunda-feira, 20 de Maio</p>
             </div>
             <Button 
               variant="default" 
-              className="bg-movebem-purple hover:bg-movebem-purple-dark w-full md:w-auto animate-pulse-subtle"
+              className="bg-gradient-to-r from-fenjes-yellow to-fenjes-yellow-dark text-fenjes-text-warm font-medium w-full md:w-auto animate-pulse-subtle"
               onClick={startDailyExercise}
             >
-              Iniciar Exercício Diário
+              ✨ Começar Meu Momento de Cura
             </Button>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
-              <div className="p-4 bg-movebem-purple-light/20 border-b">
+            <div className="lg:col-span-2 glass-card overflow-hidden hover:shadow-md transition-shadow">
+              <div className="p-4 bg-fenjes-purple-light/20 border-b">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-quicksand font-semibold text-lg text-movebem-purple-dark">
-                    Exercício do Dia
+                  <h2 className="font-quicksand font-semibold text-lg text-fenjes-purple-dark">
+                    Seu Momento de Cura Diário
                   </h2>
                   <div className="flex items-center text-sm text-gray-500">
                     <Clock size={14} className="mr-1.5" />
-                    <span>10 min</span>
+                    <span>10 min de autocuidado</span>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 md:p-6">
                 <div className="flex flex-col md:flex-row gap-6">
-                  <div className="md:w-1/3 bg-movebem-purple-light/20 rounded-lg aspect-square flex items-center justify-center">
+                  <div className="md:w-1/3 bg-fenjes-purple-light/20 rounded-lg aspect-square flex items-center justify-center">
                     <YogaIllustration pose="twist" />
                   </div>
                   <div className="md:w-2/3">
-                    <h3 className="font-quicksand text-xl font-semibold text-gray-800">
-                      Sequência de Torção Suave
+                    <h3 className="font-quicksand text-xl font-semibold text-fenjes-text-warm">
+                      Sequência de Libertação Profunda
                     </h3>
                     
                     <p className="text-gray-600 mt-2">
-                      Esta sequência vai ajudar a aliviar tensões nas costas e melhorar a mobilidade da coluna. 
-                      Ideal para quem passa muito tempo sentado.
+                      Esta sequência vai ajudar a liberar tensões nas costas e melhorar a mobilidade da coluna. 
+                      Ideal para quem passa muito tempo sentada.
                     </p>
                     
                     <ul className="mt-4 space-y-2">
                       <li className="flex items-start">
-                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-movebem-purple-light text-movebem-purple-dark text-xs font-medium mr-2 mt-0.5">
+                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-fenjes-purple-light text-fenjes-purple-dark text-xs font-medium mr-2 mt-0.5">
                           1
                         </span>
                         <span className="text-gray-700">Posição inicial com coluna ereta</span>
                       </li>
                       <li className="flex items-start">
-                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-movebem-purple-light text-movebem-purple-dark text-xs font-medium mr-2 mt-0.5">
+                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-fenjes-purple-light text-fenjes-purple-dark text-xs font-medium mr-2 mt-0.5">
                           2
                         </span>
                         <span className="text-gray-700">Rotação lenta para direita</span>
                       </li>
                       <li className="flex items-start">
-                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-movebem-purple-light text-movebem-purple-dark text-xs font-medium mr-2 mt-0.5">
+                        <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-fenjes-purple-light text-fenjes-purple-dark text-xs font-medium mr-2 mt-0.5">
                           3
                         </span>
                         <span className="text-gray-700">Retorno ao centro e rotação para esquerda</span>
@@ -119,10 +120,10 @@ const Dashboard = () => {
 
                     <div className="mt-6">
                       <Button 
-                        className="bg-movebem-purple hover:bg-movebem-purple-dark w-full sm:w-auto transition-transform hover:scale-105"
+                        className="bg-fenjes-purple hover:bg-fenjes-purple-dark text-white w-full sm:w-auto transition-transform hover:scale-105"
                         onClick={startDailyExercise}
                       >
-                        Iniciar Agora
+                        ✨ Iniciar Agora
                       </Button>
                     </div>
                   </div>
@@ -132,32 +133,34 @@ const Dashboard = () => {
 
             <div className="space-y-6">
               <ProgressCard 
-                title="Plano de 21 Dias" 
+                title="Sua Jornada de Transformação" 
                 currentValue={4} 
                 maxValue={21} 
-                icon={<Calendar size={20} />} 
+                icon={<Calendar size={20} />}
+                message="✨ 19% mais próxima da sua liberdade"
               />
               
               <ProgressCard 
-                title="Minutos Praticados" 
+                title="Minutos Investidos em Você" 
                 currentValue={85} 
                 maxValue={210} 
-                color="bg-movebem-green" 
-                icon={<Clock size={20} />} 
+                color="bg-fenjes-green" 
+                icon={<Clock size={20} />}
+                message="💪 85 minutos para sua melhor versão"
               />
               
-              <div className="bg-white rounded-xl p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <h3 className="font-quicksand font-semibold text-gray-800">Próxima Conquista</h3>
+              <GlassCard variant="hover" className="p-4">
+                <h3 className="font-quicksand font-semibold text-fenjes-text-warm">Próxima Conquista</h3>
                 <div className="mt-3 flex items-center gap-3">
-                  <div className="h-12 w-12 rounded-full bg-movebem-purple-light/30 flex items-center justify-center">
-                    <Award size={24} className="text-movebem-purple" />
+                  <div className="h-12 w-12 rounded-full bg-fenjes-yellow/30 flex items-center justify-center">
+                    <Award size={24} className="text-fenjes-yellow-dark" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-700">7 Dias Seguidos</p>
-                    <p className="text-sm text-gray-500">4 de 7 dias completos</p>
+                    <p className="font-medium text-gray-700">7 Dias de Autocuidado</p>
+                    <p className="text-sm text-gray-500">4 de 7 dias conquistados</p>
                   </div>
                 </div>
-              </div>
+              </GlassCard>
             </div>
           </div>
         </section>
@@ -165,10 +168,10 @@ const Dashboard = () => {
         {/* SOS Area */}
         <section className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-quicksand text-xl font-semibold text-gray-800">
-              SOS Alívio Rápido
+            <h2 className="font-quicksand text-xl font-semibold text-fenjes-text-warm">
+              SOS Alívio Imediato
             </h2>
-            <Link to="/exercises" className="text-movebem-purple hover:underline text-sm font-medium flex items-center">
+            <Link to="/momentos-de-liberdade" className="text-fenjes-purple hover:underline text-sm font-medium flex items-center">
               Ver Todos <ArrowRight size={16} className="ml-1" />
             </Link>
           </div>
@@ -177,10 +180,10 @@ const Dashboard = () => {
             {quickAccessCategories.map((category) => (
               <Link 
                 key={category.id} 
-                to={`/exercises?category=${category.id}`}
-                className="flex flex-col items-center justify-center p-4 bg-white rounded-xl border transition-all hover:border-movebem-purple hover:shadow-sm hover:scale-105"
+                to={`/momentos-de-liberdade?category=${category.id}`}
+                className="flex flex-col items-center justify-center p-4 bg-white rounded-xl border transition-all hover:border-fenjes-purple hover:shadow-sm hover:scale-105"
               >
-                <div className="h-12 w-12 rounded-full bg-movebem-purple-light/20 flex items-center justify-center text-movebem-purple-dark mb-2">
+                <div className="h-12 w-12 rounded-full bg-fenjes-purple-light/20 flex items-center justify-center text-fenjes-purple-dark mb-2">
                   {category.icon}
                 </div>
                 <span className="text-sm text-gray-700 text-center">{category.label}</span>
@@ -192,10 +195,10 @@ const Dashboard = () => {
         {/* Recent Exercises */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-quicksand text-xl font-semibold text-gray-800">
-              Exercícios Recentes
+            <h2 className="font-quicksand text-xl font-semibold text-fenjes-text-warm">
+              Seus Momentos de Liberdade
             </h2>
-            <Link to="/exercises" className="text-movebem-purple hover:underline text-sm font-medium flex items-center">
+            <Link to="/momentos-de-liberdade" className="text-fenjes-purple hover:underline text-sm font-medium flex items-center">
               Ver Biblioteca <ArrowRight size={16} className="ml-1" />
             </Link>
           </div>
@@ -211,6 +214,8 @@ const Dashboard = () => {
                 onFavoriteToggle={() => toggleFavorite(exercise.id)}
                 onClick={() => navigate(`/exercises/${exercise.id}`)}
                 image={<YogaIllustration pose={exercise.pose as any} />}
+                badge={exercise.completed ? "Conquistado" : ""}
+                className="glass-card border-none"
               />
             ))}
           </div>

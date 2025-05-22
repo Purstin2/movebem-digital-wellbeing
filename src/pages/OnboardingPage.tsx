@@ -1,18 +1,19 @@
 
 import OnboardingQuiz from '@/components/onboarding/OnboardingQuiz';
+import { FenjesLogo } from '@/components/brand/FenjesLogo';
 
 const OnboardingPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-fenjes-bg-light py-8 px-4">
       <div className="text-center mb-10">
-        <div className="bg-movebem-purple h-14 w-14 rounded-xl flex items-center justify-center mx-auto mb-4">
-          <span className="text-white font-quicksand font-bold text-2xl">MB</span>
+        <div className="mx-auto mb-4">
+          <FenjesLogo size="lg" />
         </div>
-        <h1 className="font-quicksand font-bold text-3xl text-gray-800 mb-2">
-          MoveBem
+        <h1 className="font-quicksand font-bold text-3xl text-fenjes-text-warm mb-2">
+          Fenjes
         </h1>
         <p className="text-gray-600">
-          Vamos personalizar seu programa para resultados melhores
+          Vamos personalizar seu programa para uma jornada de transformação
         </p>
       </div>
       

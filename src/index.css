@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -17,9 +18,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
+    /* Updated primary to use Fenjes purple */
     --primary: 270 100% 64%;
     --primary-foreground: 210 40% 98%;
 
+    /* Updated secondary to match Fenjes light purple */
     --secondary: 270 100% 96%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
@@ -85,11 +88,15 @@
   }
 
   body {
-    @apply bg-background font-montserrat text-foreground;
+    @apply bg-fenjes-bg-light font-montserrat text-fenjes-text-warm;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-quicksand font-semibold;
+  }
+  
+  .quote {
+    @apply font-playfair italic;
   }
 }
 
@@ -147,13 +154,13 @@
   /* Pulse animation for important buttons */
   @keyframes pulse-subtle {
     0% {
-      box-shadow: 0 0 0 0 rgba(155, 81, 224, 0.4);
+      box-shadow: 0 0 0 0 rgba(116, 50, 180, 0.5);
     }
     70% {
-      box-shadow: 0 0 0 6px rgba(155, 81, 224, 0);
+      box-shadow: 0 0 0 6px rgba(116, 50, 180, 0);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(155, 81, 224, 0);
+      box-shadow: 0 0 0 0 rgba(116, 50, 180, 0);
     }
   }
   
@@ -169,6 +176,15 @@
   /* Fix mobile scrolling issues */
   .overflow-y-auto {
     -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Glassmorphism utilities */
+  .glass-card {
+    @apply bg-glass-gradient backdrop-blur-lg border border-white/20 shadow-lg;
+  }
+  
+  .hero-gradient {
+    @apply bg-hero-gradient;
   }
 }
 
