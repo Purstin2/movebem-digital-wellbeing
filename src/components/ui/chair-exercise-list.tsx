@@ -16,12 +16,13 @@ interface ChairExerciseListProps {
   layout?: "grid" | "list";
   favoriteExercises?: string[];
   onToggleFavorite?: (exerciseId: string) => void;
-  userProfile?: any;
+  onExerciseSelect?: (exerciseId: string) => void;
+  gridCols?: number;
 }
 
 export function ChairExerciseList({
   exercises,
-  title = "Exercícios",
+  title,
   description,
   emptyMessage = "Não foram encontrados exercícios para mostrar",
   showFilter = true,
@@ -29,7 +30,8 @@ export function ChairExerciseList({
   layout = "grid",
   favoriteExercises = [],
   onToggleFavorite,
-  userProfile,
+  onExerciseSelect,
+  gridCols = 3,
 }: ChairExerciseListProps) {
   const [filter, setFilter] = useState<BodyCategory | null>(null);
   const [showFilters, setShowFilters] = useState(false);
@@ -46,15 +48,16 @@ export function ChairExerciseList({
   const getCategoryDisplay = (category: string): string => {
     switch (category) {
       case "neck":
-        return "Libertação Cervical";
+        return "Pescoço";
       case "shoulders":
-        return "Desbloqueio dos Ombros";
+        return "Ombros";
       case "back":
-        return "Regeneração da Coluna";
+        return "Coluna";
       case "hips":
-        return "Mobilidade do Quadril";
+        return "Quadril";
+      case "full-body":
       case "full_body":
-        return "Harmonia Completa";
+        return "Corpo Todo";
       default:
         return category;
     }
@@ -64,63 +67,67 @@ export function ChairExerciseList({
   const getCategoryIcon = (category: string): React.ReactNode => {
     switch (category) {
       case "neck":
-        return "💆‍♀️";
+        return "🔄";
       case "shoulders":
-        return "🌸";
+        return "🙌";
       case "back":
-        return "💪";
+        return "⬆️";
       case "hips":
-        return "🦋";
+        return "💃";
+      case "full-body":
       case "full_body":
         return "✨";
       default:
-        return "💜";
+        return "🧘‍♀️";
     }
   };
-  
-  // Check if exercise is recommended for user based on their conditions
-  const isRecommendedForUser = (exercise: ChairYogaExercise): boolean => {
-    if (!userProfile) return false;
-    
-    // Check if exercise targets user's primary pain area
-    if (exercise.category === userProfile.primaryPain) {
-      return true;
+
+  // Configure grid columns based on prop
+  const gridColsClass = () => {
+    switch (gridCols) {
+      case 1:
+        return "grid-cols-1";
+      case 2:
+        return "grid-cols-1 sm:grid-cols-2";
+      case 3:
+        return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+      case 4:
+        return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
+      default:
+        return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
     }
-    
-    // Check if exercise targets any of user's conditions
-    if (userProfile.conditions && exercise.targetConditions) {
-      return exercise.targetConditions.some(condition => 
-        userProfile.conditions.includes(condition)
-      );
+  };
+
+  const handleExerciseClick = (exercise: ChairYogaExercise) => {
+    if (onExerciseSelect) {
+      onExerciseSelect(exercise.id);
     }
-    
-    return false;
   };
 
   return (
-    <div className={cn("space-y-4 md:space-y-6", className)}>
+    <div className={cn("space-y-4", className)}>
       {/* Header with title and description */}
       {(title || description) && (
-        <div className="mb-4 md:mb-6">
-          {title && <h2 className="text-xl md:text-2xl font-semibold text-fenjes-purple mb-1 md:mb-2">{title}</h2>}
-          {description && <p className="text-sm md:text-base text-gray-600">{description}</p>}
+        <div className="mb-3 sm:mb-4">
+          {title && <h2 className="text-lg sm:text-xl font-semibold text-fenjes-purple mb-1">{title}</h2>}
+          {description && <p className="text-xs sm:text-sm text-gray-600">{description}</p>}
         </div>
       )}
 
       {/* Category filters - Mobile Responsive */}
       {showFilter && categories.length > 1 && (
-        <div className="mb-4 md:mb-6">
+        <div className="mb-3 sm:mb-4">
           {/* Mobile filter button */}
           <div className="flex md:hidden mb-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowFilters(!showFilters)}
-              className="w-full flex items-center justify-between text-sm"
+              className="w-full flex items-center justify-between text-xs"
             >
               <span>Filtrar por região {filter ? `(${getCategoryDisplay(filter)})` : ''}</span>
               <ChevronDown 
-                size={16} 
+                size={14} 
                 className={cn(
                   "transition-transform duration-200",
                   showFilters && "transform rotate-180"
@@ -131,16 +138,16 @@ export function ChairExerciseList({
 
           {/* Filters - Responsive */}
           <div className={cn(
-            "flex flex-wrap gap-1.5 md:gap-2",
+            "flex flex-wrap gap-1 sm:gap-1.5",
             !showFilters && "hidden md:flex"
           )}>
             <Button
               variant={filter === null ? "secondary" : "outline"}
               size="sm"
               onClick={() => setFilter(null)}
-              className="flex items-center gap-1 text-xs h-8 px-2.5 md:text-sm md:h-9 md:px-3"
+              className="flex items-center gap-1 text-xs h-7 px-2"
             >
-              <Filter size={13} className="md:size-14" />
+              <Filter size={12} />
               Todos
             </Button>
             {categories.map(category => (
@@ -149,7 +156,7 @@ export function ChairExerciseList({
                 variant={filter === category ? "secondary" : "outline"}
                 size="sm"
                 onClick={() => setFilter(category as BodyCategory)}
-                className="text-xs h-8 px-2.5 md:text-sm md:h-9 md:px-3 flex items-center gap-1"
+                className="text-xs h-7 px-2 flex items-center gap-1"
               >
                 <span>{getCategoryIcon(category)}</span>
                 {getCategoryDisplay(category)}
@@ -163,21 +170,22 @@ export function ChairExerciseList({
       {filteredExercises.length > 0 ? (
         <div className={cn(
           layout === "grid" 
-            ? "grid gap-3 md:gap-4" : "space-y-3 md:space-y-4",
-          layout === "grid" && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            ? "grid gap-2 sm:gap-3" : "space-y-2 sm:space-y-3",
+          layout === "grid" && gridColsClass()
         )}>
           {filteredExercises.map(exercise => (
             <ChairExerciseCard
               key={exercise.id}
               exercise={exercise}
-              isRecommended={userProfile ? isRecommendedForUser(exercise) : false}
               variant={favoriteExercises.includes(exercise.id) ? "featured" : "default"}
+              onClick={() => handleExerciseClick(exercise)}
+              className="cursor-pointer"
             />
           ))}
         </div>
       ) : (
         <EmptyState
-          icon={<CircleX size={30} className="md:size-40" />}
+          icon={<CircleX size={24} className="sm:size-30" />}
           title="Nenhum exercício encontrado"
           description={filter ? "Tente ajustar os filtros para encontrar exercícios" : emptyMessage}
           action={
@@ -186,7 +194,7 @@ export function ChairExerciseList({
                 variant="outline" 
                 size="sm" 
                 onClick={() => setFilter(null)}
-                className="text-xs md:text-sm"
+                className="text-xs"
               >
                 Limpar filtro
               </Button>

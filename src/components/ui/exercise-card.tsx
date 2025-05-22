@@ -10,6 +10,7 @@ interface ExerciseCardProps extends React.HTMLAttributes<HTMLDivElement> {
   exercise: Exercise | any;
   variant?: "default" | "featured" | "completed" | "upcoming";
   imageUrl?: string;
+  compact?: boolean;
 }
 
 export function ExerciseCard({
@@ -17,6 +18,7 @@ export function ExerciseCard({
   exercise,
   variant = "default",
   imageUrl,
+  compact = false,
   ...props
 }: ExerciseCardProps) {
   const navigate = useNavigate();
@@ -75,9 +77,12 @@ export function ExerciseCard({
       {...props}
     >
       <div className="flex flex-col h-full">
-        {/* Imagem do exercício - altura fixa para manter consistência */}
+        {/* Imagem do exercício - altura adaptada ao modo compacto */}
         {imageUrl && (
-          <div className="w-full h-24 sm:h-28 md:h-32 overflow-hidden">
+          <div className={cn(
+            "w-full overflow-hidden",
+            compact ? "h-16 sm:h-20" : "h-24 sm:h-28 md:h-32"
+          )}>
             <img 
               src={imageUrl} 
               alt={`Imagem para ${title}`} 
@@ -91,49 +96,78 @@ export function ExerciseCard({
           </div>
         )}
 
-        {/* Conteúdo do cartão - padding menor em mobile */}
-        <div className="p-3 md:p-4 flex flex-col flex-grow">
-          {/* Cabeçalho com etiquetas - texto menor em mobile */}
-          <div className="flex flex-wrap gap-1.5 md:gap-2 mb-1.5 md:mb-2">
-            <span className="text-[10px] md:text-xs font-medium px-1.5 py-0.5 rounded-full bg-fenjes-purple/10 text-fenjes-purple">
+        {/* Conteúdo do cartão com adaptações para modo compacto */}
+        <div className={cn(
+          "flex flex-col flex-grow",
+          compact ? "p-2 sm:p-3" : "p-3 md:p-4"
+        )}>
+          {/* Cabeçalho com etiquetas */}
+          <div className={cn(
+            "flex flex-wrap",
+            compact ? "gap-1 mb-1" : "gap-1.5 md:gap-2 mb-1.5 md:mb-2"
+          )}>
+            <span className={cn(
+              "font-medium px-1.5 py-0.5 rounded-full bg-fenjes-purple/10 text-fenjes-purple",
+              compact ? "text-[9px]" : "text-[10px] md:text-xs"
+            )}>
               {category}
             </span>
-            <span className="text-[10px] md:text-xs font-medium px-1.5 py-0.5 rounded-full bg-fenjes-yellow/10 text-fenjes-yellow-dark">
+            <span className={cn(
+              "font-medium px-1.5 py-0.5 rounded-full bg-fenjes-yellow/10 text-fenjes-yellow-dark",
+              compact ? "text-[9px]" : "text-[10px] md:text-xs"
+            )}>
               {translatedDifficulty}
             </span>
             {variant === "completed" && (
-              <span className="text-[10px] md:text-xs font-medium px-1.5 py-0.5 rounded-full bg-fenjes-green/10 text-fenjes-green">
+              <span className={cn(
+                "font-medium px-1.5 py-0.5 rounded-full bg-fenjes-green/10 text-fenjes-green",
+                compact ? "text-[9px]" : "text-[10px] md:text-xs"
+              )}>
                 Concluído
               </span>
             )}
           </div>
 
-          {/* Título e descrição - tamanhos adaptados para mobile */}
-          <h3 className="text-base md:text-lg font-semibold mb-0.5 md:mb-1 line-clamp-1">{title}</h3>
-          <p className="text-xs md:text-sm text-gray-600 line-clamp-2 mb-2 md:mb-3 flex-grow">
+          {/* Título e descrição */}
+          <h3 className={cn(
+            "font-semibold line-clamp-1",
+            compact ? "text-sm mb-0.5" : "text-base md:text-lg mb-0.5 md:mb-1"
+          )}>
+            {title}
+          </h3>
+          <p className={cn(
+            "text-gray-600 line-clamp-2 flex-grow",
+            compact ? "text-xs mb-1.5" : "text-xs md:text-sm mb-2 md:mb-3"
+          )}>
             {description}
           </p>
 
-          {/* Informações adicionais - menor em mobile */}
-          <div className="flex items-center gap-2 md:gap-3 text-[10px] md:text-xs text-gray-500 mb-2 md:mb-3">
+          {/* Informações adicionais */}
+          <div className={cn(
+            "flex items-center text-gray-500",
+            compact ? "gap-1.5 text-[9px] mb-1.5" : "gap-2 md:gap-3 text-[10px] md:text-xs mb-2 md:mb-3"
+          )}>
             <div className="flex items-center gap-1">
-              <Clock size={12} className="md:size-14" />
+              <Clock size={compact ? 10 : 12} />
               <span>{duration}</span>
             </div>
             {targetAreas && targetAreas.length > 0 && (
               <div className="flex items-center gap-1">
-                <Target size={12} className="md:size-14" />
-                <span>{targetAreas.slice(0, 2).join(", ")}</span>
+                <Target size={compact ? 10 : 12} />
+                <span>{targetAreas.slice(0, compact ? 1 : 2).join(", ")}</span>
               </div>
             )}
           </div>
 
-          {/* Botão de ação - ajustado para mobile */}
+          {/* Botão de ação */}
           <div className="flex justify-end mt-auto">
             <Button
               variant={variant === "featured" ? "secondary" : "outline"}
               size="sm"
-              className="gap-1 group text-xs md:text-sm h-7 md:h-8"
+              className={cn(
+                "gap-1 group",
+                compact ? "text-[10px] h-6 px-2" : "text-xs md:text-sm h-7 md:h-8"
+              )}
               onClick={(e) => {
                 e.stopPropagation();
                 handleClick();
@@ -141,7 +175,7 @@ export function ExerciseCard({
             >
               {variant === "completed" ? "Ver novamente" : "Iniciar"}
               <ChevronRight 
-                size={14} 
+                size={compact ? 12 : 14} 
                 className="transition-transform group-hover:translate-x-1" 
               />
             </Button>

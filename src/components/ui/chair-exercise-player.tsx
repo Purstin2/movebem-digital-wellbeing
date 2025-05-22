@@ -100,7 +100,7 @@ export function ChairExercisePlayer({
   if (!exercise) return null;
 
   return (
-    <div className="chair-exercise-player max-w-4xl mx-auto space-y-4 md:space-y-6">
+    <div className="chair-exercise-player max-w-4xl mx-auto space-y-3 md:space-y-6 px-3 md:px-6">
       {/* Back button */}
       <Button
         variant="ghost"
@@ -112,76 +112,76 @@ export function ChairExercisePlayer({
         Voltar aos exercícios
       </Button>
       
-      {/* Exercise header */}
-      <div className="bg-gradient-to-r from-fenjes-purple to-fenjes-purple-light text-white p-4 md:p-6 rounded-xl">
-        <h1 className="text-xl md:text-2xl font-semibold mb-2">{exercise.title}</h1>
-        <p className="text-sm md:text-base text-fenjes-cream opacity-90 mb-3">{exercise.description}</p>
+      {/* Exercise header - Made more compact on mobile */}
+      <div className="bg-gradient-to-r from-fenjes-purple to-fenjes-purple-light text-white p-3 md:p-6 rounded-lg md:rounded-xl">
+        <h1 className="text-lg md:text-2xl font-semibold mb-1 md:mb-2">{exercise.title}</h1>
+        <p className="text-xs md:text-base text-fenjes-cream opacity-90 mb-2 md:mb-3">{exercise.description}</p>
         
-        <div className="flex flex-wrap gap-2">
-          <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full flex items-center gap-1">
+        <div className="flex flex-wrap gap-1 md:gap-2">
+          <span className="text-[10px] md:text-xs bg-white/20 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full flex items-center gap-1">
             💺 Exercício na Cadeira
           </span>
-          <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full flex items-center gap-1">
+          <span className="text-[10px] md:text-xs bg-white/20 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full flex items-center gap-1">
             ⏱️ {exercise.duration}
           </span>
         </div>
       </div>
 
-      {/* Chair setup guide */}
+      {/* Chair setup guide - More compact on mobile */}
       {!chairSetup && (
-        <Card className="p-4 md:p-6 border-fenjes-yellow/20 bg-fenjes-yellow/5">
-          <h2 className="text-lg md:text-xl font-semibold text-fenjes-purple mb-4">
+        <Card className="p-3 md:p-6 border-fenjes-yellow/20 bg-fenjes-yellow/5">
+          <h2 className="text-base md:text-xl font-semibold text-fenjes-purple mb-3 md:mb-4">
             💺 Prepare sua Cadeira para o Exercício
           </h2>
           
-          <div className="space-y-3 mb-5">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 rounded-full bg-fenjes-green flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
+          <div className="space-y-2 md:space-y-3 mb-4 md:mb-5 text-sm md:text-base">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-fenjes-green flex items-center justify-center">
+                <span className="text-white text-xs md:text-sm">✓</span>
               </div>
               <span>Cadeira estável, sem rodinhas (ou trave as rodinhas)</span>
             </div>
             
             {exercise.chairRequirements.backrest && (
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-fenjes-green flex items-center justify-center">
-                  <span className="text-white text-sm">✓</span>
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-fenjes-green flex items-center justify-center">
+                  <span className="text-white text-xs md:text-sm">✓</span>
                 </div>
                 <span>Encosto disponível para apoio</span>
               </div>
             )}
             
             {exercise.chairRequirements.armrests && (
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-fenjes-green flex items-center justify-center">
-                  <span className="text-white text-sm">✓</span>
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-fenjes-green flex items-center justify-center">
+                  <span className="text-white text-xs md:text-sm">✓</span>
                 </div>
                 <span>Apoio para braços disponível</span>
               </div>
             )}
             
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 rounded-full bg-fenjes-green flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-fenjes-green flex items-center justify-center">
+                <span className="text-white text-xs md:text-sm">✓</span>
               </div>
               <span>Pés tocam o chão confortavelmente</span>
             </div>
             
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 rounded-full bg-fenjes-green flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-fenjes-green flex items-center justify-center">
+                <span className="text-white text-xs md:text-sm">✓</span>
               </div>
               <span>Espaço livre ao redor para mover braços</span>
             </div>
           </div>
           
           {isContraindicated() && (
-            <div className="bg-red-50 border border-red-200 p-3 rounded-md mb-4">
-              <div className="flex items-center gap-2">
-                <AlertCircle size={18} className="text-red-500" />
+            <div className="bg-red-50 border border-red-200 p-2 md:p-3 rounded-md mb-3 md:mb-4 text-xs md:text-sm">
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <AlertCircle size={16} className="text-red-500" />
                 <h3 className="font-medium text-red-600">Atenção: Contraindicação Detectada</h3>
               </div>
-              <p className="text-sm text-red-600 mt-1">
+              <p className="text-red-600 mt-1">
                 Este exercício pode não ser adequado para sua condição específica. 
                 Considere consultar seu profissional de saúde antes de prosseguir.
               </p>
@@ -189,7 +189,7 @@ export function ChairExercisePlayer({
           )}
           
           <Button 
-            className="w-full bg-fenjes-purple hover:bg-fenjes-purple-light"
+            className="w-full bg-fenjes-purple hover:bg-fenjes-purple-light text-xs md:text-sm"
             onClick={() => setChairSetup(true)}
           >
             💜 Minha Cadeira Está Pronta!
@@ -199,73 +199,73 @@ export function ChairExercisePlayer({
 
       {/* Exercise steps */}
       {chairSetup && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
           {/* Visual guidance */}
-          <Card className="p-4 md:p-6 border-fenjes-purple/20">
-            <div className="bg-fenjes-cream/30 rounded-lg p-4 flex items-center justify-center">
+          <Card className="p-3 md:p-6 border-fenjes-purple/20">
+            <div className="bg-fenjes-cream/30 rounded-lg p-2 md:p-4 flex items-center justify-center">
               {exercise.imageUrl ? (
                 <img 
                   src={exercise.imageUrl} 
                   alt={`Demonstração de ${exercise.steps[currentStep].name}`}
-                  className="max-h-64 object-contain rounded-lg"
+                  className="max-h-48 md:max-h-64 object-contain rounded-lg"
                 />
               ) : (
-                <div className="h-64 w-full flex items-center justify-center text-5xl">
+                <div className="h-48 md:h-64 w-full flex items-center justify-center text-4xl md:text-5xl">
                   {getCategoryIcon(exercise.category)}
                 </div>
               )}
             </div>
             
-            <div className="mt-4 p-3 bg-fenjes-purple/5 rounded-lg">
-              <h4 className="font-medium text-sm text-fenjes-purple mb-1">
+            <div className="mt-3 md:mt-4 p-2 md:p-3 bg-fenjes-purple/5 rounded-lg">
+              <h4 className="font-medium text-xs md:text-sm text-fenjes-purple mb-0.5 md:mb-1">
                 💺 Posição na Cadeira:
               </h4>
-              <p className="text-sm text-fenjes-text-warm">
+              <p className="text-xs md:text-sm text-fenjes-text-warm">
                 {exercise.chairPosition}
               </p>
             </div>
             
             {/* Progress bar */}
-            <div className="mt-4">
-              <div className="flex justify-between text-sm mb-1">
+            <div className="mt-3 md:mt-4">
+              <div className="flex justify-between text-xs md:text-sm mb-1">
                 <span>Passo {currentStep + 1}/{exercise.steps.length}</span>
                 <span>{formatTime(timeLeft)}</span>
               </div>
-              <Progress value={(timeLeft / totalTime) * 100} className="h-2" />
+              <Progress value={(timeLeft / totalTime) * 100} className="h-1.5 md:h-2" />
             </div>
           </Card>
           
           {/* Instructions */}
-          <Card className="p-4 md:p-6 border-fenjes-purple/20">
-            <h3 className="text-lg md:text-xl font-medium text-fenjes-purple mb-3">
+          <Card className="p-3 md:p-6 border-fenjes-purple/20">
+            <h3 className="text-base md:text-xl font-medium text-fenjes-purple mb-2 md:mb-3">
               {exercise.steps[currentStep].name}
             </h3>
             
-            <div className="bg-fenjes-purple/5 p-4 rounded-lg mb-4">
+            <div className="bg-fenjes-purple/5 p-2 md:p-4 rounded-lg mb-2 md:mb-4 text-xs md:text-base">
               <p className="text-fenjes-text-warm">{exercise.steps[currentStep].instruction}</p>
             </div>
             
             {/* Adaptation for user condition */}
             {getAdaptation() && (
-              <div className="bg-fenjes-green/10 p-3 rounded-lg mb-4">
-                <h4 className="font-medium text-sm text-fenjes-green mb-1">
+              <div className="bg-fenjes-green/10 p-2 md:p-3 rounded-lg mb-2 md:mb-4">
+                <h4 className="font-medium text-xs md:text-sm text-fenjes-green mb-0.5 md:mb-1">
                   💜 Adaptação para sua condição:
                 </h4>
-                <p className="text-sm text-fenjes-text-warm">{getAdaptation()}</p>
+                <p className="text-xs md:text-sm text-fenjes-text-warm">{getAdaptation()}</p>
               </div>
             )}
             
             {/* Breathing guidance */}
-            <div className="bg-blue-50 p-3 rounded-lg mb-4">
-              <h4 className="font-medium text-blue-800 mb-1">🫁 Respiração:</h4>
-              <p className="text-sm text-blue-700">{exercise.steps[currentStep].breathing}</p>
+            <div className="bg-blue-50 p-2 md:p-3 rounded-lg mb-2 md:mb-4">
+              <h4 className="font-medium text-xs md:text-sm text-blue-800 mb-0.5 md:mb-1">🫁 Respiração:</h4>
+              <p className="text-xs md:text-sm text-blue-700">{exercise.steps[currentStep].breathing}</p>
             </div>
             
             {/* Visualization if available */}
             {exercise.steps[currentStep].visualization && (
-              <div className="bg-fenjes-yellow/10 p-3 rounded-lg mb-4">
-                <h4 className="font-medium text-fenjes-yellow-dark mb-1">✨ Visualização:</h4>
-                <p className="text-sm text-fenjes-text-warm">
+              <div className="bg-fenjes-yellow/10 p-2 md:p-3 rounded-lg mb-2 md:mb-4">
+                <h4 className="font-medium text-xs md:text-sm text-fenjes-yellow-dark mb-0.5 md:mb-1">✨ Visualização:</h4>
+                <p className="text-xs md:text-sm text-fenjes-text-warm">
                   {exercise.steps[currentStep].visualization}
                 </p>
               </div>
@@ -273,24 +273,24 @@ export function ChairExercisePlayer({
             
             {/* Safety note if available */}
             {exercise.steps[currentStep].safetyNote && (
-              <div className="bg-red-50 p-3 rounded-lg mb-4">
-                <h4 className="font-medium text-red-600 mb-1">⚠️ Nota de Segurança:</h4>
-                <p className="text-sm text-red-700">
+              <div className="bg-red-50 p-2 md:p-3 rounded-lg mb-2 md:mb-4">
+                <h4 className="font-medium text-xs md:text-sm text-red-600 mb-0.5 md:mb-1">⚠️ Nota de Segurança:</h4>
+                <p className="text-xs md:text-sm text-red-700">
                   {exercise.steps[currentStep].safetyNote}
                 </p>
               </div>
             )}
           </Card>
           
-          {/* Controls */}
-          <div className="lg:col-span-2 flex flex-col md:flex-row justify-center items-center gap-3">
+          {/* Controls - Stack on mobile, row on larger screens */}
+          <div className="lg:col-span-2 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-3">
             {currentStep > 0 && (
               <Button 
                 variant="outline"
                 onClick={() => setCurrentStep(currentStep - 1)}
-                className="w-full md:w-auto"
+                className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
               >
-                <ChevronLeft size={18} className="mr-1" />
+                <ChevronLeft size={16} className="mr-1" />
                 Passo Anterior
               </Button>
             )}
@@ -298,16 +298,16 @@ export function ChairExercisePlayer({
             <Button
               variant={isPaused ? "default" : "secondary"}
               onClick={() => setIsPaused(!isPaused)}
-              className="w-full md:w-auto"
+              className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
             >
               {isPaused ? (
                 <>
-                  <Play size={18} className="mr-1" />
+                  <Play size={16} className="mr-1" />
                   Iniciar
                 </>
               ) : (
                 <>
-                  <Pause size={18} className="mr-1" />
+                  <Pause size={16} className="mr-1" />
                   Pausar
                 </>
               )}
@@ -317,18 +317,18 @@ export function ChairExercisePlayer({
               <Button
                 variant="outline"
                 onClick={() => setCurrentStep(currentStep + 1)}
-                className="w-full md:w-auto"
+                className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
               >
                 Próximo Passo
-                <ChevronRight size={18} className="ml-1" />
+                <ChevronRight size={16} className="ml-1" />
               </Button>
             ) : (
               <Button
                 variant="secondary"
                 onClick={onComplete}
-                className="w-full md:w-auto"
+                className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
               >
-                <CheckCircle size={18} className="mr-1" />
+                <CheckCircle size={16} className="mr-1" />
                 Concluir Exercício
               </Button>
             )}

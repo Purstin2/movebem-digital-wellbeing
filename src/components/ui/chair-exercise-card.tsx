@@ -3,13 +3,15 @@ import { cn } from "@/lib/utils";
 import { ChairYogaExercise } from "@/types/chair-yoga";
 import { DeepGlassCard } from "@/components/ui/deep-glass-card";
 import { Button } from "@/components/ui/button";
-import { Clock, ChevronRight } from "lucide-react";
+import { Clock, ChevronRight, Heart } from "lucide-react";
 
 interface ChairExerciseCardProps extends React.HTMLAttributes<HTMLDivElement> {
   exercise: ChairYogaExercise;
   variant?: "default" | "featured" | "recommended";
   showDetails?: boolean;
   isRecommended?: boolean;
+  onFavoriteToggle?: () => void;
+  isFavorite?: boolean;
 }
 
 export function ChairExerciseCard({
@@ -18,6 +20,8 @@ export function ChairExerciseCard({
   variant = "default",
   showDetails = false,
   isRecommended = false,
+  onFavoriteToggle,
+  isFavorite = false,
   ...props
 }: ChairExerciseCardProps) {
   // Verify if exercise exists
@@ -41,15 +45,16 @@ export function ChairExerciseCard({
   const getCategoryDisplay = (category: string) => {
     switch (category) {
       case "neck":
-        return "Libertação Cervical";
+        return "Pescoço";
       case "shoulders":
-        return "Desbloqueio dos Ombros";
+        return "Ombros";
       case "back":
-        return "Regeneração da Coluna";
+        return "Coluna";
       case "hips":
-        return "Mobilidade do Quadril";
+        return "Quadril";
       case "full_body":
-        return "Harmonia Completa";
+      case "full-body":
+        return "Corpo Todo";
       default:
         return category;
     }
@@ -66,17 +71,18 @@ export function ChairExerciseCard({
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "neck":
-        return <span className="text-fenjes-purple">💆‍♀️</span>;
+        return <span>🔄</span>;
       case "shoulders":
-        return <span>🌸</span>;
+        return <span>🙌</span>;
       case "back":
-        return <span className="text-fenjes-purple">💪</span>;
+        return <span>⬆️</span>;
       case "hips":
-        return <span className="text-fenjes-blue-light">🦋</span>;
+        return <span>💃</span>;
       case "full_body":
-        return <span className="text-fenjes-green">✨</span>;
+      case "full-body":
+        return <span>✨</span>;
       default:
-        return <span className="text-fenjes-purple">💜</span>;
+        return <span>🧘‍♀️</span>;
     }
   };
 
@@ -104,7 +110,7 @@ export function ChairExerciseCard({
 
   return (
     <DeepGlassCard
-      className={cn("w-full overflow-hidden transition-all", className)}
+      className={cn("w-full overflow-hidden transition-all h-full", className)}
       variant={isRecommended ? "energetic" : getCardVariant()}
       role="button"
       tabIndex={0}
@@ -112,9 +118,9 @@ export function ChairExerciseCard({
       {...props}
     >
       <div className="flex flex-col h-full">
-        {/* Image - fixed height for consistency */}
-        {exercise.imageUrl ? (
-          <div className="w-full h-24 sm:h-28 md:h-32 overflow-hidden">
+        {/* Image section */}
+        <div className="relative w-full h-20 sm:h-28 overflow-hidden bg-fenjes-purple/5">
+          {exercise.imageUrl ? (
             <img
               src={exercise.imageUrl}
               alt={`Demonstração para ${exercise.title}`}
@@ -125,90 +131,70 @@ export function ChairExerciseCard({
                 e.currentTarget.src = '/images/exercises/placeholder-exercise.jpg';
               }}
             />
-          </div>
-        ) : (
-          <div className="w-full h-24 sm:h-28 md:h-32 bg-fenjes-purple/5 flex items-center justify-center">
-            <div className="text-3xl">
-              {getCategoryIcon(exercise.category)}
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="text-2xl sm:text-3xl">
+                {getCategoryIcon(exercise.category)}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          
+          {/* Favorite button overlay */}
+          {onFavoriteToggle && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                onFavoriteToggle();
+              }}
+              className="absolute top-1 right-1 p-1 rounded-full bg-white/80 hover:bg-white"
+              aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+            >
+              <Heart 
+                size={14} 
+                className={cn(
+                  "transition-colors", 
+                  isFavorite ? "fill-fenjes-purple text-fenjes-purple" : "text-gray-400"
+                )} 
+              />
+            </button>
+          )}
+        </div>
 
         {/* Content - smaller padding on mobile */}
-        <div className="p-3 md:p-4 flex flex-col flex-grow">
+        <div className="p-2 sm:p-3 flex flex-col flex-grow">
           {/* Chair icon to indicate seated exercise */}
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-medium text-fenjes-purple bg-fenjes-purple/10 px-2 py-0.5 rounded-full flex items-center gap-1">
-              💺 Exercício na Cadeira
+            <span className="text-[10px] font-medium text-fenjes-purple bg-fenjes-purple/10 px-1.5 py-0.5 rounded-full flex items-center gap-1">
+              💺 Na Cadeira
             </span>
             {isRecommended && (
-              <span className="text-xs font-medium text-fenjes-yellow-dark bg-fenjes-yellow/10 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-medium text-fenjes-yellow-dark bg-fenjes-yellow/10 px-1.5 py-0.5 rounded-full">
                 ✨ Recomendado
               </span>
             )}
           </div>
 
-          {/* Header with tags - smaller text on mobile */}
-          <div className="flex flex-wrap gap-1.5 md:gap-2 mb-1.5 md:mb-2">
-            <span className="text-[10px] md:text-xs font-medium px-1.5 py-0.5 rounded-full bg-fenjes-purple/10 text-fenjes-purple flex items-center gap-0.5">
-              {getCategoryIcon(exercise.category)}
-              {getCategoryDisplay(exercise.category)}
-            </span>
-            <span className="text-[10px] md:text-xs font-medium px-1.5 py-0.5 rounded-full bg-fenjes-yellow/10 text-fenjes-yellow-dark">
-              {difficultyDisplay[exercise.difficulty] || exercise.difficulty}
-            </span>
-          </div>
-
-          {/* Title and message - adapted sizes for mobile */}
-          <h3 className="text-base md:text-lg font-semibold mb-0.5 md:mb-1 line-clamp-1">
+          {/* Title and message */}
+          <h3 className="text-sm font-semibold mb-1 line-clamp-1">
             {exercise.title}
           </h3>
-          <p className="text-xs md:text-sm text-gray-600 line-clamp-2 mb-2 md:mb-3 flex-grow">
-            {exercise.specificBenefit}
+          
+          <p className="text-[10px] sm:text-xs text-gray-600 line-clamp-2 mb-1.5 flex-grow">
+            {exercise.specificBenefit || exercise.description}
           </p>
 
-          {/* Target conditions */}
-          {exercise.targetConditions && exercise.targetConditions.length > 0 && (
-            <div className="mb-2 md:mb-3">
-              <div className="flex flex-wrap gap-1">
-                {exercise.targetConditions.slice(0, 2).map((condition) => (
-                  <span 
-                    key={condition} 
-                    className="text-[10px] md:text-xs bg-fenjes-green/10 text-fenjes-green px-1.5 py-0.5 rounded-full"
-                  >
-                    {conditionLabels[condition] || condition}
-                  </span>
-                ))}
-                {exercise.targetConditions.length > 2 && (
-                  <span className="text-[10px] md:text-xs bg-fenjes-green/5 text-fenjes-green px-1.5 py-0.5 rounded-full">
-                    +{exercise.targetConditions.length - 2}
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Duration */}
-          <div className="flex items-center gap-2 md:gap-3 text-[10px] md:text-xs text-gray-500 mb-2 md:mb-3">
-            <div className="flex items-center gap-1">
-              <Clock size={12} className="md:size-14" />
+          {/* Bottom section with tags */}
+          <div className="flex items-center justify-between mt-auto">
+            {/* Duration */}
+            <div className="flex items-center text-[10px] text-gray-500">
+              <Clock size={10} className="mr-1" />
               <span>{exercise.duration}</span>
             </div>
-          </div>
-
-          {/* Action button - adjusted for mobile */}
-          <div className="flex justify-end mt-auto">
-            <Button
-              variant={variant === "featured" ? "secondary" : "outline"}
-              size="sm"
-              className="gap-1 group text-xs md:text-sm h-7 md:h-8"
-            >
-              Praticar agora
-              <ChevronRight
-                size={14}
-                className="transition-transform group-hover:translate-x-1"
-              />
-            </Button>
+            
+            {/* Category tag */}
+            <span className="text-[8px] bg-fenjes-purple/10 text-fenjes-purple px-1 py-0.5 rounded-full flex items-center gap-0.5">
+              {getCategoryIcon(exercise.category)}
+            </span>
           </div>
         </div>
       </div>

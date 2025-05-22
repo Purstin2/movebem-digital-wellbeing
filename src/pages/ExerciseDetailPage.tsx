@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { YogaIllustration } from "@/components/illustrations/YogaIllustration";
 import { StepIndicator } from "@/components/ui/step-indicator";
 import { Button } from "@/components/ui/button";
-import { BookmarkIcon, Clock, ArrowLeft, ArrowRight, CheckCircle, AlertTriangle } from "lucide-react";
+import { BookmarkIcon, Clock, ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import AdaptiveExercisePlayer from "@/components/exercise/AdaptiveExercisePlayer";
@@ -187,16 +186,21 @@ const ExerciseDetailPage = () => {
 
   return (
     <AppLayout>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
-          <div>
-            <Button variant="ghost" size="sm" className="mb-2" onClick={() => navigate('/exercises')}>
+          <div className="w-full">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="mb-2 -ml-2 h-10 touch-manipulation" 
+              onClick={() => navigate('/exercises')}
+            >
               <ArrowLeft size={16} className="mr-1" /> Voltar para Exercícios
             </Button>
-            <h1 className="font-quicksand text-2xl md:text-3xl font-bold text-gray-800">
+            <h1 className="font-quicksand text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 leading-tight">
               {exercise.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-gray-600">
+            <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-600">
               <div className="flex items-center">
                 <Clock size={16} className="mr-1.5" />
                 <span>{exercise.duration}</span>
@@ -211,32 +215,34 @@ const ExerciseDetailPage = () => {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-2 md:mt-0 w-full md:w-auto justify-end">
             <Button
               variant="outline"
               size="icon"
               onClick={toggleFavorite}
               className={cn(
+                "h-12 w-12 touch-manipulation",
                 favorite ? "text-movebem-purple border-movebem-purple" : "text-gray-400"
               )}
             >
-              <BookmarkIcon size={18} className={favorite ? "fill-movebem-purple" : ""} />
+              <BookmarkIcon size={20} className={favorite ? "fill-movebem-purple" : ""} />
             </Button>
             <Button 
               onClick={markCompleted} 
               disabled={completed}
               className={cn(
-                "bg-movebem-green hover:bg-movebem-green/90",
+                "bg-movebem-green hover:bg-movebem-green/90 h-12 px-4 touch-manipulation",
                 completed && "opacity-50 cursor-not-allowed"
               )}
             >
-              <CheckCircle size={18} className="mr-1.5" />
-              {completed ? "Concluído" : "Marcar como Concluído"}
+              <CheckCircle size={20} className="mr-1.5" />
+              <span className="sm:inline hidden">{completed ? "Concluído" : "Marcar como Concluído"}</span>
+              <span className="sm:hidden inline">{completed ? "Concluído" : "Concluir"}</span>
             </Button>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border shadow-sm overflow-hidden mb-8">
+        <div className="bg-white rounded-xl border shadow-sm overflow-hidden mb-6">
           <div className="p-4 md:p-6 border-b bg-movebem-purple-light/10">
             <div className="flex flex-col md:flex-row gap-6">
               <div className="md:w-1/3 lg:w-1/4">
@@ -250,111 +256,122 @@ const ExerciseDetailPage = () => {
                   onStepClick={setCurrentStep}
                 />
                 
-                <Button 
-                  className="w-full mt-4 bg-movebem-purple hover:bg-movebem-purple-dark"
-                  onClick={handleStartExercise}
-                >
-                  Iniciar Exercício
-                </Button>
-              </div>
-
-              <div className="md:w-2/3 lg:w-3/4">
-                <div className="flex items-center mb-3">
-                  <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-movebem-purple text-white text-sm font-medium mr-2">
-                    {currentStep}
-                  </span>
-                  <h2 className="font-quicksand text-xl font-semibold text-gray-800">
-                    {currentStepData.title}
-                  </h2>
+                <div className="flex justify-between mt-4 gap-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={prevStep} 
+                    disabled={currentStep === 1}
+                    className="flex-1 h-10 touch-manipulation"
+                  >
+                    <ArrowLeft size={16} className="mr-1" /> Anterior
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={nextStep} 
+                    disabled={currentStep === exercise.steps.length}
+                    className="flex-1 h-10 touch-manipulation"
+                  >
+                    Próximo <ArrowRight size={16} className="ml-1" />
+                  </Button>
                 </div>
-
-                <p className="text-gray-600 mb-6">
-                  {currentStepData.instruction}
-                </p>
+              </div>
+              
+              <div className="md:w-2/3 lg:w-3/4 space-y-5">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-1">
+                    {currentStep}. {currentStepData.title}
+                  </h2>
+                  <div className="text-sm text-gray-500 mb-2">
+                    Duração: {currentStepData.duration}
+                  </div>
+                  <p className="text-gray-700 text-base sm:text-lg">
+                    {currentStepData.instruction}
+                  </p>
+                </div>
                 
-                {currentStepData.adaptations && (
-                  <div className="bg-blue-50 p-3 rounded-lg mb-4">
-                    <h3 className="font-medium text-blue-800 mb-1">💡 Adaptações disponíveis:</h3>
-                    <div className="space-y-1">
-                      <p className="text-sm text-blue-700">
-                        <strong>Suave:</strong> {currentStepData.adaptations.easy}
-                      </p>
-                      <p className="text-sm text-blue-700">
-                        <strong>Normal:</strong> {currentStepData.adaptations.normal}
-                      </p>
-                      <p className="text-sm text-blue-700">
-                        <strong>Desafiador:</strong> {currentStepData.adaptations.challenging}
-                      </p>
+                <div>
+                  <h3 className="font-medium text-gray-800 mb-2">Padrão de Respiração</h3>
+                  <p className="text-gray-700 text-sm sm:text-base">
+                    {currentStepData.breathingPattern}
+                  </p>
+                </div>
+                
+                <div>
+                  <h3 className="font-medium text-gray-800 mb-2">Adaptações</h3>
+                  <div className="space-y-2">
+                    <div className="bg-green-50 p-3 rounded-md">
+                      <span className="text-green-700 font-medium block text-sm">Suave:</span>
+                      <span className="text-gray-700 text-sm">{currentStepData.adaptations?.easy}</span>
+                    </div>
+                    <div className="bg-blue-50 p-3 rounded-md">
+                      <span className="text-blue-700 font-medium block text-sm">Normal:</span>
+                      <span className="text-gray-700 text-sm">{currentStepData.adaptations?.normal}</span>
+                    </div>
+                    <div className="bg-orange-50 p-3 rounded-md">
+                      <span className="text-orange-700 font-medium block text-sm">Desafiador:</span>
+                      <span className="text-gray-700 text-sm">{currentStepData.adaptations?.challenging}</span>
                     </div>
                   </div>
-                )}
+                </div>
                 
-                {currentStepData.safetyWarnings && currentStepData.safetyWarnings.length > 0 && (
-                  <div className="bg-red-50 p-3 rounded-lg mb-4">
-                    <h3 className="font-medium text-red-800 mb-1 flex items-center gap-1">
-                      <AlertTriangle size={16} /> Atenção:
-                    </h3>
-                    <ul className="text-sm text-red-700 space-y-1">
-                      {currentStepData.safetyWarnings.map((warning, i) => (
-                        <li key={i}>{warning}</li>
+                {currentStepData.commonMistakes && (
+                  <div>
+                    <h3 className="font-medium text-gray-800 mb-2">Erros Comuns</h3>
+                    <ul className="list-disc list-inside space-y-1 text-sm sm:text-base text-gray-700">
+                      {currentStepData.commonMistakes.map((mistake, idx) => (
+                        <li key={idx}>{mistake}</li>
                       ))}
                     </ul>
                   </div>
                 )}
                 
-                <div className="flex justify-between mt-6">
-                  <Button 
-                    variant="outline" 
-                    onClick={prevStep} 
-                    disabled={currentStep === 1}
-                    className={cn(currentStep === 1 && "opacity-50 cursor-not-allowed")}
-                  >
-                    <ArrowLeft size={16} className="mr-1.5" /> Anterior
-                  </Button>
-                  
-                  <Button 
-                    onClick={nextStep} 
-                    disabled={currentStep === exercise.steps.length}
-                    className={cn(
-                      "bg-movebem-purple hover:bg-movebem-purple-dark",
-                      currentStep === exercise.steps.length && "opacity-50 cursor-not-allowed"
-                    )}
-                  >
-                    Próximo <ArrowRight size={16} className="ml-1.5" />
-                  </Button>
-                </div>
+                {currentStepData.safetyWarnings && (
+                  <div className="bg-red-50 p-3 rounded-md flex items-start gap-2">
+                    <AlertTriangle size={20} className="text-red-500 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <span className="font-medium text-red-700 block text-sm">Atenção:</span>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                        {Array.isArray(currentStepData.safetyWarnings) 
+                          ? currentStepData.safetyWarnings.map((warning, idx) => (
+                              <li key={idx}>{warning}</li>
+                            ))
+                          : <li>{currentStepData.safetyWarnings}</li>
+                        }
+                      </ul>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
           
           <div className="p-4 md:p-6">
-            <h2 className="font-quicksand text-lg font-semibold text-gray-800 mb-3">
-              Sobre este exercício
-            </h2>
-            
-            <p className="text-gray-600 mb-4">
-              {exercise.description}
-            </p>
-            
-            <h3 className="font-quicksand font-medium text-gray-800 mb-2">Benefícios:</h3>
-            <ul className="space-y-1 text-gray-600 mb-4">
-              {exercise.benefits.map((benefit, index) => (
-                <li key={index} className="flex items-center">
-                  <div className="h-1.5 w-1.5 rounded-full bg-movebem-green mr-2"></div>
-                  {benefit}
-                </li>
-              ))}
-            </ul>
-            
-            <h3 className="font-quicksand font-medium text-gray-800 mb-2">Dicas de Segurança:</h3>
-            <ul className="space-y-1 text-gray-600">
-              {exercise.safetyTips.map((tip, index) => (
-                <li key={index} className="flex items-center">
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-500 mr-2"></div>
-                  {tip}
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="md:w-1/3 lg:w-1/4">
+                <h3 className="font-medium text-gray-800 mb-3">Benefícios</h3>
+                <ul className="list-disc list-inside space-y-1 text-sm sm:text-base text-gray-700">
+                  {exercise.benefits.map((benefit, idx) => (
+                    <li key={idx}>{benefit}</li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="md:w-2/3 lg:w-3/4">
+                <h3 className="font-medium text-gray-800 mb-3">Dicas de Segurança</h3>
+                <ul className="list-disc list-inside space-y-1 text-sm sm:text-base text-gray-700 mb-6">
+                  {exercise.safetyTips.map((tip, idx) => (
+                    <li key={idx}>{tip}</li>
+                  ))}
+                </ul>
+                
+                <Button 
+                  className="w-full md:w-auto bg-movebem-purple hover:bg-movebem-purple-dark h-12 touch-manipulation"
+                  onClick={handleStartExercise}
+                >
+                  <Play size={18} className="mr-2" /> Iniciar Exercício Guiado
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

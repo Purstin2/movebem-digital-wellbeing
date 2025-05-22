@@ -71,25 +71,25 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
   const todayExercise = getTodayExercise();
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-4 md:py-6">
-      {/* Header */}
-      <section className="mb-6 md:mb-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 mb-4 md:mb-6">
+    <div className="container mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6">
+      {/* Header - Responsive sizing */}
+      <section className="mb-4 sm:mb-5 md:mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 mb-3 md:mb-6">
           <div>
-            <h1 className="text-xl md:text-3xl font-quicksand font-semibold text-fenjes-purple">
+            <h1 className="text-lg sm:text-xl md:text-3xl font-quicksand font-semibold text-fenjes-purple">
               Fenjes Yoga na Cadeira
             </h1>
-            <p className="text-sm md:text-base text-gray-600 mt-1">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-0.5 md:mt-1">
               Momentos de cura sem sair da cadeira
             </p>
           </div>
 
           {/* Header action buttons */}
-          <div className="flex gap-2 mt-2 md:mt-0">
+          <div className="flex gap-2 mt-1 md:mt-0">
             <Button
               variant="outline"
               size={isMobile ? "sm" : "default"}
-              className="text-xs md:text-sm"
+              className="text-xs md:text-sm h-8 md:h-10 px-2 md:px-4"
               onClick={() => navigate("/perfil-yoga")}
             >
               Meu Perfil
@@ -97,7 +97,7 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
             <Button 
               variant="secondary"
               size={isMobile ? "sm" : "default"}
-              className="text-xs md:text-sm"
+              className="text-xs md:text-sm h-8 md:h-10 px-2 md:px-4"
               onClick={() => navigate("/favoritos")}
             >
               <Heart size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
@@ -107,27 +107,27 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
         </div>
       </section>
 
-      {/* Progress section */}
+      {/* Progress section - More compact on mobile */}
       {userProfile && (
-        <section className="mb-8">
+        <section className="mb-4 sm:mb-6 md:mb-8">
           <Card className="bg-gradient-to-r from-fenjes-purple to-fenjes-purple-light text-white overflow-hidden">
-            <CardContent className="p-6">
-              <h2 className="text-xl font-semibold mb-2">
+            <CardContent className="p-3 sm:p-4 md:p-6">
+              <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-1 md:mb-2">
                 Dia {userProfile.currentDay}/21
               </h2>
               
-              <p className="text-fenjes-cream mb-4">
+              <p className="text-xs sm:text-sm md:text-base text-fenjes-cream mb-2 sm:mb-3 md:mb-4">
                 {getDailyMessage()}
               </p>
               
-              <div className="bg-white/20 rounded-lg p-3">
-                <div className="flex justify-between text-sm mb-2">
+              <div className="bg-white/20 rounded-lg p-2 sm:p-3">
+                <div className="flex justify-between text-xs sm:text-sm mb-1 sm:mb-2">
                   <span>Sua jornada de cura</span>
                   <span>{Math.round((userProfile.currentDay || 1) / 21 * 100)}% completa</span>
                 </div>
                 <Progress 
                   value={(userProfile.currentDay || 1) / 21 * 100} 
-                  className="h-2 bg-white/20"
+                  className="h-1.5 sm:h-2 bg-white/20"
                 />
               </div>
             </CardContent>
@@ -135,75 +135,87 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
         </section>
       )}
 
-      {/* Today's exercise */}
-      <section className="mb-8">
-        <h2 className="text-lg md:text-xl font-semibold text-fenjes-purple mb-4">
+      {/* Today's exercise - Adjusted for mobile */}
+      <section className="mb-5 sm:mb-6 md:mb-8">
+        <h2 className="text-base sm:text-lg md:text-xl font-semibold text-fenjes-purple mb-2 sm:mb-3 md:mb-4">
           💜 Seu Momento de Cura de Hoje
         </h2>
         
         <Card className="overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-3 bg-gradient-to-r from-fenjes-purple/5 to-fenjes-cream/30">
             {/* Exercise image */}
-            <div className="bg-fenjes-purple/10 p-4 flex items-center justify-center">
+            <div className="bg-fenjes-purple/10 p-3 md:p-4 flex items-center justify-center">
               {todayExercise.imageUrl ? (
                 <img 
                   src={todayExercise.imageUrl} 
                   alt={todayExercise.title} 
-                  className="max-h-48 object-contain"
+                  className="max-h-32 sm:max-h-40 md:max-h-48 object-contain"
                 />
               ) : (
-                <div className="h-48 w-full flex items-center justify-center text-5xl">
+                <div className="h-32 sm:h-40 md:h-48 w-full flex items-center justify-center text-4xl md:text-5xl">
                   {getCategoryIcon(todayExercise.category)}
                 </div>
               )}
             </div>
             
             {/* Exercise details */}
-            <div className="md:col-span-2 p-6">
-              <h3 className="text-lg font-semibold mb-2">{todayExercise.title}</h3>
-              <p className="text-sm text-gray-600 mb-4">{todayExercise.description}</p>
+            <div className="md:col-span-2 p-3 sm:p-4 md:p-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{todayExercise.title}</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 md:mb-4">{todayExercise.description}</p>
               
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="text-xs bg-fenjes-purple/10 text-fenjes-purple px-2 py-1 rounded-full flex items-center gap-1">
+              <div className="flex flex-wrap gap-1 sm:gap-2 mb-2 sm:mb-3 md:mb-4">
+                <span className="text-[10px] sm:text-xs bg-fenjes-purple/10 text-fenjes-purple px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full flex items-center gap-1">
                   💺 Na Cadeira
                 </span>
-                <span className="text-xs bg-fenjes-purple/10 text-fenjes-purple px-2 py-1 rounded-full flex items-center gap-1">
+                <span className="text-[10px] sm:text-xs bg-fenjes-purple/10 text-fenjes-purple px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full flex items-center gap-1">
                   ⏱️ {todayExercise.duration}
                 </span>
-                <span className="text-xs bg-fenjes-yellow/10 text-fenjes-yellow-dark px-2 py-1 rounded-full flex items-center gap-1">
+                <span className="text-[10px] sm:text-xs bg-fenjes-yellow/10 text-fenjes-yellow-dark px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full flex items-center gap-1">
                   {getCategoryIcon(todayExercise.category)} {getCategoryLabel(todayExercise.category)}
                 </span>
               </div>
               
-              <div className="bg-fenjes-green/5 p-3 rounded-lg mb-4">
-                <p className="text-sm text-fenjes-green">
+              <div className="bg-fenjes-green/5 p-2 sm:p-3 rounded-lg mb-3 md:mb-4">
+                <p className="text-xs sm:text-sm text-fenjes-green">
                   ✨ {todayExercise.specificBenefit}
                 </p>
               </div>
               
               <Button
-                className="w-full sm:w-auto bg-fenjes-purple hover:bg-fenjes-purple-light"
+                className="w-full sm:w-auto bg-fenjes-purple hover:bg-fenjes-purple-light text-xs sm:text-sm py-1.5 sm:py-2"
                 onClick={() => navigate(`/exercicio/${todayExercise.id}`)}
               >
                 Começar Este Exercício
-                <ChevronRight size={16} className="ml-1" />
+                <ChevronRight size={14} className="ml-1" />
               </Button>
             </div>
           </div>
         </Card>
       </section>
 
-      {/* All exercises */}
+      {/* All exercises - Responsive tabs with horizontal scroll on mobile */}
       <section>
         <Tabs defaultValue="all" className="w-full">
-          <div className="flex justify-between items-center mb-4 md:mb-6 border-b">
-            <TabsList className="overflow-x-auto pb-2 md:pb-0 justify-start md:justify-center flex-grow gap-1">
-              <TabsTrigger value="all" className="text-xs md:text-sm">Todos Exercícios</TabsTrigger>
-              <TabsTrigger value="neck" className="text-xs md:text-sm">Cervical 💆‍♀️</TabsTrigger>
-              <TabsTrigger value="shoulders" className="text-xs md:text-sm">Ombros 🌸</TabsTrigger>
-              <TabsTrigger value="back" className="text-xs md:text-sm">Coluna 💪</TabsTrigger>
-              <TabsTrigger value="hips" className="text-xs md:text-sm">Quadril 🦋</TabsTrigger>
-              <TabsTrigger value="full_body" className="text-xs md:text-sm">Corpo Completo ✨</TabsTrigger>
+          <div className="flex justify-between items-center mb-3 md:mb-6 border-b overflow-x-auto pb-1">
+            <TabsList className="overflow-x-auto pb-1 md:pb-0 justify-start flex-nowrap gap-1">
+              <TabsTrigger value="all" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-2 sm:px-3">
+                Todos Exercícios
+              </TabsTrigger>
+              <TabsTrigger value="neck" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-2 sm:px-3">
+                Cervical 💆‍♀️
+              </TabsTrigger>
+              <TabsTrigger value="shoulders" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-2 sm:px-3">
+                Ombros 🌸
+              </TabsTrigger>
+              <TabsTrigger value="back" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-2 sm:px-3">
+                Coluna 💪
+              </TabsTrigger>
+              <TabsTrigger value="hips" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-2 sm:px-3">
+                Quadril 🦋
+              </TabsTrigger>
+              <TabsTrigger value="full_body" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-2 sm:px-3">
+                Corpo Completo ✨
+              </TabsTrigger>
             </TabsList>
           </div>
 

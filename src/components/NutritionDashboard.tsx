@@ -47,65 +47,7 @@ export function NutritionDashboard({ userProfile }: NutritionDashboardProps) {
     }
   }, [userProfile]);
 
-  return (
-    <div className="container mx-auto px-4 md:px-6 py-4 md:py-6">
-      {/* Header */}
-      <section className="mb-6 md:mb-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 mb-4 md:mb-6">
-          <div>
-            <h1 className="text-xl md:text-3xl font-quicksand font-semibold text-fenjes-purple">
-              Nutrição Fenjes
-            </h1>
-            <p className="text-sm md:text-base text-gray-600 mt-1">
-              Receitas e dicas personalizadas para sua saúde e bem-estar
-            </p>
-          </div>
-
-          {/* Header action buttons */}
-          <div className="flex gap-2 mt-2 md:mt-0">
-            <Button
-              variant="outline"
-              size={isMobile ? "sm" : "default"}
-              onClick={() => navigate("/perfil-nutricional")}
-              className="text-xs md:text-sm"
-            >
-              <BookOpen size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
-              Perfil Nutricional
-            </Button>
-            <Button 
-              variant="secondary"
-              size={isMobile ? "sm" : "default"}
-              className="text-xs md:text-sm"
-            >
-              <Heart size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
-              {favoriteRecipes.length ? favoriteRecipes.length : 'Meus'} Favoritos
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Daily personalized recommendations */}
-      <section className="mb-8 md:mb-10">
-        <DailyRecommendations
-          recipes={personalizedContent.dailyRecommendations}
-          personalizedTips={personalizedContent.personalizedTips}
-        />
-      </section>
-
-      {/* Recipe categories */}
-      <section>
-        <Tabs defaultValue="all" className="w-full">
-          <div className="flex justify-between items-center mb-4 md:mb-6 border-b">
-            <TabsList className="overflow-x-auto pb-2 md:pb-0 justify-start md:justify-center flex-grow gap-1">
-              <TabsTrigger value="all" className="text-xs md:text-sm">Todas Receitas</TabsTrigger>
-              <TabsTrigger value="anti-inflammatory" className="text-xs md:text-sm">Anti-Inflamatórias</TabsTrigger>
-              <TabsTrigger value="energy" className="text-xs md:text-sm">Energia</TabsTrigger>
-              <TabsTrigger value="hormonal" className="text-xs md:text-sm">Equilíbrio Hormonal</TabsTrigger>
-              <TabsTrigger value="sleep" className="text-xs md:text-sm">Sono</TabsTrigger>
-              <TabsTrigger value="digestive" className="text-xs md:text-sm">Digestivas</TabsTrigger>
-              <TabsTrigger value="conditions" className="text-xs md:text-sm">Específicas</TabsTrigger>
-            </TabsList>
-          </div>
+    return (    <div className="container mx-auto px-2 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6">      {/* Header */}      <section className="mb-4 sm:mb-6 md:mb-8">        <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 sm:gap-2 md:gap-4 mb-3 sm:mb-4 md:mb-6">          <div>            <h1 className="text-lg sm:text-xl md:text-3xl font-quicksand font-semibold text-fenjes-purple">              Nutrição Fenjes            </h1>            <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-0.5 sm:mt-1">              Receitas e dicas personalizadas para sua saúde e bem-estar            </p>          </div>          {/* Header action buttons */}          <div className="flex gap-1.5 sm:gap-2 mt-1.5 sm:mt-2 md:mt-0">            <Button              variant="outline"              size="sm"              onClick={() => navigate("/perfil-nutricional")}              className="text-[10px] sm:text-xs md:text-sm h-7 sm:h-8 md:h-9 px-2 sm:px-3"            >              <BookOpen size={isMobile ? 12 : 16} className="mr-1 md:mr-2" />              Perfil Nutricional            </Button>            <Button               variant="secondary"              size="sm"              className="text-[10px] sm:text-xs md:text-sm h-7 sm:h-8 md:h-9 px-2 sm:px-3"            >              <Heart size={isMobile ? 12 : 16} className="mr-1 md:mr-2" />              {favoriteRecipes.length ? favoriteRecipes.length : 'Meus'} Favoritos            </Button>          </div>        </div>      </section>      {/* Daily personalized recommendations */}      <section className="mb-5 sm:mb-6 md:mb-10">        <DailyRecommendations          recipes={personalizedContent.dailyRecommendations}          personalizedTips={personalizedContent.personalizedTips}        />      </section>      {/* Recipe categories */}      <section>        <Tabs defaultValue="all" className="w-full">          <div className="flex justify-between items-center mb-3 sm:mb-4 md:mb-6 border-b overflow-x-auto">            <TabsList className="overflow-x-auto pb-1 sm:pb-2 md:pb-0 justify-start flex-nowrap gap-1 w-full">              <TabsTrigger value="all" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Todas Receitas</TabsTrigger>              <TabsTrigger value="anti-inflammatory" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Anti-Inflamatórias</TabsTrigger>              <TabsTrigger value="energy" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Energia</TabsTrigger>              <TabsTrigger value="hormonal" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Equilíbrio Hormonal</TabsTrigger>              <TabsTrigger value="sleep" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Sono</TabsTrigger>              <TabsTrigger value="digestive" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Digestivas</TabsTrigger>              <TabsTrigger value="conditions" className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap px-1.5 sm:px-2.5 py-1">Específicas</TabsTrigger>            </TabsList>          </div>
 
           <TabsContent value="all">
             <RecipeList 

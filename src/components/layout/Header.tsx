@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { 
   DropdownMenu, 
@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button';
 import { NotificationCenter } from '@/components/ui/notification-center';
 import { CurrentUserState, UserJourney } from '@/types/notification';
 import { BreathingButton } from '@/components/ui/breathing-button';
-import { useMediaQuery } from '@/hooks/use-media-query';
 
 interface HeaderProps {
   userProfile?: UserProfile | null;
@@ -25,9 +24,19 @@ export function Header({ userProfile }: HeaderProps) {
   const navigate = useNavigate();
   const { toggleSidebar } = useSidebar();
   const { toast } = useToast();
-  const isMobile = useMediaQuery('(max-width: 640px)');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const hasShownInitialState = useRef(false);
+  
+  // Handle resize events
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Detecta preferências de redução de movimento
   useEffect(() => {
@@ -35,6 +44,13 @@ export function Header({ userProfile }: HeaderProps) {
       try {
         const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
         setPrefersReducedMotion(mediaQuery.matches);
+        
+        const handleMotionChange = (event: MediaQueryListEvent) => {
+          setPrefersReducedMotion(event.matches);
+        };
+        
+        mediaQuery.addEventListener('change', handleMotionChange);
+        return () => mediaQuery.removeEventListener('change', handleMotionChange);
       } catch (e) {
         // Fallback silencioso - manterá o valor padrão
       }
@@ -112,26 +128,18 @@ export function Header({ userProfile }: HeaderProps) {
   }, [navigate, toast]);
   
   return (
-    <header className="sticky top-0 z-10 w-full px-4 md:px-6 py-3 bg-fenjes-purple text-white shadow-md">
+    <header className="sticky top-0 z-20 w-full px-3 md:px-6 py-3 bg-fenjes-purple text-white shadow-md ios-sticky-fix">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <button 
-            className="md:hidden p-1.5 rounded-md hover:bg-fenjes-purple-dark active:bg-fenjes-purple-dark/80 transition-colors mr-2"
-            onClick={toggleSidebar}
-            aria-label="Abrir menu lateral"
-          >
-            <Menu size={22} className="text-white" />
-          </button>
-          
-          <Link to="/" className="flex items-center">
-            <div className="h-10 w-40 bg-white rounded flex items-center justify-center">
+          <Link to="/" className="flex items-center ml-10 md:ml-0">
+            <div className="h-10 w-32 md:w-40 bg-white rounded flex items-center justify-center overflow-hidden">
               {/* Placeholder para a logo - substituir pelo componente de imagem real */}
-              <span className="text-fenjes-purple font-semibold">LOGO FENJES</span>
+              <span className="text-fenjes-purple font-semibold text-sm md:text-base">LOGO FENJES</span>
             </div>
           </Link>
         </div>
         
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-1 md:gap-4">
           {!userProfile && (
             <BreathingButton 
               variant="secondary" 
@@ -144,36 +152,40 @@ export function Header({ userProfile }: HeaderProps) {
             </BreathingButton>
           )}
           
-          <NotificationCenter userState={userState} userJourney={userJourney} />
+          <NotificationCenter 
+            userState={userState} 
+            userJourney={userJourney} 
+            className="hidden sm:flex"
+          />
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button 
-                className="flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 pr-2 pl-1 py-1 transition-colors"
+                className="flex items-center gap-1 md:gap-2 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 px-1.5 md:pr-2 md:pl-1 py-1 transition-colors touch-target"
                 aria-label={`Menu do usuário: ${userName}`}
               >
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-white text-fenjes-purple font-medium">
+                <Avatar className="h-7 w-7 md:h-8 md:w-8">
+                  <AvatarFallback className="bg-white text-fenjes-purple font-medium text-xs md:text-sm">
                     {userInitials}
                   </AvatarFallback>
                 </Avatar>
                 <span className="hidden md:inline text-sm font-medium text-white">{userName}</span>
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-52 md:w-56">
               {!userProfile && (
-                <DropdownMenuItem className="cursor-pointer" onClick={handleQuizClick}>
+                <DropdownMenuItem className="cursor-pointer touch-target" onClick={handleQuizClick}>
                   Fazer Quiz de Perfil
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem className="cursor-pointer" asChild>
+              <DropdownMenuItem className="cursor-pointer touch-target" asChild>
                 <Link to="/evolucao-pessoal">Meu Perfil</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" asChild>
+              <DropdownMenuItem className="cursor-pointer touch-target" asChild>
                 <Link to="/evolucao-pessoal?tab=configuracoes">Configurações</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">Ajuda</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer text-red-500">Sair</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer touch-target">Ajuda</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer touch-target text-red-500">Sair</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

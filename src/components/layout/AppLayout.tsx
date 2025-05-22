@@ -1,10 +1,13 @@
-
 import { ReactNode, useEffect, useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { UserProfile } from '@/types/onboarding';
+import { useSidebar } from "@/context/SidebarContext";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -15,6 +18,19 @@ export function AppLayout({ children }: AppLayoutProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const { expanded } = useSidebar();
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  // Handle resize events
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Load user profile from session storage if exists
   useEffect(() => {
@@ -96,24 +112,52 @@ export function AppLayout({ children }: AppLayoutProps) {
   const personalizedTrack = getPersonalizedGreeting();
 
   return (
-    <div className="flex min-h-screen bg-fenjes-bg-light">
-      <Sidebar userProfile={userProfile} />
+    <div className="flex min-h-screen bg-fenjes-bg-light overflow-x-hidden">
+      {/* Desktop Sidebar - hidden on mobile */}
+      <div className="hidden md:block">
+        <Sidebar userProfile={userProfile} />
+      </div>
+      
+      {/* Mobile Sidebar with Sheet component */}
+      <div className="md:hidden">
+        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+          <SheetTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="fixed top-4 left-4 z-50 bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white"
+              aria-label="Menu"
+            >
+              <Menu size={24} className="text-fenjes-purple" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent 
+            side="left" 
+            className="p-0 w-4/5 max-w-xs border-r border-fenjes-purple-light/20"
+            onClose={() => setIsSheetOpen(false)}
+            onPointerDownOutside={() => setIsSheetOpen(false)}
+          >
+            <Sidebar userProfile={userProfile} />
+          </SheetContent>
+        </Sheet>
+      </div>
+      
       <div className="flex flex-col flex-1 w-full">
         <Header userProfile={userProfile} />
         
         {personalizedTrack && location.pathname === "/" && (
-          <div className="bg-fenjes-purple-light/20 p-3 text-center border-b text-fenjes-purple-dark animate-fade-in">
+          <div className="bg-fenjes-purple-light/20 p-2 md:p-3 text-center border-b text-fenjes-purple-dark animate-fade-in text-sm md:text-base">
             <span className="font-medium">
               Você está na {personalizedTrack} • Dia {userProfile?.currentDay || 4} de 21
             </span>
           </div>
         )}
         
-        <main className="flex-1 p-4 md:p-6 overflow-auto animate-fade-in">
+        <main className="flex-1 p-3 md:p-6 overflow-y-auto overflow-x-hidden animate-fade-in">
           {children}
         </main>
         
-        <footer className="p-4 border-t text-center text-sm text-gray-500 animate-fade-in">
+        <footer className="p-3 md:p-4 border-t text-center text-xs md:text-sm text-gray-500 animate-fade-in">
           © 2025 Fenjes - Todos os direitos reservados
         </footer>
       </div>

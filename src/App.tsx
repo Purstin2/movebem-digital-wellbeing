@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import OnboardingPage from "./pages/OnboardingPage";
 import HomePage from "./pages/HomePage";
 import ChairYogaPage from "./pages/ChairYogaPage";
+import ChairYogaExercisePage from "./pages/ChairYogaExercisePage";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="/nutrition" element={<NutritionPage />} />
             <Route path="/chair-yoga" element={<ChairYogaPage />} />
+            <Route path="/exercicio/:id" element={<ChairYogaExercisePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
