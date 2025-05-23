@@ -1,128 +1,145 @@
-import React, { useState } from 'react';
-import { AccessibilityPreferences } from '@/types/personalization';
+import React, { useEffect, useState } from 'react';
 
-interface TestResults {
-  touchTargetSize: boolean;
-  textReadability: boolean;
-  contrast: boolean;
+interface AccessibilityTestResult {
+  name: string;
+  passed: boolean;
+  details: string;
 }
 
-export const MobileAccessibilityTest: React.FC<{
-  preferences: AccessibilityPreferences;
-  onComplete: (results: TestResults) => void;
-}> = ({ preferences, onComplete }) => {
-  const [results, setResults] = useState<TestResults>({
-    touchTargetSize: false,
-    textReadability: false,
-    contrast: false
-  });
+export const MobileAccessibilityTest: React.FC = () => {
+  const [results, setResults] = useState<AccessibilityTestResult[]>([]);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const [step, setStep] = useState(0);
+  const runTests = () => {
+    setIsRunning(true);
+    const testResults: AccessibilityTestResult[] = [];
 
-  const checkTouchTarget = (event: React.TouchEvent) => {
-    const touch = event.touches[0];
-    const target = event.target as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    
-    const isValid = 
-      touch.clientX >= rect.left &&
-      touch.clientX <= rect.right &&
-      touch.clientY >= rect.top &&
-      touch.clientY <= rect.bottom;
+    // Teste 1: Tamanho mínimo de toque
+    const touchTargets = document.querySelectorAll('button, a, input, select');
+    let smallTargets = 0;
+    touchTargets.forEach(element => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width < 44 || rect.height < 44) {
+        smallTargets++;
+      }
+    });
+    testResults.push({
+      name: 'Alvos de Toque',
+      passed: smallTargets === 0,
+      details: smallTargets === 0 
+        ? 'Todos os elementos interativos têm tamanho adequado'
+        : `${smallTargets} elementos menores que 44x44px`
+    });
 
-    setResults(prev => ({ ...prev, touchTargetSize: isValid }));
-    setStep(1);
+    // Teste 2: Contraste de cores
+    const textElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, label');
+    let lowContrast = 0;
+    textElements.forEach(element => {
+      const style = window.getComputedStyle(element);
+      const backgroundColor = style.backgroundColor;
+      const color = style.color;
+      // Simplificação: apenas verifica se não é texto preto em fundo branco
+      if (color !== 'rgb(0, 0, 0)' || backgroundColor !== 'rgb(255, 255, 255)') {
+        lowContrast++;
+      }
+    });
+    testResults.push({
+      name: 'Contraste de Cores',
+      passed: lowContrast === 0,
+      details: lowContrast === 0
+        ? 'Todos os textos têm contraste adequado'
+        : `${lowContrast} elementos podem ter contraste inadequado`
+    });
+
+    // Teste 3: Tamanho de fonte
+    let smallFonts = 0;
+    textElements.forEach(element => {
+      const fontSize = parseInt(window.getComputedStyle(element).fontSize);
+      if (fontSize < 16) {
+        smallFonts++;
+      }
+    });
+    testResults.push({
+      name: 'Tamanho da Fonte',
+      passed: smallFonts === 0,
+      details: smallFonts === 0
+        ? 'Todas as fontes têm tamanho adequado'
+        : `${smallFonts} elementos com fonte menor que 16px`
+    });
+
+    // Teste 4: Orientação flexível
+    const isFlexible = !document.querySelector('meta[name="viewport"][content*="user-scalable=no"]');
+    testResults.push({
+      name: 'Zoom e Orientação',
+      passed: isFlexible,
+      details: isFlexible
+        ? 'Zoom e rotação permitidos'
+        : 'Zoom ou rotação podem estar bloqueados'
+    });
+
+    setResults(testResults);
+    setIsRunning(false);
   };
 
-  const checkReadability = () => {
-    const isReadable = preferences.fontSize >= 16 && preferences.textSpacing >= 1.5;
-    setResults(prev => ({ ...prev, textReadability: isReadable }));
-    setStep(2);
-  };
-
-  const checkContrast = () => {
-    setResults(prev => ({ ...prev, contrast: preferences.highContrast }));
-    onComplete(results);
-    setStep(3);
-  };
+  useEffect(() => {
+    // Executa testes automaticamente na montagem
+    runTests();
+  }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-xl mx-auto">
       <h2 className="text-xl font-semibold mb-4">Teste de Acessibilidade Mobile</h2>
 
-      {step === 0 && (
-        <div
-          onTouchStart={checkTouchTarget}
-          className="w-full h-32 bg-gray-100 rounded-lg flex items-center justify-center mb-4"
-        >
-          Toque aqui para testar área de toque
-        </div>
-      )}
+      {/* Botão de Teste */}
+      <button
+        onClick={runTests}
+        disabled={isRunning}
+        className="w-full mb-6 p-4 bg-primary-dark text-white rounded-lg font-medium disabled:opacity-50"
+      >
+        {isRunning ? 'Executando...' : 'Executar Testes'}
+      </button>
 
-      {step === 1 && (
-        <div className="space-y-4">
-          <p className="text-lg">O texto está legível?</p>
-          <button
-            onClick={checkReadability}
-            className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg"
+      {/* Resultados */}
+      <div className="space-y-4">
+        {results.map((result, index) => (
+          <div
+            key={index}
+            className={`p-4 rounded-lg border ${
+              result.passed
+                ? 'bg-green-50 border-green-200'
+                : 'bg-red-50 border-red-200'
+            }`}
           >
-            Sim, consigo ler bem
-          </button>
-        </div>
-      )}
-
-      {step === 2 && (
-        <div className="space-y-4">
-          <p className="text-lg">O contraste está adequado?</p>
-          <button
-            onClick={checkContrast}
-            className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg"
-          >
-            Sim, está bom
-          </button>
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="mt-4">
-          <h3 className="font-medium mb-2">Resultados:</h3>
-          <ul className="space-y-2">
-            <li className="flex items-center">
-              <span className={`w-4 h-4 rounded-full mr-2 ${
-                results.touchTargetSize ? 'bg-green-500' : 'bg-red-500'
-              }`} />
-              Área de Toque
-            </li>
-            <li className="flex items-center">
-              <span className={`w-4 h-4 rounded-full mr-2 ${
-                results.textReadability ? 'bg-green-500' : 'bg-red-500'
-              }`} />
-              Legibilidade
-            </li>
-            <li className="flex items-center">
-              <span className={`w-4 h-4 rounded-full mr-2 ${
-                results.contrast ? 'bg-green-500' : 'bg-red-500'
-              }`} />
-              Contraste
-            </li>
-          </ul>
-
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-            <h4 className="font-medium mb-2">Recomendações:</h4>
-            <ul className="text-sm space-y-1">
-              {!results.touchTargetSize && (
-                <li>• Aumente o tamanho dos elementos clicáveis (mínimo 44px)</li>
-              )}
-              {!results.textReadability && (
-                <li>• Ajuste o tamanho da fonte (mínimo 16px) e espaçamento</li>
-              )}
-              {!results.contrast && (
-                <li>• Ative o modo de alto contraste nas configurações</li>
-              )}
-            </ul>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">
+                {result.passed ? '✅' : '⚠️'}
+              </span>
+              <h3 className="font-medium">
+                {result.name}
+              </h3>
+            </div>
+            <p className={`text-sm ${
+              result.passed ? 'text-green-700' : 'text-red-700'
+            }`}>
+              {result.details}
+            </p>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
+
+      {/* Recomendações */}
+      <div className="mt-6 p-4 bg-neutral-100 rounded-lg">
+        <h3 className="font-medium mb-2">Recomendações:</h3>
+        <ul className="text-sm space-y-2">
+          <li>• Alvos de toque devem ter no mínimo 44x44px</li>
+          <li>• Fontes devem ter no mínimo 16px</li>
+          <li>• Manter contraste de cores adequado</li>
+          <li>• Permitir zoom e rotação da tela</li>
+          <li>• Testar com diferentes tamanhos de tela</li>
+        </ul>
+      </div>
     </div>
   );
-}; 
+};
+
+export default MobileAccessibilityTest; 
