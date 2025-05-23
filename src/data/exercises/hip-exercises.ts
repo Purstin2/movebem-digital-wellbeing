@@ -1,520 +1,280 @@
-import { ChairYogaExercise } from "@/types/chair-yoga";
+import { Exercise } from '../types';
 
-export const hipExercises: ChairYogaExercise[] = [
+export const hipExercises: Exercise[] = [
   {
-    id: "hip-flexion-beginner",
-    title: "Flexão Suave do Quadril",
-    category: "hips",
-    difficulty: "beginner",
-    duration: "5",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento suave de flexão do quadril para melhorar a mobilidade e aliviar tensão.",
-    specificBenefit: "Melhora a mobilidade do quadril e reduz tensão muscular.",
+    id: 'hip-1',
+    name: 'Alongamento Suave do Quadril',
+    description: 'Um alongamento gentil para aliviar a tensão no quadril.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e mãos apoiadas no colo.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Flexão Suave",
-        instruction: "Eleve suavemente um joelho em direção ao peito, mantendo a coluna ereta.",
-        duration: "2 min",
-        breathing: "Inspire ao elevar, expire ao descer"
-      },
-      {
-        name: "Retorno",
-        instruction: "Retorne suavemente à posição inicial.",
-        duration: "2 min",
-        breathing: "Inspire ao elevar, expire ao descer"
-      }
+      'Sente-se em uma cadeira com os pés apoiados no chão',
+      'Coloque o tornozelo direito sobre o joelho esquerdo',
+      'Mantenha a coluna ereta e relaxe os ombros',
+      'Permaneça nesta posição por 30 segundos',
+      'Repita do outro lado'
     ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use o encosto da cadeira para apoio.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos no joelho para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-flexion.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Alivia a tensão no quadril',
+      'Melhora a flexibilidade',
+      'Reduz dores na região lombar'
+    ],
+    precautions: [
+      'Não force o alongamento',
+      'Pare se sentir dor',
+      'Mantenha a respiração constante'
+    ],
+    imageUrl: '/exercises/hip-stretch.jpg',
+    videoUrl: '/videos/hip-stretch.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['gluteus', 'hip flexors'],
+    modifications: [
+      'Use uma almofada sob o quadril se necessário',
+      'Reduza o tempo de alongamento para 15 segundos',
+      'Mantenha os pés no chão se o alongamento for muito intenso'
+    ]
   },
   {
-    id: "hip-extension-beginner",
-    title: "Extensão Suave do Quadril",
-    category: "hips",
-    difficulty: "beginner",
-    duration: "5",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento suave de extensão do quadril para alongar e relaxar.",
-    specificBenefit: "Alonga os músculos do quadril e melhora a flexibilidade.",
+    id: 'hip-2',
+    name: 'Movimento Circular do Quadril',
+    description: 'Exercício suave para melhorar a mobilidade do quadril.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e mãos apoiadas no colo.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Extensão Suave",
-        instruction: "Estenda suavemente uma perna para trás, mantendo a coluna ereta.",
-        duration: "2 min",
-        breathing: "Inspire ao preparar, expire ao estender"
-      },
-      {
-        name: "Retorno",
-        instruction: "Retorne suavemente à posição inicial.",
-        duration: "2 min",
-        breathing: "Inspire ao preparar, expire ao estender"
-      }
+      'Sente-se em uma cadeira com os pés apoiados no chão',
+      'Coloque as mãos nos quadris',
+      'Faça movimentos circulares suaves com o quadril',
+      '5 círculos para cada lado',
+      'Mantenha a coluna ereta durante o movimento'
     ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use o encosto da cadeira para apoio.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos na coxa para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-extension.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Aumenta a mobilidade do quadril',
+      'Reduz a rigidez articular',
+      'Melhora a circulação na região'
+    ],
+    precautions: [
+      'Faça movimentos pequenos e controlados',
+      'Não force a amplitude do movimento',
+      'Pare se sentir desconforto'
+    ],
+    imageUrl: '/exercises/hip-circles.jpg',
+    videoUrl: '/videos/hip-circles.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['hip flexors', 'gluteus'],
+    modifications: [
+      'Reduza a amplitude do movimento',
+      'Faça menos repetições',
+      'Use o encosto da cadeira para apoio se necessário'
+    ]
   },
   {
-    id: "hip-abduction-beginner",
-    title: "Abdução Suave do Quadril",
-    category: "hips",
-    difficulty: "beginner",
-    duration: "5",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento suave de abdução do quadril para fortalecer e alongar.",
-    specificBenefit: "Fortalece os músculos abductores do quadril e melhora a estabilidade.",
+    id: 'hip-3',
+    name: 'Elevação Suave do Joelho',
+    description: 'Exercício para fortalecer os músculos do quadril de forma segura.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e mãos apoiadas no colo.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Abdução Suave",
-        instruction: "Abra suavemente uma perna para o lado, mantendo a coluna ereta.",
-        duration: "2 min",
-        breathing: "Inspire ao preparar, expire ao abrir"
-      },
-      {
-        name: "Retorno",
-        instruction: "Retorne suavemente à posição inicial.",
-        duration: "2 min",
-        breathing: "Inspire ao preparar, expire ao abrir"
-      }
+      'Sente-se em uma cadeira com os pés apoiados no chão',
+      'Mantenha a coluna ereta',
+      'Eleve suavemente o joelho direito',
+      'Mantenha por 3 segundos',
+      'Volte à posição inicial',
+      'Repita 5 vezes de cada lado'
     ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use o encosto da cadeira para apoio.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos na coxa para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-abduction.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Fortalece os músculos do quadril',
+      'Melhora a estabilidade',
+      'Aumenta a circulação nas pernas'
+    ],
+    precautions: [
+      'Não eleve o joelho acima do quadril',
+      'Mantenha o movimento controlado',
+      'Pare se sentir dor'
+    ],
+    imageUrl: '/exercises/knee-lift.jpg',
+    videoUrl: '/videos/knee-lift.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['hip flexors', 'quadriceps'],
+    modifications: [
+      'Reduza o número de repetições',
+      'Diminua o tempo de sustentação',
+      'Use as mãos para apoio se necessário'
+    ]
   },
   {
-    id: "hip-rotation-beginner",
-    title: "Rotação Suave do Quadril",
-    category: "hips",
-    difficulty: "beginner",
-    duration: "5",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento suave de rotação do quadril para alongar e relaxar.",
-    specificBenefit: "Alonga os músculos rotadores do quadril e melhora a mobilidade.",
+    id: 'hip-4',
+    name: 'Alongamento do Quadril em Pé',
+    description: 'Alongamento suave para o quadril que pode ser feito em pé.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e mãos apoiadas no colo.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Rotação Suave",
-        instruction: "Gire suavemente uma perna para dentro e para fora, mantendo a coluna ereta.",
-        duration: "2 min",
-        breathing: "Inspire ao preparar, expire ao girar"
-      },
-      {
-        name: "Retorno",
-        instruction: "Retorne suavemente à posição inicial.",
-        duration: "2 min",
-        breathing: "Inspire ao preparar, expire ao girar"
-      }
+      'Fique em pé com os pés afastados na largura dos ombros',
+      'Segure em uma cadeira ou parede para apoio',
+      'Cruze a perna direita sobre a esquerda',
+      'Dobre levemente os joelhos',
+      'Mantenha por 20 segundos',
+      'Repita do outro lado'
     ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use o encosto da cadeira para apoio.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos no joelho para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-rotation.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Melhora a flexibilidade do quadril',
+      'Alivia a tensão muscular',
+      'Aumenta a amplitude de movimento'
+    ],
+    precautions: [
+      'Use apoio adequado',
+      'Não force o alongamento',
+      'Mantenha a coluna ereta'
+    ],
+    imageUrl: '/exercises/standing-hip-stretch.jpg',
+    videoUrl: '/videos/standing-hip-stretch.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['gluteus', 'hip flexors'],
+    modifications: [
+      'Reduza o tempo de alongamento',
+      'Faça o exercício sentado se necessário',
+      'Use uma almofada sob o pé de apoio'
+    ]
   },
   {
-    id: "hip-flexion-intermediate",
-    title: "Flexão do Quadril com Resistência",
-    category: "hips",
-    difficulty: "intermediate",
-    duration: "8",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento de flexão do quadril com resistência suave para fortalecer e melhorar a mobilidade.",
-    specificBenefit: "Fortalece os músculos flexores do quadril e melhora a amplitude de movimento.",
+    id: 'hip-5',
+    name: 'Movimento de Pêndulo do Quadril',
+    description: 'Exercício suave para melhorar a mobilidade do quadril.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos na frente do joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Flexão com Resistência",
-        instruction: "Eleve o joelho em direção ao peito, mantendo a tensão na faixa elástica.",
-        duration: "3 min",
-        breathing: "Inspire ao elevar, expire ao descer"
-      },
-      {
-        name: "Variação com Rotação",
-        instruction: "Adicione uma leve rotação do quadril durante a flexão.",
-        duration: "4 min",
-        breathing: "Inspire ao elevar, expire ao descer"
-      }
+      'Sente-se em uma cadeira com os pés apoiados no chão',
+      'Mantenha a coluna ereta',
+      'Mova o quadril suavemente de um lado para o outro',
+      'Como um pêndulo',
+      '10 movimentos para cada lado'
     ],
-    adaptations: {
-      hip_pain: "Use uma faixa elástica mais leve e reduza a amplitude do movimento.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos no joelho para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-flexion-resistance.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Aumenta a mobilidade do quadril',
+      'Reduz a rigidez',
+      'Melhora a circulação'
+    ],
+    precautions: [
+      'Faça movimentos pequenos e controlados',
+      'Mantenha a coluna estável',
+      'Pare se sentir desconforto'
+    ],
+    imageUrl: '/exercises/hip-pendulum.jpg',
+    videoUrl: '/videos/hip-pendulum.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['hip flexors', 'gluteus'],
+    modifications: [
+      'Reduza a amplitude do movimento',
+      'Faça menos repetições',
+      'Use o encosto da cadeira para apoio'
+    ]
   },
   {
-    id: "hip-extension-intermediate",
-    title: "Extensão do Quadril com Resistência",
-    category: "hips",
-    difficulty: "intermediate",
-    duration: "8",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento de extensão do quadril com resistência suave para fortalecer e alongar.",
-    specificBenefit: "Fortalece os músculos extensores do quadril e melhora a flexibilidade.",
+    id: 'hip-6',
+    name: 'Estabilização do Core com Quadril',
+    description: 'Exercício para fortalecer o core e melhorar a estabilidade do quadril.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos atrás do joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Extensão com Resistência",
-        instruction: "Estenda a perna para trás, mantendo a tensão na faixa elástica.",
-        duration: "3 min",
-        breathing: "Inspire ao preparar, expire ao estender"
-      },
-      {
-        name: "Variação com Rotação",
-        instruction: "Adicione uma leve rotação do quadril durante a extensão.",
-        duration: "4 min",
-        breathing: "Inspire ao preparar, expire ao estender"
-      }
+      'Sente-se em uma cadeira com os pés apoiados no chão',
+      'Mantenha a coluna ereta e o core contraído',
+      'Eleve levemente um pé do chão',
+      'Mantenha o equilíbrio por 5 segundos',
+      'Volte à posição inicial',
+      'Repita 5 vezes de cada lado'
     ],
-    adaptations: {
-      hip_pain: "Use uma faixa elástica mais leve e reduza a amplitude do movimento.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos na coxa para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-extension-resistance.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Fortalece os músculos do core',
+      'Melhora a estabilidade do quadril',
+      'Auxilia no equilíbrio'
+    ],
+    precautions: [
+      'Mantenha a respiração constante',
+      'Não force o movimento',
+      'Use o encosto da cadeira se necessário'
+    ],
+    imageUrl: '/exercises/core-stability.jpg',
+    videoUrl: '/videos/core-stability.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['core', 'hip stabilizers'],
+    modifications: [
+      'Reduza o tempo de sustentação',
+      'Mantenha as mãos no encosto da cadeira',
+      'Faça menos repetições'
+    ]
   },
   {
-    id: "hip-abduction-intermediate",
-    title: "Abdução do Quadril com Resistência",
-    category: "hips",
-    difficulty: "intermediate",
-    duration: "8",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento de abdução do quadril com resistência suave para fortalecer e alongar.",
-    specificBenefit: "Fortalece os músculos abductores do quadril e melhora a estabilidade.",
+    id: 'hip-7',
+    name: 'Exercício de Propriocepção',
+    description: 'Exercício para melhorar a consciência corporal e equilíbrio.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos na lateral do joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Abdução com Resistência",
-        instruction: "Abra a perna para o lado, mantendo a tensão na faixa elástica.",
-        duration: "3 min",
-        breathing: "Inspire ao preparar, expire ao abrir"
-      },
-      {
-        name: "Variação com Rotação",
-        instruction: "Adicione uma leve rotação do quadril durante a abdução.",
-        duration: "4 min",
-        breathing: "Inspire ao preparar, expire ao abrir"
-      }
+      'Fique em pé com os pés afastados na largura dos ombros',
+      'Segure em uma cadeira ou parede para apoio',
+      'Feche os olhos suavemente',
+      'Mantenha o equilíbrio por 10 segundos',
+      'Abra os olhos e descanse',
+      'Repita 3 vezes'
     ],
-    adaptations: {
-      hip_pain: "Use uma faixa elástica mais leve e reduza a amplitude do movimento.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos na coxa para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-abduction-resistance.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    benefits: [
+      'Melhora a consciência corporal',
+      'Aumenta o equilíbrio',
+      'Fortalece a conexão mente-corpo'
+    ],
+    precautions: [
+      'Use apoio adequado',
+      'Não feche completamente os olhos se sentir inseguro',
+      'Pare se sentir tontura'
+    ],
+    imageUrl: '/exercises/proprioception.jpg',
+    videoUrl: '/videos/proprioception.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['balance system', 'hip stabilizers'],
+    modifications: [
+      'Mantenha os olhos abertos inicialmente',
+      'Reduza o tempo de sustentação',
+      'Use dois pontos de apoio'
+    ]
   },
   {
-    id: "hip-rotation-intermediate",
-    title: "Rotação do Quadril com Resistência",
-    category: "hips",
-    difficulty: "intermediate",
-    duration: "8",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Movimento de rotação do quadril com resistência suave para fortalecer e alongar.",
-    specificBenefit: "Fortalece os músculos rotadores do quadril e melhora a mobilidade.",
+    id: 'hip-8',
+    name: 'Mobilização Articular do Quadril',
+    description: 'Exercício suave para melhorar a mobilidade articular do quadril.',
+    difficulty: 'beginner',
+    duration: 5,
+    category: 'hip',
     steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos no joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Rotação com Resistência",
-        instruction: "Gire a perna para dentro e para fora, mantendo a tensão na faixa elástica.",
-        duration: "3 min",
-        breathing: "Inspire ao preparar, expire ao girar"
-      },
-      {
-        name: "Variação com Elevação",
-        instruction: "Adicione uma leve elevação do joelho durante a rotação.",
-        duration: "4 min",
-        breathing: "Inspire ao preparar, expire ao girar"
-      }
+      'Sente-se em uma cadeira com os pés apoiados no chão',
+      'Mantenha a coluna ereta',
+      'Faça movimentos suaves de rotação interna e externa do quadril',
+      '5 repetições em cada direção',
+      'Mantenha a respiração constante'
     ],
-    adaptations: {
-      hip_pain: "Use uma faixa elástica mais leve e reduza a amplitude do movimento.",
-      hip_stiffness: "Adicione uma leve pressão com as mãos no joelho para aumentar o alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-rotation-resistance.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
-  },
-  {
-    id: "hip-flexion-advanced",
-    title: "Flexão Integrada do Quadril",
-    category: "hips",
-    difficulty: "advanced",
-    duration: "10",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Sequência integrada de movimentos para fortalecer e melhorar a mobilidade do quadril.",
-    specificBenefit: "Fortalece os músculos do quadril e melhora a coordenação e equilíbrio.",
-    steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos na frente do joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Flexão com Rotação",
-        instruction: "Eleve o joelho em direção ao peito enquanto gira o quadril.",
-        duration: "3 min",
-        breathing: "Inspire ao elevar, expire ao descer"
-      },
-      {
-        name: "Sequência Integrada",
-        instruction: "Combine flexão, rotação e extensão em um movimento fluido.",
-        duration: "6 min",
-        breathing: "Inspire ao elevar, expire ao descer"
-      }
+    benefits: [
+      'Melhora a mobilidade articular',
+      'Reduz a rigidez',
+      'Aumenta a amplitude de movimento'
     ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use uma faixa elástica mais leve.",
-      hip_stiffness: "Adicione pausas entre os movimentos para alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-flexion-integrated.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
-  },
-  {
-    id: "hip-extension-advanced",
-    title: "Extensão Integrada do Quadril",
-    category: "hips",
-    difficulty: "advanced",
-    duration: "10",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Sequência integrada de movimentos para fortalecer e alongar os músculos do quadril.",
-    specificBenefit: "Fortalece os músculos extensores e melhora a coordenação e equilíbrio.",
-    steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos atrás do joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Extensão com Rotação",
-        instruction: "Estenda a perna para trás enquanto gira o quadril.",
-        duration: "3 min",
-        breathing: "Inspire ao preparar, expire ao estender"
-      },
-      {
-        name: "Sequência Integrada",
-        instruction: "Combine extensão, rotação e flexão em um movimento fluido.",
-        duration: "6 min",
-        breathing: "Inspire ao preparar, expire ao estender"
-      }
+    precautions: [
+      'Faça movimentos pequenos e controlados',
+      'Não force a amplitude',
+      'Pare se sentir dor'
     ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use uma faixa elástica mais leve.",
-      hip_stiffness: "Adicione pausas entre os movimentos para alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-extension-integrated.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
-  },
-  {
-    id: "hip-abduction-advanced",
-    title: "Abdução Integrada do Quadril",
-    category: "hips",
-    difficulty: "advanced",
-    duration: "10",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Sequência integrada de movimentos para fortalecer e alongar os músculos abductores.",
-    specificBenefit: "Fortalece os músculos abductores e melhora a coordenação e equilíbrio.",
-    steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos na lateral do joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Abdução com Rotação",
-        instruction: "Abra a perna para o lado enquanto gira o quadril.",
-        duration: "3 min",
-        breathing: "Inspire ao preparar, expire ao abrir"
-      },
-      {
-        name: "Sequência Integrada",
-        instruction: "Combine abdução, rotação e adução em um movimento fluido.",
-        duration: "6 min",
-        breathing: "Inspire ao preparar, expire ao abrir"
-      }
-    ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use uma faixa elástica mais leve.",
-      hip_stiffness: "Adicione pausas entre os movimentos para alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-abduction-integrated.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
-  },
-  {
-    id: "hip-rotation-advanced",
-    title: "Rotação Integrada do Quadril",
-    category: "hips",
-    difficulty: "advanced",
-    duration: "10",
-    targetConditions: ["hip_pain", "hip_stiffness"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    description: "Sequência integrada de movimentos para fortalecer e alongar os músculos rotadores.",
-    specificBenefit: "Fortalece os músculos rotadores e melhora a coordenação e equilíbrio.",
-    steps: [
-      {
-        name: "Preparação",
-        instruction: "Sente-se com a coluna ereta e segure uma faixa elástica com as mãos no joelho.",
-        duration: "1 min",
-        breathing: "Respiração natural"
-      },
-      {
-        name: "Rotação com Elevação",
-        instruction: "Gire a perna para dentro e para fora enquanto eleva o joelho.",
-        duration: "3 min",
-        breathing: "Inspire ao preparar, expire ao girar"
-      },
-      {
-        name: "Sequência Integrada",
-        instruction: "Combine rotação, elevação e extensão em um movimento fluido.",
-        duration: "6 min",
-        breathing: "Inspire ao preparar, expire ao girar"
-      }
-    ],
-    adaptations: {
-      hip_pain: "Reduza a amplitude do movimento e use uma faixa elástica mais leve.",
-      hip_stiffness: "Adicione pausas entre os movimentos para alongamento."
-    },
-    contraindications: ["hip_replacement", "acute_hip_injury"],
-    imageUrl: "/images/exercises/hip-rotation-integrated.jpg",
-    chairRequirements: {
-      backrest: true,
-      armrests: true,
-      wheels: false
-    }
+    imageUrl: '/exercises/hip-mobilization.jpg',
+    videoUrl: '/videos/hip-mobilization.mp4',
+    equipment: ['chair'],
+    targetMuscles: ['hip rotators', 'hip flexors'],
+    modifications: [
+      'Reduza a amplitude do movimento',
+      'Faça menos repetições',
+      'Use o encosto da cadeira para apoio'
+    ]
   }
 ]; 

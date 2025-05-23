@@ -9,18 +9,21 @@ export interface RecipeIngredient {
 
 export interface Recipe {
   id: string;
-  title: string;
-  category: NutritionCategory;
-  targetProfile: string[];
-  difficulty: DifficultyLevel;
-  prepTime: string;
-  emotionalMessage: string;
-  ingredients: RecipeIngredient[];
-  preparation: string[];
-  scientificBacking: string;
-  timing: string;
-  personalizedTips: Record<string, string>;
-  imageUrl?: string;
+  name: string;
+  description: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  duration: number;
+  category: string;
+  ingredients: string[];
+  steps: string[];
+  benefits: string[];
+  imageUrl: string;
+  nutritionalInfo: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
 }
 
 export interface NutritionalProfile {

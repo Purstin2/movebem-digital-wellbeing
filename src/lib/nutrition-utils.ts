@@ -85,65 +85,31 @@ export const prioritizeRecipes = (
   const recipesWithScores = recipes.map(recipe => {
     let score = 0;
     
-    // Increase score for matching target profiles
-    if (recipe.targetProfile) {
-      // Primary pain area matches
-      if (recipe.targetProfile.includes(userProfile.primaryPain)) {
-        score += 3;
-      }
-      
-      // Pain level matches
-      if (recipe.targetProfile.includes(userProfile.painLevel === 'high' ? 'high_pain' : 
-                                       userProfile.painLevel === 'medium' ? 'moderate_pain' : 
-                                       'low_pain')) {
-        score += 3;
-      }
-      
-      // Conditions match
-      if (userProfile.conditions) {
-        userProfile.conditions.forEach(condition => {
-          if (recipe.targetProfile.includes(condition)) {
-            score += 5;
-          }
-        });
-      }
-      
-      // Goals match
-      if (userProfile.goals) {
-        userProfile.goals.forEach(goal => {
-          if (recipe.targetProfile.includes(goal)) {
-            score += 2;
-          }
-        });
-      }
-    }
-    
     // Increase score based on nutritional needs
-    if (needs.antiInflammatory && recipe.category === 'anti_inflammatory') {
+    if (needs.antiInflammatory && recipe.category === 'anti-inflammatory') {
       score += 4;
     }
     
-    if (needs.hormonalSupport && recipe.category === 'hormonal_balance') {
+    if (needs.hormonalSupport && recipe.category === 'hormonal-balance') {
       score += 4;
     }
     
-    if (needs.energyOptimization && recipe.category === 'energy_boost') {
+    if (needs.energyOptimization && recipe.category === 'energy-boost') {
       score += 4;
     }
     
-    if (needs.digestiveSupport && 
-        (recipe.category === 'digestive_health' || recipe.category === 'detox_support')) {
+    if (needs.digestiveSupport && recipe.category === 'digestive-health') {
       score += 4;
     }
     
-    if (needs.sleepSupport && recipe.category === 'sleep_support') {
+    if (needs.sleepSupport && recipe.category === 'sleep-support') {
       score += 4;
     }
     
-    // Increase score for condition-specific recipes that match user conditions
-    if (recipe.category === 'condition_specific' && needs.specificConditions.length > 0) {
+    // Increase score for condition-specific recipes
+    if (needs.specificConditions.length > 0) {
       needs.specificConditions.forEach(condition => {
-        if (recipe.targetProfile.includes(condition)) {
+        if (recipe.benefits.some(benefit => benefit.toLowerCase().includes(condition.toLowerCase()))) {
           score += 6;
         }
       });
