@@ -1,60 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
+    /* Fenjes Color Palette (HEX for direct mapping) */
+    --fenjes-purple-light: #E9D5FF;
+    --fenjes-purple-default: #9747FF;
+    --fenjes-purple-dark: #7432B4;
+    --fenjes-yellow-light: #FEF7CD;
+    --fenjes-yellow-default: #FCD34D;
+    --fenjes-yellow-dark: #E9B949;
+    --fenjes-green-light: #A7F3D0;
+    --fenjes-green-default: #10B981;
+    --fenjes-green-dark: #057A55;
+    --fenjes-blue-light: #EBF5FB;
+    --fenjes-blue-default: #5DADE2;
+    --fenjes-blue-dark: #2E86C1;
     
-    /* Fenjes color palette */
-    --fenjes-purple: 272 54% 45%; /* #7432B4 - Roxo principal */
-    --fenjes-purple-light: 272 100% 64%; /* #9747FF - Roxo claro */
-    --fenjes-yellow: 44 96% 65%; /* #FCD34D - Amarelo */
-    --fenjes-yellow-dark: 45 90% 34%; /* Versão mais escura do amarelo para texto */
-    --fenjes-green: 158 83% 40%; /* #10B981 - Verde */
-    --fenjes-cream: 260 100% 98%; /* #F7F3FF - Fundo suave */
-    --fenjes-text-warm: 26 20% 27%; /* #4A3F35 - Texto acolhedor */
-    --fenjes-blue: 210 100% 50%; /* Complementary color for accent */
-    --fenjes-blue-light: 199 89% 48%; /* Alternative accent color */
+    --fenjes-neutral-100: #FFFFFF; /* White */
+    --fenjes-neutral-200: #F7F3FF; /* Off-white purple tint */
+    --fenjes-neutral-300: #F5F5F5; /* Light Gray */
+    --fenjes-neutral-400: #E0E0E0; /* Medium Light Gray */
+    --fenjes-neutral-500: #BDBDBD; /* Gray */
+    --fenjes-neutral-600: #757575; /* Dark Gray */
+    --fenjes-neutral-700: #4A3F35; /* Warm Dark Brownish Gray */
+    --fenjes-neutral-800: #333333; /* Very Dark Gray */
+    --fenjes-neutral-900: #1A1A1A; /* Near Black */
 
-    --primary: var(--fenjes-purple);
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
+    /* ShadCN UI Theme Variables (Light Mode) */
+    --background: 260 100% 98%; /* --fenjes-neutral-200 (F7F3FF) - HSL approx. */
+    --foreground: 26 20% 27%;    /* --fenjes-neutral-700 (4A3F35) - HSL approx. */
     
-    /* Additional theme colors */
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --primary: 266 100% 64%;        /* --fenjes-purple-default (9747FF) - HSL approx. */
+    --primary-foreground: 0 0% 100%; /* White */
+    
+    --secondary: 158 83% 40%;       /* --fenjes-green-default (10B981) - HSL approx. */
+    --secondary-foreground: 0 0% 100%; /* White */
+    
+    --accent: 44 96% 65%;           /* --fenjes-yellow-default (FCD34D) - HSL approx. */
+    --accent-foreground: 26 20% 27%;  /* --fenjes-neutral-700 (4A3F35) for contrast */
+
+    --destructive: 0 75% 55%;       /* Standard Red for errors */
+    --destructive-foreground: 0 0% 100%;
+    
+    --card: 0 0% 100%;              /* --fenjes-neutral-100 (FFFFFF) */
+    --card-foreground: 26 20% 27%;    /* --fenjes-neutral-700 (4A3F35) */
+    
+    --popover: 0 0% 100%;           /* --fenjes-neutral-100 (FFFFFF) */
+    --popover-foreground: 26 20% 27%; /* --fenjes-neutral-700 (4A3F35) */
+    
+    --muted: 0 0% 96.1%;            /* Light Gray - HSL for #F5F5F5 */
+    --muted-foreground: 0 0% 40%;     /* Darker Gray for muted text */
+    
+    --border: 0 0% 87.8%;           /* Medium Light Gray - HSL for #E0E0E0 */
+    --input: 0 0% 87.8%;            /* Medium Light Gray - HSL for #E0E0E0 */
+    --ring: 266 100% 64%;           /* --fenjes-purple-default (9747FF) for focus rings */
+
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    /* Fenjes Dark Mode Palette (Adjust HSL values as needed) */
+    --background: 26 10% 10%;        /* Darker version of warm gray, e.g. #211D1A */
+    --foreground: 0 0% 95%;         /* Light Gray / Off-white for text */
+    
+    --primary: 266 80% 70%;         /* Lighter Purple for dark mode */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 158 70% 50%;       /* Lighter Green */
+    --secondary-foreground: 0 0% 100%;
+    
+    --accent: 44 80% 70%;           /* Lighter Yellow */
+    --accent-foreground: 26 10% 10%;   /* Dark text for contrast on light yellow */
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --card: 26 10% 13%;             /* Slightly lighter than background, e.g. #2E2A27 */
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 26 10% 13%;
+    --popover-foreground: 0 0% 95%;
+    
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 266 80% 70%;           /* Lighter Purple for focus rings */
+  }
+
+  body {
+    @apply font-sans text-base text-[var(--foreground)] bg-[var(--background)];
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
   }
 } 

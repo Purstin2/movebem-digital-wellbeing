@@ -62,7 +62,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-                // Fenjes Colors (replacing MoveBem colors)
                 fenjes: {
                     purple: {
                         light: '#E9D5FF',
@@ -75,13 +74,25 @@ export default {
                         dark: '#E9B949',
                     },
                     green: {
+                        light: '#A7F3D0',
                         DEFAULT: '#10B981',
+                        dark: '#057A55',
                     },
-                    bg: {
-                        light: '#F7F3FF',
+                    blue: {
+                        light: '#EBF5FB',
+                        DEFAULT: '#5DADE2',
+                        dark: '#2E86C1',
                     },
-                    text: {
-                        warm: '#4A3F35',
+                    neutral: {
+                        100: '#FFFFFF',
+                        200: '#F7F3FF',
+                        300: '#F5F5F5',
+                        400: '#E0E0E0',
+                        500: '#BDBDBD',
+                        600: '#757575',
+                        700: '#4A3F35',
+                        800: '#333333',
+                        900: '#1A1A1A',
                     }
                 },
                 // Keeping MoveBem colors for backward compatibility but we'll replace their usage
@@ -151,12 +162,14 @@ export default {
                 'glass-hover': 'glass-hover 0.3s ease-out forwards'
 			},
             fontFamily: {
+                sans: ['Quicksand', 'sans-serif'],
+                serif: ['Playfair Display', 'serif'],
                 'montserrat': ['Montserrat', 'sans-serif'],
                 'quicksand': ['Quicksand', 'sans-serif'],
                 'playfair': ['Playfair Display', 'serif']
             },
             backgroundImage: {
-                'hero-gradient': 'linear-gradient(135deg, #7432B4 0%, #9747FF 100%)',
+                'hero-gradient': 'linear-gradient(135deg, var(--fenjes-purple-dark) 0%, var(--fenjes-purple-default) 100%)',
                 'glass-gradient': 'linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
             }
 		}
