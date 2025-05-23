@@ -6,11 +6,11 @@ import { ChairExerciseList } from "./ui/chair-exercise-list";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Heart, ChevronRight } from "lucide-react";
+import { Heart, ChevronRight, ChevronLeft, Play, CheckCircle, ExternalLink, Info } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useFavoriteExercises } from "@/hooks/use-favorite-exercises";
 import { JourneyTracker } from "@/components/JourneyTracker";
-import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ChairYogaDashboardProps {
   userProfile?: Partial<ChairYogaProfile> | null;
@@ -25,14 +25,40 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
   // Group exercises by category for tabs
   const exercisesByCategory = groupExercisesByCategory(chairYogaExercises);
 
+  // Helper function to map numeric pain level to string category
+  const mapPainLevelToString = (painLevelNumber?: number | string): string => {
+    if (typeof painLevelNumber === 'string') {
+      if (['low', 'medium', 'high'].includes(painLevelNumber)) {
+        return painLevelNumber;
+      }
+      const parsed = parseInt(painLevelNumber, 10);
+      if (!isNaN(parsed)) painLevelNumber = parsed;
+      else return 'medium'; 
+    }
+    if (painLevelNumber === undefined || painLevelNumber === null) return 'medium';
+    if (painLevelNumber <= 3) return 'low';
+    if (painLevelNumber <= 6) return 'medium';
+    return 'high';
+  };
+
+  // Define an interface for the profile object expected by getRecommendedExercises
+  interface RecommendationProfileType {
+    primaryPain: string;
+    conditions: string[];
+    painLevel: string; // Explicitly string
+    mobilityLevel: string;
+    currentDay?: number; 
+  }
+
   // Generate personalized recommendations when user profile changes
   useEffect(() => {
     if (userProfile) {
-      // Cast o userProfile para ter todos os campos necessários ou use valores padrão
-      const profileForRecommendations = {
+      const mappedPainLevel = mapPainLevelToString(userProfile.painLevel);
+      
+      const profileForRecommendations: RecommendationProfileType = {
         primaryPain: userProfile.primaryPain || 'neck',
         conditions: userProfile.conditions || [],
-        painLevel: userProfile.painLevel || 'medium',
+        painLevel: mappedPainLevel,
         mobilityLevel: userProfile.mobilityLevel || 'moderate'
       };
       
@@ -244,8 +270,11 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
           </TabsContent>
         </Tabs>
         
-        {/* Medical disclaimer */}
-        <MedicalDisclaimer variant="exercise" className="mt-8" />
+        <div className="flex justify-center mt-8">
+          <Button variant="outline" className="w-full sm:w-auto">
+            <ExternalLink className="mr-2 h-4 w-4" /> Ver Todos os Exercícios
+          </Button>
+        </div>
       </section>
     </div>
   );
@@ -287,3 +316,5 @@ function getCategoryLabel(category: string): string {
       return category;
   }
 } 
+
+export default ChairYogaDashboard; 

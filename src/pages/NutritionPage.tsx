@@ -12,7 +12,7 @@ import { generatePersonalizedNutrition } from "@/lib/nutrition-utils";
 import { UserProfile } from "@/types/onboarding";
 import { RecipeList } from "@/components/ui/recipe-list";
 import { useFavoriteRecipes } from "@/hooks/use-favorite-recipes";
-import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
+import { RecipeCard } from "@/components/ui/recipe-card";
 
 interface NutritionGuide {
   id: string;
@@ -155,21 +155,20 @@ const NutritionPage = () => {
 
   return (
     <AppLayout>
-      <div className="container mx-auto px-4 py-8">
-        <MedicalDisclaimer />
-        <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="flex flex-wrap justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-fenjes-purple">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-fenjes-purple">
               Nutrição Fenjes
             </h1>
-            <p className="text-gray-600">Receitas e dicas personalizadas para sua saúde e bem-estar</p>
+            <p className="text-sm sm:text-base text-gray-600">Receitas e dicas personalizadas para sua saúde e bem-estar</p>
           </div>
           
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
             <Button 
               variant="outline" 
               onClick={() => setShowNutritionGuide(true)} 
-              className="flex items-center gap-2"
+              className="flex items-center gap-1.5 sm:gap-2 h-9 sm:h-10 text-sm sm:text-base w-full sm:w-auto"
             >
               <FileText size={16} /> Guia Nutricional
             </Button>
@@ -177,13 +176,17 @@ const NutritionPage = () => {
         </div>
 
         <Card className="col-span-full">
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
             <Tabs defaultValue={hasRecommendations ? "recommended" : "library"} className="w-full">
-              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 mb-4">
+              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 mb-3 sm:mb-4">
                 {hasRecommendations && (
-                  <TabsTrigger value="recommended">Recomendadas para Você</TabsTrigger>
+                  <TabsTrigger value="recommended" className="h-9 sm:h-10 text-sm sm:text-base">
+                    Recomendadas para Você
+                  </TabsTrigger>
                 )}
-                <TabsTrigger value="library">Biblioteca de Receitas</TabsTrigger>
+                <TabsTrigger value="library" className="h-9 sm:h-10 text-sm sm:text-base">
+                  Biblioteca de Receitas
+                </TabsTrigger>
               </TabsList>
               {hasRecommendations && (
                 <TabsContent value="recommended" className="mt-2">
@@ -204,82 +207,96 @@ const NutritionPage = () => {
                   favoriteRecipes={favoriteRecipes}
                   onToggleFavorite={toggleFavorite}
                   showFilter={true}
-                  recommendedIds={recommendedIds}
+                  recommendedIds={[]}
                   title="Nossa Biblioteca Completa"
+                  emptyMessage="Nenhuma receita encontrada. Que tal explorar outras categorias?"
                 />
               </TabsContent>
             </Tabs>
-              </CardContent>
-            </Card>
+          </CardContent>
+        </Card>
             
         {nutritionGuide && (
-      <Dialog open={showNutritionGuide} onOpenChange={setShowNutritionGuide}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl text-fenjes-purple">
+          <Dialog open={showNutritionGuide} onOpenChange={setShowNutritionGuide}>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+              <DialogHeader>
+                <DialogTitle className="text-xl sm:text-2xl text-fenjes-purple">
                   {nutritionGuide.title}
-            </DialogTitle>
-            <DialogDescription>
+                </DialogTitle>
+                <DialogDescription className="text-sm sm:text-base">
                   {nutritionGuide.description}
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="mt-6">
-                <Tabs defaultValue={activeGuideSection.toString()} onValueChange={(value) => setActiveGuideSection(parseInt(value))}>
-              <TabsList className="w-full flex overflow-x-auto">
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="mt-4 sm:mt-6 flex flex-col overflow-hidden">
+                <Tabs defaultValue={activeGuideSection.toString()} onValueChange={(value) => setActiveGuideSection(parseInt(value))} className="flex flex-col overflow-hidden">
+                  <TabsList className="w-full flex overflow-x-auto flex-shrink-0 gap-1 sm:gap-2">
                     {nutritionGuide.content.sections.map((section, index) => (
-                  <TabsTrigger 
-                    key={index} 
-                    value={index.toString()}
-                    className="flex-shrink-0"
-                  >
-                    {section.title}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+                      <TabsTrigger 
+                        key={index} 
+                        value={index.toString()}
+                        className="flex-shrink-0 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-1.5 sm:py-2"
+                      >
+                        {section.title}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
               
                   {nutritionGuide.content.sections.map((section, index) => (
-                <TabsContent key={index} value={index.toString()} className="pt-4">
-                  <h3 className="text-xl font-semibold mb-3">{section.title}</h3>
-                  <p className="mb-4 text-gray-700">{section.text}</p>
+                    <TabsContent 
+                      key={index} 
+                      value={index.toString()} 
+                      className="pt-3 sm:pt-4 overflow-y-auto flex-grow"
+                    >
+                      <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">{section.title}</h3>
+                      <p className="mb-3 sm:mb-4 text-sm sm:text-base text-gray-700">{section.text}</p>
                   
-                  {section.tips && (
-                    <div className="mb-6">
-                      <h4 className="font-medium mb-2">Dicas Práticas:</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        {section.tips.map((tip, i) => (
-                          <li key={i} className="text-gray-700">{tip}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {section.foods && (
-                    <div>
-                      <h4 className="font-medium mb-2">Alimentos Recomendados:</h4>
-                      <div className="space-y-3">
-                        {section.foods.map((food, i) => (
-                          <div key={i} className="bg-gray-50 p-3 rounded-md">
-                            <div className="font-medium">{food.name}</div>
-                            <div className="text-sm text-gray-600">{food.benefits}</div>
-                            {food.serving && (
-                              <div className="text-xs text-gray-500 mt-1">
-                                Porção recomendada: {food.serving}
+                      {section.tips && (
+                        <div className="space-y-2">
+                          <h4 className="font-medium text-sm sm:text-base">Dicas:</h4>
+                          <ul className="list-disc list-inside space-y-1">
+                            {section.tips.map((tip, tipIndex) => (
+                              <li key={tipIndex} className="text-sm sm:text-base text-gray-600">
+                                {tip}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {section.foods && (
+                        <div className="mt-4">
+                          <h4 className="font-medium mb-2 text-sm sm:text-base">Alimentos Recomendados:</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {section.foods.map((food, foodIndex) => (
+                              <div 
+                                key={foodIndex} 
+                                className="bg-gray-50 rounded-lg p-3 sm:p-4"
+                              >
+                                <h5 className="font-medium text-sm sm:text-base text-fenjes-purple mb-1">
+                                  {food.name}
+                                </h5>
+                                <p className="text-xs sm:text-sm text-gray-600 mb-1">
+                                  {food.benefits}
+                                </p>
+                                {food.serving && (
+                                  <p className="text-xs sm:text-sm text-gray-500 italic">
+                                    Porção recomendada: {food.serving}
+                                  </p>
+                                )}
                               </div>
-                            )}
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </TabsContent>
-              ))}
-            </Tabs>
-          </div>
-        </DialogContent>
-      </Dialog>
-        )}
+                        </div>
+                      )}
+                    </TabsContent>
+                  ))}
+                </Tabs>
               </div>
+            </DialogContent>
+          </Dialog>
+        )}
+      </div>
     </AppLayout>
   );
 };

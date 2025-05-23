@@ -260,7 +260,7 @@ const AchievementsPage = () => {
             <CardContent>
               <Progress 
                 value={(unlockCount / totalCount) * 100} 
-                className="h-2.5 mb-4" 
+                className="h-2.5 mb-4 [&>div]:bg-gray-800 dark:[&>div]:bg-gray-600" 
               />
               <p className="text-sm text-gray-500">
                 Continue sua jornada diária para desbloquear novas conquistas e recompensas exclusivas.
@@ -298,7 +298,10 @@ const AchievementsPage = () => {
                 
                 {achievement.progress !== undefined && !achievement.unlocked && (
                   <div className="mb-3">
-                    <Progress value={achievement.progress} className="h-1.5" />
+                    <Progress 
+                      value={achievement.progress} 
+                      className="h-2 bg-muted [&>div]:bg-gray-800 dark:[&>div]:bg-gray-600"
+                    />
                     <p className="text-xs text-right text-gray-500 mt-1">
                       {Math.round(achievement.progress)}% concluído
                     </p>

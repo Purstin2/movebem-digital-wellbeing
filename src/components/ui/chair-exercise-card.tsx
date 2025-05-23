@@ -146,26 +146,42 @@ export function ChairExerciseCard({
 
         {/* Content section */}
         <div className="flex-1 p-4 sm:p-6">
-          <div className="space-y-2">
+          <div className="flex justify-between items-start mb-2">
             <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
               {exercise.title}
             </h3>
-            
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="outline" className="text-sm">
-                <Clock className="mr-1 h-4 w-4" />
-                {exercise.duration} min
-              </Badge>
-              <Badge variant="outline" className="text-sm">
-                <Activity className="mr-1 h-4 w-4" />
-                {difficultyDisplay[exercise.difficulty]}
-              </Badge>
-            </div>
-
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-              {exercise.description}
-            </p>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 -mr-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleFavorite(exercise.id);
+              }}
+            >
+              <Heart 
+                className={cn(
+                  "h-5 w-5",
+                  isFavorite ? "fill-current text-fenjes-purple" : "text-gray-400"
+                )} 
+              />
+            </Button>
           </div>
+          
+          <div className="flex flex-wrap gap-2 mb-2">
+            <Badge variant="outline" className="text-sm">
+              <Clock className="mr-1 h-4 w-4" />
+              {exercise.duration} min
+            </Badge>
+            <Badge variant="outline" className="text-sm">
+              <Activity className="mr-1 h-4 w-4" />
+              {difficultyDisplay[exercise.difficulty]}
+            </Badge>
+          </div>
+
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
+            {exercise.description}
+          </p>
 
           {showDetails && (
             <div className="mt-4 space-y-3">
@@ -221,25 +237,6 @@ export function ChairExerciseCard({
           >
             <Play className="mr-2 h-5 w-5" />
             Iniciar Exercício
-          </Button>
-          
-          <Button
-            variant="outline"
-            onClick={() => onToggleFavorite(exercise.id)}
-            className="w-full h-12 text-base"
-            aria-label={isFavorite ? `Remover ${exercise.title} dos favoritos` : `Adicionar ${exercise.title} aos favoritos`}
-          >
-            {isFavorite ? (
-              <>
-                <Heart className="mr-2 h-5 w-5 fill-current" />
-                Remover dos Favoritos
-              </>
-            ) : (
-              <>
-                <Heart className="mr-2 h-5 w-5" />
-                Adicionar aos Favoritos
-              </>
-            )}
           </Button>
         </div>
       </div>

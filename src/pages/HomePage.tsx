@@ -7,7 +7,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { UserProfile } from '@/types/onboarding';
 import { Icons } from '@/components/icons';
 import { ArrowRight, Edit3, User, Zap, Heart, Star, Wind, Leaf, Brain } from 'lucide-react';
-import { MedicalDisclaimer } from '@/components/ui/medical-disclaimer';
 
 interface NextStep {
   title: string;
@@ -104,32 +103,32 @@ const HomePage = () => {
   ];
 
   return (
-    <AppLayout showSidebar={true} showNavbar={true}>
+    <AppLayout showSidebar={true} showHeader={true}>
       <div className="min-h-screen bg-gradient-to-br from-fenjes-white to-fenjes-blue/10">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 text-center bg-fenjes-purple text-white relative overflow-hidden">
+        <section className="py-8 sm:py-16 md:py-24 text-center bg-fenjes-purple text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-fenjes-purple via-fenjes-purple-dark to-fenjes-blue opacity-70"></div>
           <div className="absolute inset-0 pattern-cross pattern-white pattern-bg-transparent pattern-opacity-10 pattern-size-12"></div>
           
-          <div className="container mx-auto px-6 relative z-10">
+          <div className="container mx-auto px-4 sm:px-6 relative z-10">
             {userProfile && (
-              <Avatar className="h-20 w-20 mx-auto mb-6 border-4 border-white shadow-lg">
+              <Avatar className="h-16 w-16 sm:h-20 sm:w-20 mx-auto mb-4 sm:mb-6 border-4 border-white shadow-lg">
                 <AvatarImage src={undefined} alt={userProfile.firstName || 'Usuário'} />
-                <AvatarFallback className="text-2xl bg-fenjes-blue-light text-fenjes-purple-dark">
+                <AvatarFallback className="text-xl sm:text-2xl bg-fenjes-blue-light text-fenjes-purple-dark">
                   {userProfile.firstName ? userProfile.firstName.substring(0,1).toUpperCase() : 'U'}
                 </AvatarFallback>
               </Avatar>
             )}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              {greeting}{userProfile ? `, ${userProfile.firstName}` : ''}!
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4">
+              {greeting}{userProfile?.firstName ? `, ${userProfile.firstName}` : ''}!
             </h1>
-            <p className="text-lg md:text-xl text-fenjes-blue/30 mb-8 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-fenjes-blue/30 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
               Seu refúgio diário para alívio, movimento e nutrição. Redescubra o bem-estar com Fenjes.
             </p>
             {nextStep && (
               <Button
                 size="lg"
-                className="bg-white text-fenjes-purple hover:bg-gray-100 shadow-lg transform hover:scale-105 transition-transform duration-300"
+                className="bg-white text-fenjes-purple hover:bg-gray-100 shadow-lg transform hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
                 onClick={() => navigate(nextStep.link)}
               >
                 {nextStep.ctaText} <ArrowRight className="ml-2 h-5 w-5" />
@@ -138,7 +137,8 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Next Step / Personalized Action Section */}
+        {/* Next Step / Personalized Action Section - REMOVED AS PER USER REQUEST */}
+        {/* 
         {nextStep && !userProfile?.primaryPain && (
           <section className="py-12 bg-fenjes-blue-light">
             <div className="container mx-auto px-6">
@@ -159,30 +159,35 @@ const HomePage = () => {
             </div>
           </section>
         )}
+        */}
 
         {/* Features Section */}
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-4">
+        <section className="py-8 sm:py-16 md:py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 text-center mb-3 sm:mb-4">
               Descubra o Poder do Fenjes
             </h2>
-            <p className="text-lg text-gray-600 text-center mb-12 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-600 text-center mb-8 sm:mb-12 max-w-xl mx-auto px-4">
               Ferramentas e recursos desenhados para apoiar sua jornada única de bem-estar.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {featureCards.map((card) => (
                 <Card key={card.title} className={`${card.bgColor} shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col`}>
-                  <CardHeader className="items-center text-center">
-                    <div className="p-3 rounded-full bg-white mb-4 shadow">
+                  <CardHeader className="items-center text-center p-4 sm:p-6">
+                    <div className="p-2 sm:p-3 rounded-full bg-white mb-3 sm:mb-4 shadow">
                       {card.icon}
                     </div>
-                    <CardTitle className={`text-xl font-semibold ${card.textColor}`}>{card.title}</CardTitle>
+                    <CardTitle className={`text-lg sm:text-xl font-semibold ${card.textColor}`}>{card.title}</CardTitle>
                   </CardHeader>
-                  <CardContent className="flex-grow">
-                    <p className="text-gray-700 text-sm mb-6 text-center">{card.description}</p>
+                  <CardContent className="flex-grow p-4 sm:p-6">
+                    <p className="text-gray-700 text-sm sm:text-base mb-4 sm:mb-6 text-center">{card.description}</p>
                   </CardContent>
-                  <div className="p-6 pt-0">
-                    <Button variant="outline" className={`w-full ${card.textColor} border-${card.textColor.split('-')[1]} hover:bg-${card.textColor.split('-')[1]}/10`} onClick={() => navigate(card.link)}>
+                  <div className="p-4 sm:p-6 pt-0">
+                    <Button 
+                      variant="outline" 
+                      className={`w-full h-10 sm:h-12 text-sm sm:text-base ${card.textColor} border-${card.textColor.split('-')[1]} hover:bg-${card.textColor.split('-')[1]}/10`} 
+                      onClick={() => navigate(card.link)}
+                    >
                       {card.cta} <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
@@ -193,11 +198,11 @@ const HomePage = () => {
         </section>
 
         {/* Inspirational Quote Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-6 text-center">
-            <Zap className="h-12 w-12 text-fenjes-yellow mx-auto mb-4" />
-            <h3 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-3">Momento Fenjes</h3>
-            <p className="text-xl text-gray-600 italic max-w-2xl mx-auto">
+        <section className="py-8 sm:py-16 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-6 text-center">
+            <Zap className="h-8 w-8 sm:h-12 sm:w-12 text-fenjes-yellow mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 mb-2 sm:mb-3">Momento Fenjes</h3>
+            <p className="text-lg sm:text-xl text-gray-600 italic max-w-2xl mx-auto px-4">
               "Acredite na sua capacidade de cura. Cada pequeno passo é uma vitória em direção ao seu bem-estar."
             </p>
           </div>
@@ -205,8 +210,6 @@ const HomePage = () => {
         
         {/* Achievements Quick Glance - Optional, if data is available */}
         {/* This could be a small section if you want to add back recent achievements */}
-
-        <MedicalDisclaimer />
       </div>
     </AppLayout>
   );

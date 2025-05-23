@@ -270,13 +270,6 @@ export interface AccessibilityPreferences {
   lineHeight: number;
 }
 
-export interface MedicalDisclaimer {
-  type: 'general' | 'exercise' | 'nutrition';
-  message: string;
-  severity: 'info' | 'warning' | 'critical';
-  acknowledgementRequired: boolean;
-}
-
 export interface TherapeuticTrack {
   painManagement: {
     exercises: string[];

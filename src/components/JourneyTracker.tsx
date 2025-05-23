@@ -106,11 +106,11 @@ export function JourneyTracker({ onDayComplete, className }: JourneyTrackerProps
           
           <Progress 
             value={completionPercentage} 
-            className="h-2 bg-white/20" 
+            className="h-2 bg-white/20 [&>div]:bg-fenjes-yellow"
           />
         </div>
         
-        <div className="p-4 bg-white">
+        <div className="p-4 bg-card">
           <p className="text-gray-700 text-sm mb-3">
             Cada prática é um passo em direção à sua transformação. Complete os exercícios diariamente para progredir.
           </p>

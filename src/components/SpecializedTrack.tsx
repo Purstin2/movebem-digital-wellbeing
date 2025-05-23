@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PersonalizedProgram, TrackRequirements } from '@/types/personalization';
-import MedicalDisclaimer from './MedicalDisclaimer';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface SpecializedTrackProps {
   type: 'therapeutic' | 'adaptive' | 'wellness';
@@ -64,7 +64,7 @@ export const SpecializedTrack: React.FC<SpecializedTrackProps> = ({
   };
 
   const trackInfo = getTrackInfo();
-  const colorScheme = {
+  const colorSchemes = {
     blue: {
       bg: 'bg-blue-50',
       border: 'border-blue-500',
@@ -83,16 +83,18 @@ export const SpecializedTrack: React.FC<SpecializedTrackProps> = ({
       text: 'text-purple-700',
       button: 'bg-purple-500 hover:bg-purple-600',
     },
-  }[trackInfo.color];
+  };
+
+  const currentColorScheme = colorSchemes[trackInfo.color as keyof typeof colorSchemes];
 
   return (
-    <div className={`rounded-lg ${colorScheme.bg} p-6 mb-8`}>
+    <div className={`rounded-lg ${currentColorScheme?.bg || 'bg-gray-50'} p-6 mb-8`}>
       <div className="flex items-center gap-3 mb-4">
         <span className="text-3xl" role="img" aria-label="Track icon">
           {trackInfo.icon}
         </span>
         <div>
-          <h2 className={`text-2xl font-semibold ${colorScheme.text}`}>
+          <h2 className={`text-2xl font-semibold ${currentColorScheme?.text || 'text-gray-700'}`}>
             {trackInfo.title}
           </h2>
           <p className="text-gray-600">{trackInfo.subtitle}</p>
@@ -104,14 +106,14 @@ export const SpecializedTrack: React.FC<SpecializedTrackProps> = ({
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* Características da Trilha */}
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className={`text-lg font-medium ${colorScheme.text} mb-4`}>
+          <h3 className={`text-lg font-medium ${currentColorScheme?.text || 'text-gray-700'} mb-4`}>
             Características Principais
           </h3>
           <ul className="space-y-3">
             {trackInfo.features.map((feature, index) => (
               <li key={index} className="flex items-center gap-2">
                 <svg
-                  className={`w-5 h-5 ${colorScheme.text}`}
+                  className={`w-5 h-5 ${currentColorScheme?.text || 'text-gray-700'}`}
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -129,14 +131,14 @@ export const SpecializedTrack: React.FC<SpecializedTrackProps> = ({
 
         {/* Requisitos e Recomendações */}
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className={`text-lg font-medium ${colorScheme.text} mb-4`}>
+          <h3 className={`text-lg font-medium ${currentColorScheme?.text || 'text-gray-700'} mb-4`}>
             Requisitos e Recomendações
           </h3>
           <div className="space-y-4">
             <div>
               <p className="font-medium">Nível de Dor Máximo:</p>
               <p className="text-gray-600">
-                {requirements[type].maxPainLevel}/10
+                {requirements[type].maxPainLevel.level}/10
               </p>
             </div>
             <div>
@@ -148,7 +150,7 @@ export const SpecializedTrack: React.FC<SpecializedTrackProps> = ({
             <div>
               <p className="font-medium">Supervisão Profissional:</p>
               <p className="text-gray-600">
-                {requirements[type].requiredProfessionalGuidance
+                {(requirements[type] as any).requiredProfessionalGuidance
                   ? 'Necessária'
                   : 'Recomendada'}
               </p>
@@ -158,22 +160,17 @@ export const SpecializedTrack: React.FC<SpecializedTrackProps> = ({
       </div>
 
       {/* Medical Disclaimer específico para a trilha */}
-      <MedicalDisclaimer
-        variant="exercise"
-        painLevelWarning={true}
-        requiresProfessionalGuidance={requirements[type].requiredProfessionalGuidance}
-        contraindicatedFor={[
-          'Lesões agudas não avaliadas',
-          'Condições médicas instáveis',
-          'Dor severa não diagnosticada',
-        ]}
-      />
+      <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+        <p className="text-sm text-yellow-700">
+          Lembre-se: este plano é uma sugestão. Ouça seu corpo e ajuste conforme necessário.
+        </p>
+      </div>
 
       {/* Botão de Início/Continuação */}
       <button
-        className={`w-full mt-6 py-3 px-6 text-white rounded-lg ${colorScheme.button} transition-colors duration-200`}
+        className={`w-full mt-6 py-3 px-6 text-white rounded-lg ${currentColorScheme?.button || 'bg-gray-500 hover:bg-gray-600'} transition-colors duration-200`}
       >
-        {program.progressTracking.currentDay === 0
+        {program.currentDay === 0
           ? 'Começar Jornada'
           : 'Continuar Jornada'}
       </button>

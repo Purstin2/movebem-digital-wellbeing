@@ -186,22 +186,23 @@ export function AppLayout({ children, className, showHeader = true, showSidebar 
       
       <div className="flex-1 flex">
         {showSidebar && (
-          <div className={cn(
-            "fixed inset-y-0 z-20 flex-shrink-0 transition-all duration-300 mt-16",
-            "md:w-64 md:left-0 md:relative md:mt-0",
-            expanded ? "left-0" : "-left-full",
-            (isMobile && expanded) && "w-64 bg-background bg-opacity-100"
-          )}>
-            <Sidebar userProfile={userProfile} className="border-r min-h-screen py-4" />
-            
+          <>
             {/* Overlay em dispositivos móveis */}
             {isMobile && expanded && (
               <div 
-                className="fixed inset-0 bg-black/50 z-[-1] md:hidden"
+                className="fixed inset-0 bg-black/50 z-20 md:hidden"
                 onClick={toggleSidebar}
               />
             )}
-          </div>
+            <div className={cn(
+              "fixed inset-y-0 z-30 flex-shrink-0 transition-all duration-300 mt-16 bg-white",
+              "md:w-64 md:left-0 md:relative md:mt-0",
+              expanded ? "left-0" : "-left-full",
+              (isMobile && expanded) && "w-64"
+            )}>
+              <Sidebar userProfile={userProfile} className="border-r min-h-screen py-4" />
+            </div>
+          </>
         )}
         
         <main className={cn(

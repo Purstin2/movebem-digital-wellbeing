@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -160,39 +159,39 @@ const ExercisesPage = () => {
 
   return (
     <AppLayout>
-      <div className="max-w-7xl mx-auto animate-fade-in">
-        <header className="mb-8">
-          <h1 className="font-quicksand text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 animate-fade-in">
+        <header className="mb-6 sm:mb-8">
+          <h1 className="font-quicksand text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2">
             Biblioteca de Exercícios
           </h1>
-          <p className="text-gray-500">
+          <p className="text-sm sm:text-base text-gray-500">
             Explore exercícios específicos para cada parte do corpo ou necessidade
           </p>
         </header>
 
         {/* User Track Section */}
         {userProfile?.trackAssigned && trackInfo && trackExercises.length > 0 && (
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="mb-6 sm:mb-8">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <div className={`p-1.5 rounded-full ${trackInfo.color.replace('bg-', 'bg-opacity-20 bg-')}`}>
                 {getTrackIcon(userProfile.trackAssigned)}
               </div>
-              <h2 className="font-quicksand text-xl font-semibold">
+              <h2 className="font-quicksand text-lg sm:text-xl font-semibold">
                 Sua Trilha {trackInfo.name}
               </h2>
             </div>
             
-            <Card className="mb-6 bg-gradient-to-r from-white to-gray-50">
-              <CardHeader className="pb-2">
+            <Card className="mb-4 sm:mb-6 bg-gradient-to-r from-white to-gray-50">
+              <CardHeader className="pb-2 p-4 sm:p-6">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">Exercícios Recomendados</CardTitle>
-                  <Badge variant="outline">
+                  <CardTitle className="text-base sm:text-lg">Exercícios Recomendados</CardTitle>
+                  <Badge variant="outline" className="text-xs sm:text-sm">
                     Dia {userProfile.currentDay || 1}
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <CardContent className="p-4 sm:p-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {trackExercises.slice(0, 3).map((exercise) => (
                     <ExerciseCard
                       key={exercise.id}
@@ -213,25 +212,25 @@ const ExercisesPage = () => {
         )}
 
         {/* Search and filters */}
-        <div className="bg-white rounded-xl p-4 mb-6 border shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex flex-col md:flex-row gap-4">
+        <div className="bg-white rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 border shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
               <Input
                 placeholder="Buscar exercícios..."
-                className="pl-10"
+                className="pl-10 h-10 sm:h-12 text-sm sm:text-base"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <div className="flex items-center gap-2">
               <Filter size={18} className="text-gray-500" />
-              <span className="text-sm text-gray-500">Filtros:</span>
+              <span className="text-xs sm:text-sm text-gray-500">Filtros:</span>
             </div>
           </div>
 
           {/* Categories */}
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
             {categories.map((category) => (
               <CategoryBadge
                 key={category.id}
@@ -239,13 +238,14 @@ const ExercisesPage = () => {
                 label={category.label}
                 active={activeCategory === category.id}
                 onClick={() => handleCategoryClick(category.id)}
+                className="text-xs sm:text-sm py-1 sm:py-1.5 px-2 sm:px-3"
               />
             ))}
           </div>
         </div>
 
         {/* Exercises Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {filteredExercises.length > 0 ? (
             filteredExercises.map((exercise) => (
               <ExerciseCard
@@ -257,15 +257,13 @@ const ExercisesPage = () => {
                 onFavoriteToggle={() => toggleFavorite(exercise.id)}
                 onClick={() => navigate(`/exercises/${exercise.id}`)}
                 image={<YogaIllustration pose={exercise.pose as any} />}
+                className="h-full"
               />
             ))
           ) : (
-            <div className="col-span-full py-12 text-center">
-              <h3 className="text-lg font-quicksand font-medium text-gray-700 mb-2">
-                Nenhum exercício encontrado
-              </h3>
-              <p className="text-gray-500">
-                Tente ajustar seus filtros ou buscar por outro termo
+            <div className="col-span-full text-center py-8">
+              <p className="text-gray-500 text-sm sm:text-base">
+                Nenhum exercício encontrado com os filtros atuais.
               </p>
             </div>
           )}

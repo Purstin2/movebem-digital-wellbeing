@@ -199,21 +199,6 @@ export interface ProgressionPlan {
   };
 }
 
-export const MedicalDisclaimer = {
-  general: [
-    'Este conteúdo não substitui acompanhamento médico profissional',
-    'Consulte seu médico antes de iniciar qualquer programa de exercícios',
-    'Pare imediatamente se sentir dor excessiva ou desconforto',
-    'Adapte os exercícios conforme sua condição física individual',
-    'Em caso de condições médicas específicas, busque orientação profissional'
-  ],
-  exerciseSpecific: (exercise: ChairYogaExercise) => [
-    `Contraindicações específicas para ${exercise.title}:`,
-    ...exercise.contraindications
-  ],
-  medicationWarnings: {
-    anticoagulants: 'Evite exercícios com risco de impacto ou pressão excessiva',
-    bloodPressure: 'Monitore sua pressão durante os exercícios',
-    painMedication: 'Não exceda limites naturais de movimento'
-  }
-}; 
+export interface SafetyTips {
+  safetyTips: string[];
+} 

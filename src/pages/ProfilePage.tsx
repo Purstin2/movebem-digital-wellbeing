@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 import { 
   User, Settings, Bell, Volume2, Moon, 
   CheckCircle2, Award, Clock, Calendar, 
@@ -30,6 +31,7 @@ interface UserSettings {
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   // Estado para configurações do usuário
   const [userSettings, setUserSettings] = useState<UserSettings>({
@@ -150,6 +152,11 @@ const ProfilePage = () => {
         [type]: !prev.notifications[type]
       }
     }));
+  };
+  
+  // Função para navegar para a página de conquistas
+  const handleViewFullProgress = () => {
+    navigate('/conquistas');
   };
   
   return (
@@ -288,47 +295,44 @@ const ProfilePage = () => {
               </Card>
               
               {/* Progress Summary */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg font-quicksand">Meu Progresso</CardTitle>
+              <Card className="md:col-span-1">
+                <CardHeader>
+                  <CardTitle>Meu Progresso</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-5">
-                  <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-fenjes-purple-light/30 flex items-center justify-center text-fenjes-purple-dark">
-                      <Calendar size={20} />
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="h-5 w-5 text-fenjes-purple" />
+                      <div>
+                        <div className="font-semibold">{userData.progress.daysCompleted} de 21</div>
+                        <div className="text-sm text-gray-500">Dias Completados</div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Dias Completados</p>
-                      <p className="font-medium text-gray-900">{userData.progress.daysCompleted} de 21</p>
+                    
+                    <div className="flex items-center gap-3">
+                      <Clock className="h-5 w-5 text-fenjes-purple" />
+                      <div>
+                        <div className="font-semibold">{userData.progress.totalMinutes} minutos</div>
+                        <div className="text-sm text-gray-500">Tempo Total de Prática</div>
+                      </div>
                     </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Award className="h-5 w-5 text-fenjes-purple" />
+                      <div>
+                        <div className="font-semibold">{userData.progress.achievements} desbloqueadas</div>
+                        <div className="text-sm text-gray-500">Conquistas</div>
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      variant="outline" 
+                      className="w-full mt-4"
+                      onClick={handleViewFullProgress}
+                    >
+                      Ver Progresso Completo
+                    </Button>
                   </div>
-                  
-                  <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-fenjes-green/20 flex items-center justify-center text-fenjes-green">
-                      <Clock size={20} />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Tempo Total de Prática</p>
-                      <p className="font-medium text-gray-900">{userData.progress.totalMinutes} minutos</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
-                      <Award size={20} />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Conquistas</p>
-                      <p className="font-medium text-gray-900">{userData.progress.achievements} desbloqueadas</p>
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    className="w-full mt-2 bg-fenjes-purple hover:bg-fenjes-purple-dark h-12 touch-manipulation"
-                    variant="default"
-                  >
-                    Ver Progresso Completo
-                  </Button>
                 </CardContent>
               </Card>
             </div>
@@ -434,23 +438,20 @@ const ProfilePage = () => {
                     </div>
                   </div>
                   
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <p className="text-gray-900 font-medium">Som</p>
-                      <Volume2 size={16} />
-                    </div>
-                    <p className="text-sm text-gray-500 mb-4">Sons de notificação e feedback</p>
-                    <Slider 
-                      value={[userSettings.soundVolume]}
-                      max={100}
-                      step={5}
-                      onValueChange={changeVolume}
-                      className="touch-manipulation"
-                    />
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>0%</span>
-                      <span>50%</span>
-                      <span>100%</span>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Som</label>
+                        <span className="text-xs text-gray-500">{userSettings.soundVolume}%</span>
+                      </div>
+                      <Slider
+                        value={[userSettings.soundVolume]}
+                        onValueChange={changeVolume}
+                        max={100}
+                        step={1}
+                        className="[&>div]:bg-fenjes-purple"
+                      />
+                      <p className="text-xs text-gray-500">Sons de notificação e feedback</p>
                     </div>
                   </div>
                   

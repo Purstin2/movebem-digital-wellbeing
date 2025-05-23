@@ -11,6 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useSidebar } from "@/context/SidebarContext";
 import { UserProfile } from '@/types/onboarding';
 import { NotificationsPanel } from '@/components/ui/notifications';
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
 
 interface HeaderProps {
   userProfile?: UserProfile | null;
@@ -20,6 +22,7 @@ export function Header({ userProfile }: HeaderProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const { toggleSidebar } = useSidebar();
 
   // Handle resize events
   useEffect(() => {
@@ -45,8 +48,19 @@ export function Header({ userProfile }: HeaderProps) {
   return (
     <header className="sticky top-0 z-20 w-full px-3 md:px-6 py-3 bg-fenjes-purple text-white shadow-md ios-sticky-fix">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center">
-          <Link to="/" className="flex items-center ml-10 md:ml-0">
+        <div className="flex items-center gap-2">
+          {/* Botão de menu para mobile */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-white hover:bg-white/10"
+            onClick={toggleSidebar}
+          >
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Abrir menu</span>
+          </Button>
+
+          <Link to="/" className="flex items-center">
             <div className="h-10 w-32 md:w-40 bg-white rounded flex items-center justify-center overflow-hidden">
               {/* Placeholder para a logo - substituir pelo componente de imagem real */}
               <span className="text-fenjes-purple font-semibold text-sm md:text-base">LOGO FENJES</span>
