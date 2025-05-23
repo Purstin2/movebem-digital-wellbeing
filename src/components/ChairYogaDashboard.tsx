@@ -10,6 +10,7 @@ import { Heart, ChevronRight } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useFavoriteExercises } from "@/hooks/use-favorite-exercises";
 import { JourneyTracker } from "@/components/JourneyTracker";
+import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
 
 interface ChairYogaDashboardProps {
   userProfile?: Partial<ChairYogaProfile> | null;
@@ -242,6 +243,9 @@ export function ChairYogaDashboard({ userProfile }: ChairYogaDashboardProps) {
             />
           </TabsContent>
         </Tabs>
+        
+        {/* Medical disclaimer */}
+        <MedicalDisclaimer variant="exercise" className="mt-8" />
       </section>
     </div>
   );

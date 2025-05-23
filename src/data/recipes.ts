@@ -408,6 +408,225 @@ export const energyBoostingRecipes: Recipe[] = [
     },
     
     imageUrl: '/images/nutrition/matcha_latte.jpg'
+  },
+  
+  // NOVOS ENERGIZANTES
+  {
+    id: 'beet_berry_power_smoothie',
+    title: 'Smoothie Energizante de Beterraba e Frutas Vermelhas',
+    category: 'energy_boost',
+    targetProfile: ['fatigue', 'morning_energy', 'workout_preparation'],
+    difficulty: 'easy',
+    prepTime: '7 min',
+    emotionalMessage: 'Desperte suas células com a energia da terra e do sol',
+    
+    ingredients: [
+      { item: '1/2 beterraba média crua', benefit: 'Nitratos que melhoram fluxo sanguíneo e oxigenação' },
+      { item: '1 xícara de frutas vermelhas mistas', benefit: 'Antioxidantes que combatem fadiga celular' },
+      { item: '1 col sopa de sementes de chia', benefit: 'Ômega-3 para energia sustentada' },
+      { item: '1 col sopa de proteína de ervilha', benefit: 'Aminoácidos essenciais para vitalidade muscular' },
+      { item: '1 col chá de maca peruana', benefit: 'Adaptógeno energético natural' },
+      { item: '1/2 banana', benefit: 'Potássio para função neuromuscular' },
+      { item: '1 xícara de água de coco', benefit: 'Eletrólitos para hidratação celular otimizada' },
+      { item: '1 col chá de gengibre fresco ralado', benefit: 'Ativa circulação e metabolismo' },
+      { item: 'Gelo a gosto', benefit: 'Refrescância e temperatura ideal' }
+    ],
+    
+    preparation: [
+      'Lave e corte a beterraba em pedaços pequenos',
+      'Adicione todos os ingredientes no liquidificador',
+      'Bata até obter consistência homogênea e cremosa',
+      'Se necessário, ajuste a consistência com mais água de coco',
+      'Sirva imediatamente para máximo benefício energético'
+    ],
+    
+    scientificBacking: 'Pesquisas mostram que os nitratos da beterraba aumentam a eficiência mitocondrial em até 20%, melhorando o uso de oxigênio e reduzindo a sensação de fadiga durante exercícios físicos. Um estudo publicado no Journal of Applied Physiology demonstrou melhora de 16% na resistência após consumo.',
+    
+    timing: 'Ideal para consumo pela manhã ou 60 minutos antes de atividade física',
+    
+    personalizedTips: {
+      digestive_sensitive: 'Comece com 1/4 de beterraba e aumente gradualmente',
+      hypertension: 'Monitore pressão arterial, pois nitratos podem reduzi-la',
+      diabetes: 'Substitua banana por maçã verde para menor impacto glicêmico'
+    },
+    
+    imageUrl: '/images/nutrition/beet_smoothie.jpg'
+  },
+  
+  {
+    id: 'quinoa_power_bowl',
+    title: 'Bowl Energético de Quinoa e Superalimentos',
+    category: 'energy_boost',
+    targetProfile: ['sustained_energy', 'balanced_nutrition', 'muscle_recovery'],
+    difficulty: 'medium',
+    prepTime: '20 min',
+    emotionalMessage: 'Construa sua vitalidade com a sabedoria dos grãos ancestrais',
+    
+    ingredients: [
+      { item: '1/2 xícara de quinoa', benefit: 'Carboidratos complexos + proteína vegetal completa' },
+      { item: '1/4 abacate', benefit: 'Gorduras saudáveis para energia sustentada' },
+      { item: '1/4 xícara de edamame', benefit: 'Proteína completa e ferro biodisponível' },
+      { item: '1/4 xícara de blueberries', benefit: 'Antioxidantes para proteção celular' },
+      { item: '1 col sopa de sementes de abóbora', benefit: 'Magnésio e zinco para metabolismo energético' },
+      { item: '1 ovo cozido', benefit: 'Colina para função cerebral e muscular' },
+      { item: '1 punhado de espinafre', benefit: 'Ferro e folato para combater anemia e fadiga' },
+      { item: '1 col sopa de azeite extra virgem', benefit: 'Ácidos graxos essenciais para função celular' },
+      { item: '1/2 limão (suco)', benefit: 'Vitamina C para absorção de ferro e alcalinização' },
+      { item: '1 pitada de sal marinho', benefit: 'Eletrólitos para equilíbrio celular' }
+    ],
+    
+    preparation: [
+      'Cozinhe a quinoa em 1 xícara de água com pitada de sal por 15 minutos',
+      'Enquanto isso, cozinhe o edamame por 5 minutos em água fervente',
+      'Prepare o molho: misture azeite, suco de limão, sal e pimenta',
+      'Monte o bowl: quinoa como base, arranje os outros ingredientes em seções',
+      'Regue com o molho e sirva morno ou frio'
+    ],
+    
+    scientificBacking: 'A combinação de carboidratos complexos, proteínas e gorduras saudáveis fornece energia contínua sem picos de insulina. A quinoa tem índice glicêmico baixo (53) e contém todos os aminoácidos essenciais, promovendo recuperação muscular e energia sustentada por até 4 horas.',
+    
+    timing: 'Ideal para almoço ou refeição pós-treino',
+    
+    personalizedTips: {
+      vegan: 'Substitua o ovo por tofu firme temperado',
+      celiac: 'Perfeito como está - quinoa é naturalmente sem glúten',
+      thyroid_issues: 'Cozinhe bem o espinafre para reduzir oxalatos'
+    },
+    
+    imageUrl: '/images/nutrition/quinoa_bowl.jpg'
+  },
+  
+  {
+    id: 'adaptogenic_coffee_alternative',
+    title: 'Alternativa ao Café com Adaptógenos',
+    category: 'energy_boost',
+    targetProfile: ['caffeine_sensitive', 'adrenal_fatigue', 'sustainable_energy'],
+    difficulty: 'easy',
+    prepTime: '8 min',
+    emotionalMessage: 'Energia equilibrada que nutre ao invés de esgotar',
+    
+    ingredients: [
+      { item: '1 xícara de água quente', benefit: 'Base de hidratação essencial' },
+      { item: '1 col sopa de raiz de chicória torrada', benefit: 'Sabor similar ao café sem cafeína' },
+      { item: '1 col chá de cacau cru', benefit: 'Teobromina para energia suave' },
+      { item: '1 col chá de alfarroba em pó', benefit: 'Doçura natural rica em cálcio' },
+      { item: '1/2 col chá de canela', benefit: 'Estabiliza açúcar no sangue' },
+      { item: '1 col chá de cogumelo chaga em pó', benefit: 'Adaptógeno para energia celular' },
+      { item: '1/2 col chá de ashwagandha', benefit: 'Equilibra cortisol e energia adrenal' },
+      { item: '1/4 col chá de cardamomo', benefit: 'Melhora digestão e assimilação' },
+      { item: '1/3 xícara de leite de coco cremoso', benefit: 'TCMs para energia cerebral imediata' }
+    ],
+    
+    preparation: [
+      'Ferva água e desligue o fogo',
+      'Adicione chicória, cacau, alfarroba e especiarias',
+      'Mexa bem e deixe em infusão por 3 minutos',
+      'Adicione os adaptógenos e mexa novamente',
+      'Acrescente leite de coco e mexa para incorporar',
+      'Opcional: bata rapidamente para criar espuma',
+      'Sirva quente em xícara pré-aquecida'
+    ],
+    
+    scientificBacking: 'Os adaptógenos como chaga e ashwagandha funcionam modulando o eixo HPA (hipotálamo-pituitária-adrenal), oferecendo suporte às glândulas adrenais esgotadas. Estudos clínicos mostram que a ashwagandha reduz cortisol em 28% e aumenta energia sem o crash posterior da cafeína.',
+    
+    timing: 'Manhãs ou início da tarde, especialmente durante períodos de estresse',
+    
+    personalizedTips: {
+      digestive_issues: 'Omita cardamomo se causar desconforto',
+      autoimmune: 'Consulte médico sobre uso de adaptógenos',
+      weight_loss: 'Use leite de amêndoas em vez de leite de coco'
+    },
+    
+    imageUrl: '/images/nutrition/adaptogenic_coffee.jpg'
+  },
+  
+  {
+    id: 'ginseng_citrus_revitalizer',
+    title: 'Revitalizante de Ginseng e Cítricos',
+    category: 'energy_boost',
+    targetProfile: ['mental_fatigue', 'immune_boost', 'cognitive_enhancement'],
+    difficulty: 'easy',
+    prepTime: '5 min',
+    emotionalMessage: 'Clareza mental e vitalidade em cada gole refrescante',
+    
+    ingredients: [
+      { item: '1 xícara de água filtrada', benefit: 'Hidratação pura para função celular' },
+      { item: '1 col chá de extrato de ginseng coreano', benefit: 'Adaptógeno clássico para energia e foco' },
+      { item: '1 laranja orgânica (suco + raspas)', benefit: 'Vitamina C para imunidade e vitalidade' },
+      { item: '1/2 limão siciliano (suco)', benefit: 'Vitamina C adicional e alcalinizante' },
+      { item: '1 col chá de bagas de goji', benefit: 'Antioxidantes e ferro para combater fadiga' },
+      { item: '1 col chá de mel de manuka', benefit: 'Energia rápida com propriedades medicinais' },
+      { item: '1 pitada de sal do Himalaia', benefit: 'Minerais para condução nervosa e hidratação' },
+      { item: '3-4 folhas de hortelã fresca', benefit: 'Ativa receptores sensoriais para alerta mental' },
+      { item: 'Gelo a gosto', benefit: 'Refrescância e ativação metabólica' }
+    ],
+    
+    preparation: [
+      'Aqueça 1/4 xícara de água e hidrate as bagas de goji por 2 minutos',
+      'Esprema os sucos de laranja e limão',
+      'Adicione o extrato de ginseng ao suco e misture bem',
+      'Combine todos os ingredientes, incluindo as bagas hidratadas',
+      'Adicione água filtrada até completar 2 xícaras',
+      'Misture com mel e sal até dissolver',
+      'Sirva gelado com folhas de hortelã e raspas de laranja'
+    ],
+    
+    scientificBacking: 'O ginseng coreano (Panax ginseng) contém ginsenosídeos que demonstraram efeitos significativos na melhoria da função cognitiva, incluindo memória de trabalho e velocidade de processamento mental. Um estudo duplo-cego publicado no Journal of Psychopharmacology mostrou melhora de 15-20% na performance mental após 8 semanas de uso.',
+    
+    timing: 'Meados da manhã ou começo da tarde, especialmente em momentos de cansaço mental',
+    
+    personalizedTips: {
+      hypertension: 'Use metade da dose de ginseng se pressão arterial for sensível',
+      insomnia: 'Não consuma após as 15h00',
+      diabetes: 'Substitua mel por stevia ou omita completamente'
+    },
+    
+    imageUrl: '/images/nutrition/ginseng_citrus.jpg'
+  },
+  
+  {
+    id: 'coconut_chia_power_pudding',
+    title: 'Pudim Energizante de Coco e Chia',
+    category: 'energy_boost',
+    targetProfile: ['endurance_needs', 'healthy_fats', 'brain_function'],
+    difficulty: 'easy',
+    prepTime: '10 min + 4h geladeira',
+    emotionalMessage: 'Combustível sustentável para corpo e mente ativa',
+    
+    ingredients: [
+      { item: '3 col sopa de sementes de chia', benefit: 'Ômega-3 para função cerebral e anti-inflamatório' },
+      { item: '1 lata pequena de leite de coco (200ml)', benefit: 'TCMs para energia cerebral imediata' },
+      { item: '1/2 xícara de água de coco', benefit: 'Eletrólitos para hidratação celular' },
+      { item: '1 col sopa de óleo de coco extra virgem', benefit: 'Triglicérides de cadeia média para energia' },
+      { item: '1 col sopa de mel cru', benefit: 'Glicogênio para estoque energético muscular' },
+      { item: '1 col chá de extrato de baunilha', benefit: 'Estabiliza níveis de açúcar' },
+      { item: '1/4 col chá de sal marinho', benefit: 'Minerais para função neuromuscular' },
+      { item: '2 col sopa de coco ralado sem açúcar', benefit: 'Fibras e gorduras para saciedade' },
+      { item: '1 col sopa de nibs de cacau cru', benefit: 'Antioxidantes e compostos estimulantes naturais' },
+      { item: '1/4 col chá de canela', benefit: 'Estabiliza glicemia e ativa circulação' }
+    ],
+    
+    preparation: [
+      'Em uma tigela, misture sementes de chia, leite de coco, água de coco e óleo de coco',
+      'Adicione mel, baunilha, sal e canela, mexendo bem',
+      'Incorpore metade do coco ralado e nibs de cacau',
+      'Transfira para potes individuais de vidro',
+      'Cubra e refrigere por pelo menos 4 horas ou durante a noite',
+      'Antes de servir, decore com o restante do coco ralado e nibs de cacau',
+      'Para potencializar, adicione frutas frescas por cima'
+    ],
+    
+    scientificBacking: 'A combinação de TCMs do coco com os ácidos graxos ômega-3 da chia cria um combustível dual para o cérebro. Estudos demonstram que os TCMs são convertidos em cetonas, uma fonte alternativa de energia cerebral que melhora a função cognitiva em 9-14% em estudos controlados.',
+    
+    timing: 'Ideal como café da manhã ou lanche pré-treino 60-90 minutos antes',
+    
+    personalizedTips: {
+      keto_diet: 'Substitua mel por eritritol ou stevia',
+      endurance_athletes: 'Adicione 1 col chá de pólen de abelha para micronutrientes',
+      menopausal: 'Adicione 1 col chá de maca para equilíbrio hormonal adicional'
+    },
+    
+    imageUrl: '/images/nutrition/coconut_chia.jpg'
   }
 ];
 
@@ -665,6 +884,312 @@ export const sleepRelaxationRecipes: Recipe[] = [
     },
     
     imageUrl: '/images/nutrition/moon_milk.jpg'
+  },
+  
+  // NOVAS RECEITAS PARA SONO E RELAXAMENTO
+  {
+    id: 'chamomile_lavender_sleepytime_tea',
+    title: 'Chá Noturno de Camomila e Lavanda',
+    category: 'sleep_support',
+    targetProfile: ['sleep_onset_issues', 'anxiety', 'racing_thoughts'],
+    difficulty: 'easy',
+    prepTime: '7 min',
+    emotionalMessage: 'Um abraço quente que sussurra ao seu sistema nervoso: descanse agora',
+    
+    ingredients: [
+      { item: '2 col chá de flores de camomila secas', benefit: 'Apigenina que se liga aos mesmos receptores que benzodiazepínicos' },
+      { item: '1 col chá de lavanda culinária', benefit: 'Linalol com efeito ansiolítico natural' },
+      { item: '1/2 col chá de pétalas de rosa', benefit: 'Relaxante suave e aromático' },
+      { item: '1/4 col chá de folhas de melissa', benefit: 'Reduz inquietação mental' },
+      { item: '1/2 col chá de valeriana (opcional)', benefit: 'Potencializa efeito sedativo em casos de insônia severa' },
+      { item: '1 col chá de mel de tília', benefit: 'Flavonóides relaxantes e prebióticos noturnos' },
+      { item: '1 fatia fina de limão', benefit: 'Vitamina C para absorção de compostos ativos' },
+      { item: '2 xícaras de água filtrada', benefit: 'Veículo para extração de compostos ativos' }
+    ],
+    
+    preparation: [
+      'Ferva a água e desligue o fogo',
+      'Adicione as ervas secas em infusor ou sachê',
+      'Mergulhe o infusor na água quente',
+      'Tampe e deixe em infusão por 7-10 minutos',
+      'Retire o infusor e adicione mel quando estiver morno',
+      'Adicione a rodela de maçã para sabor e benefícios adicionais',
+      'Beba lentamente, 45-60 minutos antes de dormir'
+    ],
+    
+    scientificBacking: 'A passiflora mostrou eficácia comparável a benzodiazepínicos leves para tratamento de ansiedade e insônia em estudos clínicos, sem efeitos colaterais significativos. O mecanismo de ação inclui modulação de receptores GABA-A e efeito inibitório no sistema nervoso central.',
+    
+    timing: 'Consumir 45-60 minutos antes de dormir, idealmente como parte de uma rotina de relaxamento noturno',
+    
+    personalizedTips: {
+      medication_users: 'Consulte seu médico se usa medicamentos para ansiedade ou sono',
+      pregnancy: 'Evite passiflora durante gestação; substitua por apenas camomila',
+      liver_concerns: 'Use quantidades menores de ervas inicialmente e monitore resposta'
+    },
+    
+    imageUrl: '/images/nutrition/passion_flower.jpg'
+  },
+  
+  {
+    id: 'tart_cherry_sleep_elixir',
+    title: 'Elixir do Sono de Cereja Ácida',
+    category: 'sleep_support',
+    targetProfile: ['melatonin_deficient', 'sleep_quality', 'inflammation_night'],
+    difficulty: 'easy',
+    prepTime: '5 min',
+    emotionalMessage: 'A natureza tem seu próprio remédio para embalar seus sonhos em seda',
+    
+    ingredients: [
+      { item: '1/2 xícara de suco de cereja ácida puro', benefit: 'Fonte natural de melatonina bioativa' },
+      { item: '1/2 xícara de água filtrada', benefit: 'Dilui a concentração para sabor balanceado' },
+      { item: '1 col chá de magnésio líquido (citrato)', benefit: 'Relaxante muscular natural e regulador do sono' },
+      { item: '1 col chá de xarope de bordo', benefit: 'Manganês e zinco para síntese de serotonina' },
+      { item: '1 col chá de vinagre de maçã', benefit: 'Equilibra pH e aumenta absorção de nutrientes' },
+      { item: '1 pitada de canela', benefit: 'Estabiliza açúcar no sangue durante a noite' },
+      { item: '1 col chá de óleo de linhaça', benefit: 'Ômega-3 para combate à inflamação noturna' }
+    ],
+    
+    preparation: [
+      'Misture o suco de cereja e água em um copo',
+      'Adicione o magnésio líquido e mexa bem',
+      'Incorpore o xarope de bordo e vinagre',
+      'Adicione a canela e mexa novamente',
+      'Por último, adicione o óleo de linhaça e misture rapidamente',
+      'Beba em pequenos goles 60 minutos antes de dormir'
+    ],
+    
+    scientificBacking: 'Um estudo da Universidade de Louisiana mostrou que o consumo de suco de cereja ácida aumentou os níveis de melatonina e resultou em mais 84 minutos de sono por noite. A combinação com magnésio potencializa o efeito, pois este mineral é cofator para conversão de triptofano em serotonina e melatonina.',
+    
+    timing: 'Consumir 45-60 minutos antes de dormir para permitir absorção ideal da melatonina natural',
+    
+    personalizedTips: {
+      autoimmune: 'Faça teste com pequena quantidade para verificar sensibilidade',
+      diabetes: 'Substitua xarope de bordo por stevia líquida',
+      arthritis: 'Dobre a quantidade de suco de cereja para efeito anti-inflamatório potencializado'
+    },
+    
+    imageUrl: '/images/nutrition/cherry_elixir.jpg'
+  },
+  
+  {
+    id: 'magnesium_rich_bedtime_smoothie',
+    title: 'Smoothie Noturno Rico em Magnésio',
+    category: 'sleep_support',
+    targetProfile: ['muscle_tension', 'restless_legs', 'stress_insomnia'],
+    difficulty: 'easy',
+    prepTime: '8 min',
+    emotionalMessage: 'Relaxe cada célula do seu corpo enquanto convida o sono profundo',
+    
+    ingredients: [
+      { item: '1 banana madura congelada', benefit: 'Magnésio natural e triptofano para serotonina' },
+      { item: '1/2 xícara de espinafre baby', benefit: 'Magnésio biodisponível e calmante natural' },
+      { item: '1 col sopa de sementes de abóbora', benefit: 'Alta concentração de magnésio e zinco' },
+      { item: '1 col sopa de manteiga de amêndoas', benefit: 'Triptofano e gorduras saudáveis para hormônios' },
+      { item: '1/2 xícara de leite de aveia', benefit: 'Aveia contém melatonina e beta-glucanas relaxantes' },
+      { item: '1/2 col chá de canela', benefit: 'Estabiliza açúcar no sangue durante o sono' },
+      { item: '1 tâmara sem caroço', benefit: 'Adoçante natural com minerais relaxantes' },
+      { item: '1 pitada de sal marinho', benefit: 'Eletrólitos para relaxamento muscular' },
+      { item: '1/4 col chá de noz-moscada', benefit: 'Leve sedativo natural tradicional' },
+      { item: '1/2 xícara de cubos de gelo', benefit: 'Resfria corpo para induzir sono' }
+    ],
+    
+    preparation: [
+      'Adicione todos os ingredientes ao liquidificador',
+      'Bata em velocidade alta até ficar cremoso',
+      'Se necessário, adicione mais líquido para ajustar consistência',
+      'Transfira para um copo e adicione canela polvilhada por cima',
+      'Beba lentamente, 30-45 minutos antes de dormir'
+    ],
+    
+    scientificBacking: 'O magnésio é um cofator essencial para cerca de 300 reações enzimáticas no corpo, incluindo a produção de GABA, o principal neurotransmissor inibitório do cérebro. Estudos clínicos mostram que a suplementação de magnésio melhora a qualidade do sono em 67% dos casos, especialmente em pessoas com síndrome das pernas inquietas e espasmos musculares noturnos.',
+    
+    timing: 'Ideal para consumo 30-45 minutos antes de dormir',
+    
+    personalizedTips: {
+      digestive_sensitive: 'Reduza espinafre para 1/4 de xícara inicialmente',
+      blood_sugar_issues: 'Use apenas 1/2 banana e adicione proteína em pó sem açúcar',
+      severe_insomnia: 'Adicione 1 col chá de extrato de valeriana líquida'
+    },
+    
+    imageUrl: '/images/nutrition/magnesium_smoothie.jpg'
+  },
+  
+  {
+    id: 'calming_bedtime_cookies',
+    title: 'Cookies Calmantes para Antes de Dormir',
+    category: 'sleep_support',
+    targetProfile: ['evening_cravings', 'sleep_transition', 'stress_eaters'],
+    difficulty: 'medium',
+    prepTime: '25 min (10 min preparo + 15 min forno)',
+    emotionalMessage: 'Satisfaça seus desejos noturnos enquanto prepara seu corpo para sonhos tranquilos',
+    
+    ingredients: [
+      { item: '1 xícara de aveia em flocos', benefit: 'Melatonina natural e carboidratos relaxantes' },
+      { item: '1/2 xícara de farinha de amêndoas', benefit: 'Triptofano e magnésio para relaxamento' },
+      { item: '2 col sopa de sementes de girassol', benefit: 'Ricas em triptofano para produção de serotonina' },
+      { item: '1 banana madura amassada', benefit: 'Potássio e magnésio para relaxamento muscular' },
+      { item: '3 col sopa de óleo de coco', benefit: 'TCMs para equilíbrio hormonal noturno' },
+      { item: '2 col sopa de mel', benefit: 'Glicogênio para fígado durante sono' },
+      { item: '1 col chá de canela', benefit: 'Estabiliza açúcar no sangue durante o sono' },
+      { item: '1/4 col chá de noz-moscada', benefit: 'Leve sedativo natural com aroma relaxante' },
+      { item: '1/4 col chá de flor de sal', benefit: 'Minerais para neurotransmissão' },
+      { item: '1/4 xícara de cerejas desidratadas', benefit: 'Fonte natural de melatonina' },
+      { item: '2 col sopa de chocolate amargo 70% picado', benefit: 'Magnésio e satisfação sem excesso de açúcar' }
+    ],
+    
+    preparation: [
+      'Pré-aqueça o forno a 180°C e forre uma assadeira com papel manteiga',
+      'Misture aveia, farinha de amêndoas, sementes, sal e especiarias',
+      'Em tigela separada, amasse banana com óleo de coco e mel',
+      'Combine ingredientes secos e úmidos até formar massa homogênea',
+      'Incorpore cerejas e chocolate picado',
+      'Forme 12 cookies com colher de sopa na assadeira',
+      'Achate levemente cada cookie com as costas da colher',
+      'Asse por 12-15 minutos até dourar levemente',
+      'Deixe esfriar por 5 minutos na assadeira antes de transferir'
+    ],
+    
+    scientificBacking: 'Carboidratos complexos como a aveia aumentam a disponibilidade de triptofano no cérebro, precursor da serotonina e melatonina. O consumo moderado de carboidratos antes de dormir eleva a insulina, que ajuda o triptofano a cruzar a barreira hematoencefálica mais facilmente.',
+    
+    timing: 'Consumir 1-2 cookies 60-90 minutos antes de dormir',
+    
+    personalizedTips: {
+      weight_conscious: 'Limite-se a um cookie e guarde o restante para outros dias',
+      gluten_sensitive: 'Use aveia certificada sem glúten',
+      diabetes: 'Substitua mel por eritritol ou xilitol'
+    },
+    
+    imageUrl: '/images/nutrition/bedtime_cookies.jpg'
+  },
+  
+  {
+    id: 'passion_flower_sleep_infusion',
+    title: 'Infusão de Maracujá para Sono Profundo',
+    category: 'sleep_support',
+    targetProfile: ['anxiety_insomnia', 'overthinking', 'gaba_support'],
+    difficulty: 'easy',
+    prepTime: '7 min',
+    emotionalMessage: 'Como um abraço gentil que acalma até os pensamentos mais agitados',
+    
+    ingredients: [
+      { item: '2 col chá de folhas e flores de passiflora secas', benefit: 'Aumenta GABA natural para acalmar mente' },
+      { item: '1 col chá de folhas de melissa', benefit: 'Reduz hiperatividade mental e preocupações' },
+      { item: '1/2 col chá de flores de camomila', benefit: 'Apigenina com efeito similar a ansiolíticos leves' },
+      { item: '1/4 col chá de lavanda culinária', benefit: 'Linalol para indução de relaxamento' },
+      { item: '1/4 col chá de lúpulo', benefit: 'Contém 2-metil-3-buten-2-ol com efeito sedativo' },
+      { item: '1 rodela fina de maçã desidratada', benefit: 'Quercetina para ação anti-inflamatória cerebral' },
+      { item: '1 col chá de mel de flor de laranjeira', benefit: 'Tradicionalmente usado para acalmar e promover sono' },
+      { item: '2 xícaras de água filtrada', benefit: 'Veículo para extração de compostos ativos' }
+    ],
+    
+    preparation: [
+      'Ferva a água e desligue o fogo',
+      'Adicione as ervas secas em infusor ou sachê',
+      'Mergulhe o infusor na água quente',
+      'Tampe e deixe em infusão por 7-10 minutos',
+      'Retire o infusor e adicione mel quando estiver morno',
+      'Adicione a rodela de maçã para sabor e benefícios adicionais',
+      'Beba lentamente, 45-60 minutos antes de dormir'
+    ],
+    
+    scientificBacking: 'A passiflora mostrou eficácia comparável a benzodiazepínicos leves para tratamento de ansiedade e insônia em estudos clínicos, sem efeitos colaterais significativos. O mecanismo de ação inclui modulação de receptores GABA-A e efeito inibitório no sistema nervoso central.',
+    
+    timing: 'Consumir 45-60 minutos antes de dormir, idealmente como parte de uma rotina de relaxamento noturno',
+    
+    personalizedTips: {
+      medication_users: 'Consulte seu médico se usa medicamentos para ansiedade ou sono',
+      pregnancy: 'Evite passiflora durante gestação; substitua por apenas camomila',
+      liver_concerns: 'Use quantidades menores de ervas inicialmente e monitore resposta'
+    },
+    
+    imageUrl: '/images/nutrition/passion_flower.jpg'
+  },
+  
+  {
+    id: 'sleep_supporting_trail_mix',
+    title: 'Mix de Oleaginosas para Sono Reparador',
+    category: 'sleep_support',
+    targetProfile: ['late_night_snackers', 'hormone_balance', 'sleep_maintenance'],
+    difficulty: 'easy',
+    prepTime: '5 min',
+    emotionalMessage: 'Pequenos tesouros da natureza que preparam sua bioquímica para sonhos dourados',
+    
+    ingredients: [
+      { item: '2 col sopa de nozes', benefit: 'Rica em melatonina natural e triptofano' },
+      { item: '2 col sopa de amêndoas', benefit: 'Magnésio e cálcio para relaxamento neuromuscular' },
+      { item: '1 col sopa de pistache sem sal', benefit: 'Vitamina B6 para conversão de triptofano em serotonina' },
+      { item: '1 col sopa de sementes de abóbora', benefit: 'Zinco necessário para metabolismo da melatonina' },
+      { item: '1 col sopa de cerejas desidratadas sem açúcar', benefit: 'Fonte concentrada de melatonina natural' },
+      { item: '1 col sopa de banana desidratada em pedaços', benefit: 'Potássio e magnésio relaxantes musculares' },
+      { item: '1 col chá de nibs de cacau', benefit: 'Magnésio e triptofano' },
+      { item: '1/4 col chá de canela', benefit: 'Estabiliza açúcar sanguíneo durante a noite' },
+      { item: '1 pitada de flor de sal', benefit: 'Minerais para equilíbrio eletrolítico noturno' }
+    ],
+    
+    preparation: [
+      'Combine todos os ingredientes secos em uma tigela',
+      'Misture delicadamente para distribuir as especiarias',
+      'Divida em porções individuais de 1/4 xícara',
+      'Armazene em recipientes hermeticamente fechados',
+      'Consuma uma porção 60 minutos antes de dormir, mastigando muito bem cada pedaço'
+    ],
+    
+    scientificBacking: 'Nozes e cerejas são duas das fontes naturais mais ricas em melatonina dietética. Estudos mostram que o consumo de 28g de nozes eleva significativamente os níveis de melatonina no sangue. O magnésio presente nas amêndoas e sementes de abóbora funciona como relaxante muscular natural e cofator para enzimas relacionadas ao sono.',
+    
+    timing: 'Ideal para consumo 60 minutos antes de dormir, em pequena quantidade (1/4 xícara)',
+    
+    personalizedTips: {
+      digestive_sensitive: 'Consuma 90 minutos antes de dormir para permitir digestão completa',
+      nut_allergy: 'Substitua nozes/amêndoas por sementes de girassol e linhaça',
+      weight_conscious: 'Limite-se a 2 col sopa como porção total'
+    },
+    
+    imageUrl: '/images/nutrition/sleep_trail_mix.jpg'
+  },
+  
+  {
+    id: 'valerian_honey_sleep_tonic',
+    title: 'Tônico de Valeriana e Mel para Insônia',
+    category: 'sleep_support',
+    targetProfile: ['chronic_insomnia', 'difficulty_staying_asleep', 'anxiety'],
+    difficulty: 'easy',
+    prepTime: '8 min',
+    emotionalMessage: 'Um elixir ancestral que convida o sono profundo mesmo nas noites mais desafiadoras',
+    
+    ingredients: [
+      { item: '1 col chá de raiz de valeriana seca', benefit: 'Aumenta GABA e induz sono profundo' },
+      { item: '1/2 col chá de raiz de ashwagandha', benefit: 'Adaptógeno que reduz cortisol noturno' },
+      { item: '1/2 col chá de flor de camomila', benefit: 'Apigenina com efeito calmante' },
+      { item: '1/4 col chá de folhas de melissa', benefit: 'Reduz tensão mental e física' },
+      { item: '1/4 col chá de lúpulo', benefit: 'Potencializa efeito sedativo da valeriana' },
+      { item: '1/4 col chá de canela', benefit: 'Equilibra glicemia durante sono' },
+      { item: '1 col sopa de mel cru', benefit: 'Glicogênio hepático para sono estável' },
+      { item: '1 col chá de óleo MCT', benefit: 'Proporciona energia cerebral durante o sono' },
+      { item: '1 pitada de sal do Himalaia', benefit: 'Eletrólitos para processos neurais' },
+      { item: '1 xícara de água filtrada quente', benefit: 'Veículo para extração de princípios ativos' }
+    ],
+    
+    preparation: [
+      'Coloque ervas em infusor ou filtro de papel',
+      'Ferva água e despeje sobre as ervas',
+      'Deixe em infusão coberta por 8-10 minutos',
+      'Remova ervas e adicione mel quando estiver morno',
+      'Adicione óleo MCT e sal, misturando bem',
+      'Beba metade da xícara 45 minutos antes de dormir',
+      'Reserve a outra metade na mesa de cabeceira em garrafa térmica caso acorde durante a noite'
+    ],
+    
+    scientificBacking: 'A valeriana (Valeriana officinalis) contém ácido valerênico que inibe a degradação de GABA no cérebro, aumentando seus níveis e promovendo sono de ondas lentas. Um estudo publicado no European Journal of Medical Research mostrou que 89% dos participantes relataram melhora no sono com uso contínuo por duas semanas.',
+    
+    timing: 'Consumir 45 minutos antes de dormir; uma segunda dose pequena pode ser tomada se acordar durante a noite',
+    
+    personalizedTips: {
+      medication_users: 'Consulte médico se usa antidepressivos ou ansiolíticos',
+      morning_grogginess: 'Reduza dose pela metade nas primeiras noites',
+      liver_concerns: 'Evite uso contínuo por mais de 2-3 semanas sem pausa'
+    },
+    
+    imageUrl: '/images/nutrition/valerian_tonic.jpg'
   }
 ];
 
@@ -763,3 +1288,140 @@ export const allRecipes: Recipe[] = [
   ...digestiveDetoxRecipes,
   ...conditionSpecificRecipes
 ]; 
+
+// Função para obter receitas recomendadas com base no perfil nutricional do usuário
+export const getRecommendedRecipes = (
+  nutritionalProfile: { 
+    primaryPain: string; 
+    conditions: string[];
+    goals: string[];
+    antiInflammatoryNeeds: boolean;
+    hormonalSupport: boolean;
+    energyOptimization: boolean;
+    digestiveSupport: boolean;
+    stressManagement: boolean;
+    sleepSupport: boolean;
+    currentDay?: number;
+  }
+) => {
+  // Mapeamento de categorias de receitas para necessidades do usuário
+  const categoryMapping = {
+    antiInflammatoryNeeds: 'anti_inflammatory',
+    hormonalSupport: 'hormonal_balance',
+    energyOptimization: 'energy_boost',
+    sleepSupport: 'sleep_support',
+    digestiveSupport: 'digestive_health'
+  };
+  
+  // Identifica as categorias necessárias com base no perfil
+  const neededCategories = Object.entries(categoryMapping)
+    .filter(([need, _]) => nutritionalProfile[need])
+    .map(([_, category]) => category);
+    
+  // Se não há categorias específicas, inclui todas
+  const targetCategories = neededCategories.length > 0 ? neededCategories : 
+    Object.values(categoryMapping);
+  
+  // Filtra receitas por categoria e compatibilidade com condições do usuário
+  let relevantRecipes = allRecipes.filter(recipe => {
+    // Verifica se a receita está em uma categoria necessária
+    const matchesCategory = targetCategories.includes(recipe.category);
+    
+    // Verifica se a receita é compatível com o perfil do usuário
+    const matchesProfile = recipe.targetProfile.some(profileItem => 
+      nutritionalProfile.conditions.includes(profileItem) || 
+      nutritionalProfile.goals.includes(profileItem)
+    );
+    
+    return matchesCategory || matchesProfile;
+  });
+  
+  // Personalização baseada em progressão temporal (se disponível)
+  if (nutritionalProfile.currentDay) {
+    // Semana 1: Receitas simples e básicas
+    if (nutritionalProfile.currentDay <= 7) {
+      relevantRecipes = relevantRecipes.filter(recipe => 
+        recipe.difficulty === 'easy' || 
+        recipe.prepTime.includes('5 min') || 
+        recipe.prepTime.includes('10 min')
+      );
+    }
+    // Semana 2: Introduzir algumas receitas de dificuldade média
+    else if (nutritionalProfile.currentDay <= 14) {
+      // Já inclui todas as receitas, mas prioriza as de dificuldade fácil e média
+    }
+    // Semana 3: Balancear entre todas as dificuldades
+    else {
+      // Inclui todas as receitas, mas com ordem de prioridade diferente
+    }
+  }
+  
+  // Ordenar por relevância para necessidades específicas e compatibilidade
+  relevantRecipes.sort((a, b) => {
+    // Priorizar receitas para a dor primária
+    const aPainRelated = a.targetProfile.includes(nutritionalProfile.primaryPain);
+    const bPainRelated = b.targetProfile.includes(nutritionalProfile.primaryPain);
+    
+    if (aPainRelated && !bPainRelated) return -1;
+    if (!aPainRelated && bPainRelated) return 1;
+    
+    // Priorizar receitas para condições específicas
+    const aConditionMatches = a.targetProfile.filter(item => 
+      nutritionalProfile.conditions.includes(item)).length;
+    const bConditionMatches = b.targetProfile.filter(item => 
+      nutritionalProfile.conditions.includes(item)).length;
+    
+    if (aConditionMatches > bConditionMatches) return -1;
+    if (aConditionMatches < bConditionMatches) return 1;
+    
+    // Priorizar receitas para objetivos específicos
+    const aGoalMatches = a.targetProfile.filter(item => 
+      nutritionalProfile.goals.includes(item)).length;
+    const bGoalMatches = b.targetProfile.filter(item => 
+      nutritionalProfile.goals.includes(item)).length;
+    
+    if (aGoalMatches > bGoalMatches) return -1;
+    if (aGoalMatches < bGoalMatches) return 1;
+    
+    // Por fim, priorizar por dificuldade (se estiver nos primeiros dias)
+    if (nutritionalProfile.currentDay && nutritionalProfile.currentDay <= 10) {
+      const difficultyOrder = { 'easy': 0, 'medium': 1, 'hard': 2 };
+      return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty];
+    }
+    
+    return 0;
+  });
+  
+  // Função para garantir diversidade de categorias
+  const ensureDiversity = (recipes) => {
+    const categoryCount = {};
+    const diverseRecipes = [];
+    
+    // Inicializa contagem
+    Object.values(categoryMapping).forEach(category => {
+      categoryCount[category] = 0;
+    });
+    
+    // Monta lista diversa
+    for (const recipe of recipes) {
+      if (categoryCount[recipe.category] < 2) { // Máximo 2 por categoria
+        diverseRecipes.push(recipe);
+        categoryCount[recipe.category]++;
+      }
+      
+      // Limite máximo de 8 receitas
+      if (diverseRecipes.length >= 8) break;
+    }
+    
+    // Se ainda não chegou a 8, complete com outras receitas
+    if (diverseRecipes.length < 8) {
+      const remaining = recipes.filter(r => !diverseRecipes.includes(r));
+      diverseRecipes.push(...remaining.slice(0, 8 - diverseRecipes.length));
+    }
+    
+    return diverseRecipes;
+  };
+  
+  // Retorna uma seleção personalizada e diversa de receitas
+  return ensureDiversity(relevantRecipes);
+}; 

@@ -9,9 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { generatePersonalizedNutrition } from "@/lib/nutrition-utils";
 import { allRecipes, antiInflammatoryRecipes, energyBoostingRecipes, hormonalBalanceRecipes, sleepRelaxationRecipes, digestiveDetoxRecipes, conditionSpecificRecipes } from "@/data/recipes";
 import { Button } from "@/components/ui/button";
-import { Heart, Utensils, BookOpen, BookMarked } from "lucide-react";
+import { Heart, Utensils, BookOpen, BookMarked, ChevronRight, Clock3 } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useFavoriteRecipes } from "@/hooks/use-favorite-recipes";
+import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
 
 interface NutritionDashboardProps {
   userProfile?: UserProfile | null;
@@ -118,6 +119,9 @@ export function NutritionDashboard({ userProfile }: NutritionDashboardProps) {
             />
           </TabsContent>
         </Tabs>
+        
+        {/* Medical disclaimer */}
+        <MedicalDisclaimer variant="recipe" className="mt-8" />
       </section>
 
       {/* Additional nutrition resources */}

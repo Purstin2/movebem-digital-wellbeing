@@ -576,3 +576,94 @@ input, select, textarea {
     min-height: -webkit-fill-available;
   }
 }
+
+/* ===== Accessibility Styles ===== */
+
+/* High Contrast Mode */
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  
+  --primary: #ffff00;
+  --primary-foreground: #000000;
+  
+  --secondary: #ffff00;
+  --secondary-foreground: #000000;
+  
+  --muted: #333333;
+  --muted-foreground: #ffffff;
+  
+  --accent: #ffff00;
+  --accent-foreground: #000000;
+  
+  --card: #000000;
+  --card-foreground: #ffffff;
+  
+  --border: #ffffff;
+  
+  --input: #333333;
+  --input-foreground: #ffffff;
+  
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.high-contrast button {
+  border: 1px solid #ffffff;
+  outline: 2px solid transparent;
+}
+
+.high-contrast button:focus {
+  outline: 2px solid #ffff00;
+}
+
+.high-contrast input, 
+.high-contrast textarea, 
+.high-contrast select {
+  border: 1px solid #ffffff;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.high-contrast a {
+  color: #ffff00;
+  text-decoration: underline;
+}
+
+.high-contrast img {
+  filter: contrast(120%);
+}
+
+/* Reduced Motion */
+.reduced-motion * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Base Text Size Adjustments */
+html {
+  font-size: 16px; /* Default base size */
+}
+
+/* Large buttons for better touch targets */
+.large-touch-targets button,
+.large-touch-targets .btn,
+.large-touch-targets input[type="checkbox"],
+.large-touch-targets input[type="radio"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Ensure adequate line spacing for readability */
+.improved-readability {
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* Focus indicators */
+.focus-visible:focus {
+  outline: 3px solid #ffff00;
+  outline-offset: 2px;
+}

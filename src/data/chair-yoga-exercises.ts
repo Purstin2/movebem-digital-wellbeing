@@ -2633,26 +2633,114 @@ export const getRecommendedExercises = (
     conditions: string[]; 
     painLevel: string;
     mobilityLevel: string;
+    currentDay?: number;
   }
 ) => {
   // Filtrando exercícios relevantes para as condições do usuário
-  const relevantExercises = chairYogaExercises.filter(exercise => {
+  let relevantExercises = chairYogaExercises.filter(exercise => {
     // Prioriza exercícios para área de dor primária
-    if (exercise.category === userProfile.primaryPain) {
-      return true;
-    }
+    const targetsPrimaryPain = exercise.category === userProfile.primaryPain;
     
     // Verifica se o exercício serve para alguma das condições do usuário
-    if (exercise.targetConditions.some(condition => 
-      userProfile.conditions.includes(condition))
-    ) {
-      return true;
-    }
+    const matchesCondition = exercise.targetConditions.some(condition => 
+      userProfile.conditions.includes(condition));
     
-    return false;
+    return targetsPrimaryPain || matchesCondition;
   });
   
-  // Ordenar por relevância (complexidade adicional que pode ser implementada depois)
-  // Aqui apenas retornamos os 3 primeiros exercícios relevantes
-  return relevantExercises.slice(0, 3);
+  // Ajustar baseado no nível de dor
+  if (userProfile.painLevel === 'high') {
+    // Para dor alta, filtrar para incluir apenas exercícios de iniciante
+    relevantExercises = relevantExercises.filter(ex => ex.difficulty === 'beginner');
+  } else if (userProfile.painLevel === 'medium') {
+    // Para dor média, incluir iniciante e intermediário, mas priorizar iniciante
+    relevantExercises = [
+      ...relevantExercises.filter(ex => ex.difficulty === 'beginner'),
+      ...relevantExercises.filter(ex => ex.difficulty === 'intermediate').slice(0, 2)
+    ];
+  } else {
+    // Para dor baixa, incluir todos, mas priorizar por progressão
+    // Nenhuma alteração necessária, já que todos os exercícios estão incluídos
+  }
+  
+  // Ajustar baseado no nível de mobilidade
+  if (userProfile.mobilityLevel === 'minimal') {
+    relevantExercises = relevantExercises.filter(ex => 
+      ex.difficulty === 'beginner' || 
+      !ex.chairRequirements.backrest // Exercícios que não requerem encosto são mais simples
+    );
+  } else if (userProfile.mobilityLevel === 'moderate') {
+    // Manter iniciante e intermediário, filtrar exercícios avançados
+    relevantExercises = relevantExercises.filter(ex => 
+      ex.difficulty !== 'advanced'
+    );
+  }
+  
+  // Criar progressão baseada no dia atual do usuário (se fornecido)
+  if (userProfile.currentDay) {
+    // Semana 1 (dias 1-7): Foco em exercícios básicos e de iniciante
+    if (userProfile.currentDay <= 7) {
+      relevantExercises = relevantExercises.filter(ex => ex.difficulty === 'beginner');
+    } 
+    // Semana 2 (dias 8-14): Introduzir alguns exercícios intermediários
+    else if (userProfile.currentDay <= 14) {
+      relevantExercises = [
+        ...relevantExercises.filter(ex => ex.difficulty === 'beginner'),
+        ...relevantExercises.filter(ex => ex.difficulty === 'intermediate').slice(0, 3)
+      ];
+    } 
+    // Semana 3 (dias 15-21): Balancear iniciante, intermediário e introduzir avançado
+    else {
+      // Manter distribuição balanceada com todos os níveis
+      const beginnerExercises = relevantExercises.filter(ex => ex.difficulty === 'beginner').slice(0, 3);
+      const intermediateExercises = relevantExercises.filter(ex => ex.difficulty === 'intermediate').slice(0, 3);
+      const advancedExercises = relevantExercises.filter(ex => ex.difficulty === 'advanced').slice(0, 2);
+      
+      relevantExercises = [...beginnerExercises, ...intermediateExercises, ...advancedExercises];
+    }
+  }
+  
+  // Verificar contraindicações específicas do usuário
+  if (userProfile.conditions.length > 0) {
+    relevantExercises = relevantExercises.filter(exercise => {
+      // Se o exercício tem contraindicações específicas
+      if (exercise.contraindications) {
+        // Verificar se alguma condição do usuário está nas contraindicações
+        const isContraindicated = exercise.contraindications.some(
+          contraindication => userProfile.conditions.includes(contraindication)
+        );
+        // Retornar apenas exercícios que não são contraindicados
+        return !isContraindicated;
+      }
+      return true;
+    });
+  }
+
+  // Ordenar por relevância e personalização
+  relevantExercises.sort((a, b) => {
+    // Priorizar exercícios para área primária de dor
+    if (a.category === userProfile.primaryPain && b.category !== userProfile.primaryPain) return -1;
+    if (b.category === userProfile.primaryPain && a.category !== userProfile.primaryPain) return 1;
+    
+    // Priorizar exercícios com adaptações para as condições do usuário
+    const aHasAdaptations = Object.keys(a.adaptations).some(adaptation => 
+      userProfile.conditions.includes(adaptation));
+    const bHasAdaptations = Object.keys(b.adaptations).some(adaptation => 
+      userProfile.conditions.includes(adaptation));
+    
+    if (aHasAdaptations && !bHasAdaptations) return -1;
+    if (!aHasAdaptations && bHasAdaptations) return 1;
+    
+    // Por último, ordenar por dificuldade adequada ao nível do usuário
+    const difficultyOrder = { 'beginner': 0, 'intermediate': 1, 'advanced': 2 };
+    const userLevelMap = { 'high': 0, 'medium': 1, 'low': 2 };
+    const painLevelIndex = userLevelMap[userProfile.painLevel];
+    
+    // Aproximar dificuldade do exercício ao nível de dor (invertido) do usuário
+    return Math.abs(difficultyOrder[a.difficulty] - (2 - painLevelIndex)) - 
+           Math.abs(difficultyOrder[b.difficulty] - (2 - painLevelIndex));
+  });
+  
+  // Retorna uma seleção personalizada (8 exercícios, ou menos se não houver suficientes)
+  return relevantExercises.slice(0, 8);
 }; 
