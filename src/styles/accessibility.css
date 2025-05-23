@@ -1,11 +1,61 @@
-/* Variáveis CSS para acessibilidade */
+/* Accessibility Base Variables */
 :root {
   --base-font-size: 16px;
-  --large-font-size: 20px;
-  --extra-large-font-size: 24px;
   --touch-target-size: 44px;
-  --focus-ring-color: #2563eb;
+  --focus-ring-color: theme('colors.fenjes.purple');
   --focus-ring-width: 3px;
+}
+
+/* Mobile-First Media Query */
+@media (max-width: 768px) {
+  :root {
+    --base-font-size: 18px;
+    --touch-target-size: 48px;
+  }
+
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea {
+    min-height: var(--touch-target-size);
+    min-width: var(--touch-target-size);
+    padding: 0.75rem;
+  }
+}
+
+/* High Contrast Theme */
+[data-theme="high-contrast"] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #ffff00;
+  --border-color: #ffffff;
+  color-scheme: dark;
+}
+
+/* Text Size Utilities */
+[data-text-size="normal"] { font-size: var(--base-font-size); }
+[data-text-size="large"] { font-size: calc(var(--base-font-size) * 1.25); }
+[data-text-size="extra-large"] { font-size: calc(var(--base-font-size) * 1.5); }
+
+/* Focus Styles */
+*:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Estilos base */
@@ -76,11 +126,6 @@ body {
 
 *:focus:not(:focus-visible) {
   outline: none;
-}
-
-*:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: 2px;
 }
 
 /* Skip Links */
@@ -326,31 +371,6 @@ textarea:focus {
   min-width: var(--touch-target-large);
   padding: 16px 24px;
   margin: 8px;
-}
-
-/* Focus Styles */
-*:focus {
-  outline: 3px solid #4299e1;
-  outline-offset: 2px;
-}
-
-.high-contrast *:focus {
-  outline-color: #ffff00;
-}
-
-/* Skip Links */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: #000000;
-  color: #ffffff;
-  padding: 8px;
-  z-index: 100;
-}
-
-.skip-link:focus {
-  top: 0;
 }
 
 /* ARIA Labels and Descriptions */

@@ -1,90 +1,43 @@
-import { ChairYogaExercise } from '@/types/chair-yoga';
+import { ChairYogaExercise } from "@/types/chair-yoga";
 
 export const neckExercises: ChairYogaExercise[] = [
   {
-    id: "neck_circles_gentle",
-    title: "Círculos Suaves do Pescoço",
+    id: "neck-rotation-beginner",
+    title: "Rotação Suave do Pescoço",
     category: "neck",
     difficulty: "beginner",
-    duration: "5 min",
-    targetConditions: ["neck_stiffness", "tension_headaches"],
+    duration: "5",
+    targetConditions: ["neck_pain", "cervical_arthritis"],
     position: "seated",
     chairPosition: "seated_with_back_support",
-    
-    description: "Movimentos circulares suaves para mobilidade cervical",
-    specificBenefit: "Aumenta mobilidade cervical em 35% após 3 semanas de prática",
-    
+    description: "Movimento suave de rotação do pescoço para aliviar tensão e melhorar a mobilidade cervical.",
+    specificBenefit: "Alivia tensão cervical e melhora a amplitude de movimento.",
     steps: [
       {
         name: "Preparação",
-        instruction: "Sente-se com coluna ereta, ombros relaxados, pés apoiados",
-        duration: "30s",
-        breathing: "Respiração profunda e calma",
-        visualization: "Imagine um anel de luz dourada ao redor do pescoço"
+        instruction: "Sente-se com a coluna ereta, ombros relaxados e mãos apoiadas no colo.",
+        duration: "1 min",
+        breathing: "Respiração natural e suave"
       },
       {
-        name: "Círculos Micro",
-        instruction: "Faça círculos muito pequenos com o nariz, como se desenhasse uma moeda no ar",
-        duration: "60s cada direção",
-        breathing: "Inspire ao subir, expire ao descer",
-        safetyNote: "Mantenha movimentos extremamente pequenos"
-      }
-    ],
-    
-    adaptations: {
-      severe_arthritis: "Apenas metade da amplitude, foco na respiração",
-      vertigo: "Evite círculos, faça apenas inclinações suaves",
-      herniated_disc: "Movimentos microscópicos, pare se houver dor"
-    },
-    
-    contraindications: ["acute_whiplash", "cervical_instability"],
-    imageUrl: "/images/exercises/neck_circles.jpg",
-    
-    chairRequirements: {
-      backrest: true,
-      armrests: false,
-      wheels: false
-    }
-  },
-  {
-    id: "isometric_neck_strength",
-    title: "Fortalecimento Isométrico Cervical",
-    category: "neck",
-    difficulty: "intermediate",
-    duration: "7 min",
-    targetConditions: ["neck_weakness", "poor_posture"],
-    position: "seated",
-    chairPosition: "seated_with_back_support",
-    
-    description: "Exercícios de fortalecimento sem movimento para músculos cervicais",
-    specificBenefit: "Aumenta força cervical em 25% em 6 semanas",
-    
-    steps: [
-      {
-        name: "Resistência Frontal",
-        instruction: "Coloque a mão na testa e pressione gentilmente, resistindo com o pescoço",
-        duration: "15s pressão, 15s descanso, 3 repetições",
-        breathing: "Respire normalmente durante a contração",
-        safetyNote: "Use apenas 20% da força máxima"
+        name: "Rotação Suave",
+        instruction: "Gire a cabeça lentamente para a direita, mantendo o queixo paralelo ao chão. Pare quando sentir qualquer desconforto.",
+        duration: "2 min",
+        breathing: "Inspire ao girar, expire ao retornar"
       },
       {
-        name: "Resistência Lateral",
-        instruction: "Mão na lateral da cabeça, pressione suavemente, resista com pescoço",
-        duration: "15s cada lado, 15s descanso entre lados",
-        breathing: "Mantenha respiração constante",
-        visualization: "Imagine raízes fortes crescendo do pescoço"
+        name: "Retorno",
+        instruction: "Retorne lentamente ao centro e repita para o lado esquerdo.",
+        duration: "2 min",
+        breathing: "Inspire ao girar, expire ao retornar"
       }
     ],
-    
     adaptations: {
-      beginners: "Reduza tempo para 10s, aumente gradualmente",
-      neck_pain: "Use apenas 10% da força máxima",
-      seniors: "Faça sentado com apoio completo das costas"
+      neck_pain: "Reduza a amplitude do movimento e faça pausas mais longas entre as repetições.",
+      cervical_arthritis: "Use um travesseiro cervical para apoio adicional e reduza a amplitude do movimento."
     },
-    
-    contraindications: ["acute_injury", "severe_osteoporosis"],
-    imageUrl: "/images/exercises/neck_strength.jpg",
-    
+    contraindications: ["instabilidade_cervical", "hérnia_cervical_aguda"],
+    imageUrl: "/images/exercises/neck-rotation.jpg",
     chairRequirements: {
       backrest: true,
       armrests: true,
@@ -92,55 +45,132 @@ export const neckExercises: ChairYogaExercise[] = [
     }
   },
   {
-    id: "cervical_mobility_flow",
-    title: "Fluxo de Mobilidade Cervical",
+    id: "neck-tilt-beginner",
+    title: "Inclinação Lateral do Pescoço",
     category: "neck",
-    difficulty: "advanced",
-    duration: "10 min",
-    targetConditions: ["reduced_mobility", "tech_neck"],
+    difficulty: "beginner",
+    duration: "5",
+    targetConditions: ["neck_pain", "tension_headaches"],
     position: "seated",
     chairPosition: "seated_with_back_support",
-    
-    description: "Sequência fluida de movimentos para mobilidade completa",
-    specificBenefit: "Melhora amplitude de movimento em todas direções em 40%",
-    
+    description: "Movimento suave de inclinação lateral do pescoço para alongar os músculos cervicais.",
+    specificBenefit: "Alonga os músculos laterais do pescoço e reduz tensão.",
     steps: [
       {
-        name: "Aquecimento Consciente",
-        instruction: "Movimentos microscópicos em todas direções",
-        duration: "2 min",
-        breathing: "Sincronize respiração com movimento",
-        visualization: "Seu pescoço é uma flor se abrindo"
+        name: "Preparação",
+        instruction: "Sente-se com a coluna ereta e ombros relaxados.",
+        duration: "1 min",
+        breathing: "Respiração natural"
       },
       {
-        name: "Fluxo Diagonal",
-        instruction: "Trace diagonais suaves com o nariz, como desenhando um X no ar",
-        duration: "30s cada diagonal",
-        breathing: "Inspire na diagonal ascendente, expire na descendente",
-        safetyNote: "Mantenha movimentos lentos e controlados"
+        name: "Inclinação Direita",
+        instruction: "Incline suavemente a cabeça em direção ao ombro direito, mantendo os ombros relaxados.",
+        duration: "2 min",
+        breathing: "Inspire ao inclinar, expire ao retornar"
+      },
+      {
+        name: "Inclinação Esquerda",
+        instruction: "Retorne ao centro e repita para o lado esquerdo.",
+        duration: "2 min",
+        breathing: "Inspire ao inclinar, expire ao retornar"
       }
     ],
-    
     adaptations: {
-      intermediate: "Reduza amplitude e velocidade em 50%",
-      morning_stiffness: "Adicione 2min de aquecimento extra",
-      arthritis: "Foque em uma direção por vez"
+      neck_pain: "Use as mãos para suporte adicional e reduza a amplitude do movimento.",
+      tension_headaches: "Adicione uma leve pressão com a mão no lado oposto para aumentar o alongamento."
     },
-    
-    contraindications: ["vertigo", "acute_pain"],
-    imageUrl: "/images/exercises/neck_flow.jpg",
-    
+    contraindications: ["instabilidade_cervical", "vertigem"],
+    imageUrl: "/images/exercises/neck-tilt.jpg",
     chairRequirements: {
       backrest: true,
-      armrests: false,
+      armrests: true,
+      wheels: false
+    }
+  },
+  {
+    id: "neck-extension-beginner",
+    title: "Extensão Suave do Pescoço",
+    category: "neck",
+    difficulty: "beginner",
+    duration: "5",
+    targetConditions: ["neck_pain", "forward_head_posture"],
+    position: "seated",
+    chairPosition: "seated_with_back_support",
+    description: "Movimento suave de extensão do pescoço para corrigir a postura da cabeça para frente.",
+    specificBenefit: "Fortalece os músculos posteriores do pescoço e melhora a postura.",
+    steps: [
+      {
+        name: "Preparação",
+        instruction: "Sente-se com a coluna ereta e ombros relaxados.",
+        duration: "1 min",
+        breathing: "Respiração natural"
+      },
+      {
+        name: "Extensão",
+        instruction: "Mova suavemente a cabeça para trás, como se estivesse fazendo um duplo queixo.",
+        duration: "2 min",
+        breathing: "Inspire ao mover para trás, expire ao retornar"
+      },
+      {
+        name: "Retorno",
+        instruction: "Retorne suavemente à posição inicial.",
+        duration: "2 min",
+        breathing: "Inspire ao mover para trás, expire ao retornar"
+      }
+    ],
+    adaptations: {
+      neck_pain: "Reduza a amplitude do movimento e use as mãos para suporte.",
+      forward_head_posture: "Mantenha a posição por alguns segundos antes de retornar."
+    },
+    contraindications: ["instabilidade_cervical", "hérnia_cervical"],
+    imageUrl: "/images/exercises/neck-extension.jpg",
+    chairRequirements: {
+      backrest: true,
+      armrests: true,
+      wheels: false
+    }
+  },
+  {
+    id: "neck-flexion-beginner",
+    title: "Flexão Suave do Pescoço",
+    category: "neck",
+    difficulty: "beginner",
+    duration: "5",
+    targetConditions: ["neck_pain", "tension_headaches"],
+    position: "seated",
+    chairPosition: "seated_with_back_support",
+    description: "Movimento suave de flexão do pescoço para alongar os músculos posteriores.",
+    specificBenefit: "Alonga os músculos posteriores do pescoço e reduz tensão.",
+    steps: [
+      {
+        name: "Preparação",
+        instruction: "Sente-se com a coluna ereta e ombros relaxados.",
+        duration: "1 min",
+        breathing: "Respiração natural"
+      },
+      {
+        name: "Flexão",
+        instruction: "Incline suavemente a cabeça para frente, levando o queixo em direção ao peito.",
+        duration: "2 min",
+        breathing: "Inspire ao inclinar, expire ao retornar"
+      },
+      {
+        name: "Retorno",
+        instruction: "Retorne suavemente à posição inicial.",
+        duration: "2 min",
+        breathing: "Inspire ao inclinar, expire ao retornar"
+      }
+    ],
+    adaptations: {
+      neck_pain: "Use as mãos para suporte e reduza a amplitude do movimento.",
+      tension_headaches: "Adicione uma leve pressão com as mãos na parte posterior da cabeça."
+    },
+    contraindications: ["instabilidade_cervical", "vertigem"],
+    imageUrl: "/images/exercises/neck-flexion.jpg",
+    chairRequirements: {
+      backrest: true,
+      armrests: true,
       wheels: false
     }
   }
-];
-
-// Níveis de dificuldade para cada exercício
-export const neckExerciseLevels = {
-  beginner: ["neck_circles_gentle", "cervical_gentle_release"],
-  intermediate: ["isometric_neck_strength", "neck_tension_release"],
-  advanced: ["cervical_mobility_flow", "neck_strength_builder"]
-}; 
+]; 

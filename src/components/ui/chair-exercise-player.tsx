@@ -283,58 +283,71 @@ export function ChairExercisePlayer({
           </Card>
           
           {/* Controls - Stack on mobile, row on larger screens */}
-          <div className="lg:col-span-2 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-3">
-            {currentStep > 0 && (
-              <Button 
-                variant="outline"
-                onClick={() => setCurrentStep(currentStep - 1)}
-                className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
-              >
-                <ChevronLeft size={16} className="mr-1" />
-                Passo Anterior
-              </Button>
-            )}
-            
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 mt-4">
+            <Button
+              variant="outline"
+              onClick={() => setCurrentStep(currentStep - 1)}
+              disabled={currentStep === 0}
+              className="w-full md:w-auto h-12 md:h-14 text-base md:text-lg"
+              aria-label="Passo anterior"
+            >
+              <ChevronLeft size={24} className="mr-2" aria-hidden="true" />
+              Anterior
+            </Button>
+
             <Button
               variant={isPaused ? "default" : "secondary"}
               onClick={() => setIsPaused(!isPaused)}
-              className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
+              className="w-full md:w-auto h-12 md:h-14 text-base md:text-lg"
+              aria-label={isPaused ? "Iniciar exercício" : "Pausar exercício"}
             >
               {isPaused ? (
                 <>
-                  <Play size={16} className="mr-1" />
+                  <Play size={24} className="mr-2" aria-hidden="true" />
                   Iniciar
                 </>
               ) : (
                 <>
-                  <Pause size={16} className="mr-1" />
+                  <Pause size={24} className="mr-2" aria-hidden="true" />
                   Pausar
                 </>
               )}
             </Button>
-            
-            {currentStep < exercise.steps.length - 1 ? (
-              <Button
-                variant="outline"
-                onClick={() => setCurrentStep(currentStep + 1)}
-                className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
-              >
-                Próximo Passo
-                <ChevronRight size={16} className="ml-1" />
-              </Button>
-            ) : (
-              <Button
-                variant="secondary"
-                onClick={onComplete}
-                className="w-full md:w-auto text-xs md:text-sm py-1.5 md:py-2"
-              >
-                <CheckCircle size={16} className="mr-1" />
-                Concluir Exercício
-              </Button>
-            )}
+
+            <Button
+              variant="outline"
+              onClick={() => setCurrentStep(currentStep + 1)}
+              disabled={currentStep === exercise.steps.length - 1}
+              className="w-full md:w-auto h-12 md:h-14 text-base md:text-lg"
+              aria-label="Próximo passo"
+            >
+              <ChevronRight size={24} className="mr-2" aria-hidden="true" />
+              Próximo
+            </Button>
           </div>
         </div>
       )}
+
+      {/* Progress indicator */}
+      <div 
+        className="mt-6"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={exercise.steps.length}
+        aria-valuenow={currentStep + 1}
+        aria-label="Progresso do exercício"
+      >
+        <div className="flex justify-between text-sm md:text-base mb-2">
+          <span>Passo {currentStep + 1} de {exercise.steps.length}</span>
+          <span>{Math.round(((currentStep + 1) / exercise.steps.length) * 100)}%</span>
+        </div>
+        <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+          <div 
+            className="h-full bg-fenjes-purple rounded-full transition-all duration-300"
+            style={{ width: `${((currentStep + 1) / exercise.steps.length) * 100}%` }}
+          />
+        </div>
+      </div>
     </div>
   );
 }

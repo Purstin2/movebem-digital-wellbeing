@@ -1,33 +1,42 @@
-# Welcome to your Lovable project
+# FENJES - Digital Wellbeing Platform
 
-## Project info
+FENJES é uma plataforma digital de bem-estar focada em mulheres 35+ com dores articulares, oferecendo exercícios de yoga adaptados, receitas anti-inflamatórias e um sistema personalizado de acompanhamento.
 
-**URL**: https://lovable.dev/projects/3aee98d9-3dcb-49c6-8611-787bb5e1e9a8
+## Instalação
 
-## How can I edit this code?
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/fenjes-digital-wellbeing.git
+cd fenjes-digital-wellbeing
 
-There are several ways of editing your application.
+# Instale as dependências
+npm install
 
-**Use Lovable**
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3aee98d9-3dcb-49c6-8611-787bb5e1e9a8) and start prompting.
+## Características Principais
 
-Changes made via Lovable will be committed automatically to this repo.
+- 45 exercícios de yoga adaptados (pescoço, ombros, coluna, quadril)
+- 30+ receitas anti-inflamatórias e terapêuticas
+- Sistema de personalização baseado em nível de dor
+- Interface otimizada para acessibilidade
+- Suporte técnico integrado
 
-**Use your preferred IDE**
+## Avisos Médicos
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Este aplicativo não substitui orientação médica profissional. Consulte seu médico antes de iniciar qualquer programa de exercícios.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Suporte
 
-Follow these steps:
+- Email: suporte@fenjes.com.br
+- WhatsApp: (11) 99999-9999
+- Horário: Seg-Sex, 9h às 18h
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Licença
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Copyright © 2024 FENJES. Todos os direitos reservados.
 
 # Step 3: Install the necessary dependencies.
 npm i

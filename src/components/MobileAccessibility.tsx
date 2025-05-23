@@ -26,123 +26,70 @@ const MobileAccessibility: React.FC<MobileAccessibilityProps> = ({
   };
 
   return (
-    <div className="p-4 space-y-6">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-bold mb-6">Acessibilidade Mobile</h2>
+    <div className="p-4">
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-xl font-bold mb-4">Acessibilidade</h2>
 
         {/* Tamanho da Fonte */}
-        <div className="mb-6">
-          <label className="block text-base font-medium mb-2">
-            Tamanho da Fonte
-          </label>
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { value: 'normal', label: 'Normal' },
-              { value: 'large', label: 'Grande' },
-              { value: 'extra_large', label: 'Extra' }
-            ].map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={() => updatePreference('fontSize', value)}
-                className={`
-                  p-4 rounded-lg text-center border-2 min-h-[44px]
-                  ${preferences.fontSize === value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200'
-                  }
-                `}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-2">Tamanho da Fonte</label>
+          <select
+            value={preferences.fontSize}
+            onChange={(e) => updatePreference('fontSize', e.target.value)}
+            className="w-full p-2 border rounded min-h-[44px]"
+          >
+            <option value="normal">Normal</option>
+            <option value="large">Grande</option>
+            <option value="extra_large">Extra Grande</option>
+          </select>
         </div>
 
         {/* Contraste */}
-        <div className="mb-6">
-          <label className="block text-base font-medium mb-2">
-            Contraste
-          </label>
-          <div className="grid grid-cols-2 gap-2">
-            {[
-              { value: 'normal', label: 'Normal' },
-              { value: 'high', label: 'Alto' }
-            ].map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={() => updatePreference('contrast', value)}
-                className={`
-                  p-4 rounded-lg text-center border-2 min-h-[44px]
-                  ${preferences.contrast === value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200'
-                  }
-                `}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Animações */}
-        <div className="mb-6">
-          <label className="block text-base font-medium mb-2">
-            Animações
-          </label>
-          <div className="grid grid-cols-2 gap-2">
-            {[
-              { value: 'normal', label: 'Normal' },
-              { value: 'reduced', label: 'Reduzidas' }
-            ].map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={() => updatePreference('animations', value)}
-                className={`
-                  p-4 rounded-lg text-center border-2 min-h-[44px]
-                  ${preferences.animations === value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200'
-                  }
-                `}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-2">Contraste</label>
+          <select
+            value={preferences.contrast}
+            onChange={(e) => updatePreference('contrast', e.target.value)}
+            className="w-full p-2 border rounded min-h-[44px]"
+          >
+            <option value="normal">Normal</option>
+            <option value="high">Alto</option>
+            <option value="maximum">Máximo</option>
+          </select>
         </div>
 
         {/* Modo de Cor */}
+        <div className="mb-4">
+          <label className="block font-medium mb-2">Modo de Cor</label>
+          <select
+            value={preferences.colorMode}
+            onChange={(e) => updatePreference('colorMode', e.target.value)}
+            className="w-full p-2 border rounded min-h-[44px]"
+          >
+            <option value="light">Claro</option>
+            <option value="dark">Escuro</option>
+            <option value="high_contrast">Alto Contraste</option>
+          </select>
+        </div>
+
+        {/* Animações */}
         <div>
-          <label className="block text-base font-medium mb-2">
-            Modo de Cor
-          </label>
-          <div className="grid grid-cols-2 gap-2">
-            {[
-              { value: 'light', label: 'Claro' },
-              { value: 'dark', label: 'Escuro' }
-            ].map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={() => updatePreference('colorMode', value)}
-                className={`
-                  p-4 rounded-lg text-center border-2 min-h-[44px]
-                  ${preferences.colorMode === value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200'
-                  }
-                `}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <label className="block font-medium mb-2">Animações</label>
+          <select
+            value={preferences.animations}
+            onChange={(e) => updatePreference('animations', e.target.value)}
+            className="w-full p-2 border rounded min-h-[44px]"
+          >
+            <option value="normal">Normal</option>
+            <option value="reduced">Reduzidas</option>
+            <option value="none">Desativadas</option>
+          </select>
         </div>
       </div>
 
-      <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-        <h3 className="font-medium text-blue-800 mb-2">Dicas de Acessibilidade</h3>
-        <ul className="space-y-2 text-sm text-blue-700">
+      <div className="mt-4 bg-blue-50 p-4 rounded-lg border border-blue-200">
+        <h3 className="font-medium text-blue-800 mb-2">Dicas</h3>
+        <ul className="text-sm text-blue-700 space-y-1">
           <li>• Use dois dedos para zoom</li>
           <li>• Gire o dispositivo se necessário</li>
           <li>• Ative o leitor de tela do dispositivo</li>

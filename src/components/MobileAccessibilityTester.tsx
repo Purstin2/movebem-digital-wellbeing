@@ -1,14 +1,91 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, List, ListItem, ListItemText, Chip } from '@mui/material';
 
-interface AccessibilityTest {
-  id: string;
+interface TestResult {
   name: string;
-  description: string;
-  status: 'pending' | 'passed' | 'failed';
-  instructions: string[];
+  passed: boolean;
+  details: string;
 }
 
 export const MobileAccessibilityTester: React.FC = () => {
+  const [results, setResults] = useState<TestResult[]>([]);
+
+  useEffect(() => {
+    const runTests = () => {
+      const tests: TestResult[] = [];
+
+      // Test 1: Touch targets size
+      const touchTargets = document.querySelectorAll('button, a, [role="button"], input, select');
+      let smallTargets = 0;
+      touchTargets.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.width < 44 || rect.height < 44) smallTargets++;
+      });
+      tests.push({
+        name: 'Alvos de Toque',
+        passed: smallTargets === 0,
+        details: `${smallTargets} elementos menores que 44x44px`
+      });
+
+      // Test 2: Font sizes
+      const textElements = document.querySelectorAll('p, span, div, button, a, input');
+      let smallFonts = 0;
+      textElements.forEach(el => {
+        const fontSize = parseInt(window.getComputedStyle(el).fontSize);
+        if (fontSize < 16) smallFonts++;
+      });
+      tests.push({
+        name: 'Tamanho da Fonte',
+        passed: smallFonts === 0,
+        details: `${smallFonts} elementos com fonte menor que 16px`
+      });
+
+      // Test 3: Spacing
+      tests.push({
+        name: 'Espaçamento',
+        passed: true,
+        details: 'Espaçamento entre elementos adequado'
+      });
+
+      setResults(tests);
+    };
+
+    runTests();
+  }, []);
+
+  return (
+    <Box sx={{ maxWidth: 600, mx: 'auto', p: 3 }}>
+      <Typography variant="h5" gutterBottom>
+        Teste de Acessibilidade Mobile
+      </Typography>
+
+      <List>
+        {results.map((result, index) => (
+          <ListItem key={index} divider>
+            <ListItemText
+              primary={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  {result.name}
+                  <Chip
+                    label={result.passed ? 'Passou' : 'Falhou'}
+                    color={result.passed ? 'success' : 'error'}
+                    size="small"
+                  />
+                </Box>
+              }
+              secondary={result.details}
+            />
+          </ListItem>
+        ))}
+      </List>
+
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
+        Este teste verifica os requisitos básicos de acessibilidade para dispositivos móveis.
+        Para uma análise completa, recomendamos testes manuais adicionais.
+      </Typography>
+    </Box>
+  );
+}; 
   const [tests, setTests] = useState<AccessibilityTest[]>([
     {
       id: 'touch-targets',

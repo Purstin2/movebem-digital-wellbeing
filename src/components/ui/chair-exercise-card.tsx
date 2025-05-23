@@ -3,7 +3,9 @@ import { cn } from "@/lib/utils";
 import { ChairYogaExercise } from "@/types/chair-yoga";
 import { DeepGlassCard } from "@/components/ui/deep-glass-card";
 import { Button } from "@/components/ui/button";
-import { Clock, ChevronRight, Heart } from "lucide-react";
+import { Clock, ChevronRight, Heart, Play, Activity } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface ChairExerciseCardProps extends React.HTMLAttributes<HTMLDivElement> {
   exercise: ChairYogaExercise;
@@ -12,6 +14,8 @@ interface ChairExerciseCardProps extends React.HTMLAttributes<HTMLDivElement> {
   isRecommended?: boolean;
   onFavoriteToggle?: () => void;
   isFavorite?: boolean;
+  onStart: () => void;
+  onToggleFavorite: (id: string) => void;
 }
 
 export function ChairExerciseCard({
@@ -22,6 +26,8 @@ export function ChairExerciseCard({
   isRecommended = false,
   onFavoriteToggle,
   isFavorite = false,
+  onStart,
+  onToggleFavorite,
   ...props
 }: ChairExerciseCardProps) {
   // Verify if exercise exists
@@ -132,70 +138,109 @@ export function ChairExerciseCard({
               }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-2xl sm:text-3xl">
-                {getCategoryIcon(exercise.category)}
-              </div>
+            <div className="w-full h-full flex items-center justify-center bg-fenjes-purple/10">
+              {getCategoryIcon(exercise.category)}
             </div>
-          )}
-          
-          {/* Favorite button overlay */}
-          {onFavoriteToggle && (
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                onFavoriteToggle();
-              }}
-              className="absolute top-1 right-1 p-1 rounded-full bg-white/80 hover:bg-white"
-              aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-            >
-              <Heart 
-                size={14} 
-                className={cn(
-                  "transition-colors", 
-                  isFavorite ? "fill-fenjes-purple text-fenjes-purple" : "text-gray-400"
-                )} 
-              />
-            </button>
           )}
         </div>
 
-        {/* Content - smaller padding on mobile */}
-        <div className="p-2 sm:p-3 flex flex-col flex-grow">
-          {/* Chair icon to indicate seated exercise */}
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] font-medium text-fenjes-purple bg-fenjes-purple/10 px-1.5 py-0.5 rounded-full flex items-center gap-1">
-              💺 Na Cadeira
-            </span>
-            {isRecommended && (
-              <span className="text-[10px] font-medium text-fenjes-yellow-dark bg-fenjes-yellow/10 px-1.5 py-0.5 rounded-full">
-                ✨ Recomendado
-              </span>
-            )}
-          </div>
-
-          {/* Title and message */}
-          <h3 className="text-sm font-semibold mb-1 line-clamp-1">
-            {exercise.title}
-          </h3>
-          
-          <p className="text-[10px] sm:text-xs text-gray-600 line-clamp-2 mb-1.5 flex-grow">
-            {exercise.specificBenefit || exercise.description}
-          </p>
-
-          {/* Bottom section with tags */}
-          <div className="flex items-center justify-between mt-auto">
-            {/* Duration */}
-            <div className="flex items-center text-[10px] text-gray-500">
-              <Clock size={10} className="mr-1" />
-              <span>{exercise.duration}</span>
-            </div>
+        {/* Content section */}
+        <div className="flex-1 p-4 sm:p-6">
+          <div className="space-y-2">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {exercise.title}
+            </h3>
             
-            {/* Category tag */}
-            <span className="text-[8px] bg-fenjes-purple/10 text-fenjes-purple px-1 py-0.5 rounded-full flex items-center gap-0.5">
-              {getCategoryIcon(exercise.category)}
-            </span>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="outline" className="text-sm">
+                <Clock className="mr-1 h-4 w-4" />
+                {exercise.duration} min
+              </Badge>
+              <Badge variant="outline" className="text-sm">
+                <Activity className="mr-1 h-4 w-4" />
+                {difficultyDisplay[exercise.difficulty]}
+              </Badge>
+            </div>
+
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
+              {exercise.description}
+            </p>
           </div>
+
+          {showDetails && (
+            <div className="mt-4 space-y-3">
+              <div>
+                <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                  Benefícios:
+                </h4>
+                <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300">
+                  {exercise.steps.map((step, index) => (
+                    <li key={index}>{step.instruction}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {exercise.adaptations && (
+                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                    Adaptações Disponíveis
+                  </h4>
+                  <ul className="list-disc list-inside text-sm text-blue-700 dark:text-blue-300">
+                    {Object.entries(exercise.adaptations).map(([condition, adaptation]) => (
+                      <li key={condition}>
+                        <span className="font-medium">{conditionLabels[condition]}:</span>{' '}
+                        {adaptation}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {exercise.contraindications && exercise.contraindications.length > 0 && (
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                  <h4 className="text-sm font-medium text-red-800 dark:text-red-200 mb-2">
+                    ⚠️ Contraindicações
+                  </h4>
+                  <ul className="list-disc list-inside text-sm text-red-700 dark:text-red-300">
+                    {exercise.contraindications.map((condition, index) => (
+                      <li key={index}>{conditionLabels[condition]}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Action buttons */}
+        <div className="p-4 sm:p-6 pt-0 flex flex-col sm:flex-row gap-3">
+          <Button
+            onClick={onStart}
+            className="w-full h-12 text-base"
+            aria-label={`Iniciar ${exercise.title}`}
+          >
+            <Play className="mr-2 h-5 w-5" />
+            Iniciar Exercício
+          </Button>
+          
+          <Button
+            variant="outline"
+            onClick={() => onToggleFavorite(exercise.id)}
+            className="w-full h-12 text-base"
+            aria-label={isFavorite ? `Remover ${exercise.title} dos favoritos` : `Adicionar ${exercise.title} aos favoritos`}
+          >
+            {isFavorite ? (
+              <>
+                <Heart className="mr-2 h-5 w-5 fill-current" />
+                Remover dos Favoritos
+              </>
+            ) : (
+              <>
+                <Heart className="mr-2 h-5 w-5" />
+                Adicionar aos Favoritos
+              </>
+            )}
+          </Button>
         </div>
       </div>
     </DeepGlassCard>
