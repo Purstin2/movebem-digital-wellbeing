@@ -27,7 +27,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Fortalece o sistema imunológico',
       'Auxilia na recuperação muscular'
     ],
-    imageUrl: '/recipes/anti-inflammatory-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 250,
       protein: 5,
@@ -64,7 +64,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Auxilia na redução de inflamação',
       'Fornece energia sustentável'
     ],
-    imageUrl: '/recipes/quinoa-salad.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 320,
       protein: 12,
@@ -107,7 +107,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Rica em antioxidantes',
       'Auxilia na recuperação muscular'
     ],
-    imageUrl: '/recipes/turmeric-soup.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 180,
       protein: 4,
@@ -147,7 +147,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Auxilia na redução de inflamação',
       'Fonte de proteínas de alta qualidade'
     ],
-    imageUrl: '/recipes/omega-salad.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 350,
       protein: 20,
@@ -190,7 +190,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Auxilia na redução de inflamação',
       'Fonte de fibras e minerais'
     ],
-    imageUrl: '/recipes/lentil-soup.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 220,
       protein: 15,
@@ -229,7 +229,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Auxilia na redução de inflamação',
       'Fonte de fibras e minerais'
     ],
-    imageUrl: '/recipes/chickpea-salad.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 280,
       protein: 12,
@@ -264,7 +264,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Auxilia na redução de inflamação',
       'Fonte de vitaminas e minerais'
     ],
-    imageUrl: '/recipes/berry-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 250,
       protein: 6,
@@ -306,7 +306,7 @@ export const antiInflammatoryRecipes: Recipe[] = [
       'Auxilia na redução de inflamação',
       'Fonte de fibras e minerais'
     ],
-    imageUrl: '/recipes/quinoa-vegetables.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 320,
       protein: 12,

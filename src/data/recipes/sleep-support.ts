@@ -27,7 +27,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Melhora a qualidade do sono',
       'Reduz a ansiedade'
     ],
-    imageUrl: '/recipes/relaxing-tea.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 30,
       protein: 0,
@@ -64,7 +64,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Melhora a qualidade do sono',
       'Tem propriedades anti-inflamatórias'
     ],
-    imageUrl: '/recipes/golden-milk.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 120,
       protein: 2,
@@ -102,7 +102,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Melhora a qualidade do sono',
       'Reduz a ansiedade'
     ],
-    imageUrl: '/recipes/calming-tea.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 25,
       protein: 0,
@@ -138,7 +138,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Melhora a qualidade do sono',
       'Fonte de triptofano'
     ],
-    imageUrl: '/recipes/cherry-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 220,
       protein: 5,
@@ -174,7 +174,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Reduz ansiedade',
       'Auxilia na digestão'
     ],
-    imageUrl: '/recipes/chamomile-lavender-tea.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 20,
       protein: 0,
@@ -208,7 +208,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Auxilia na produção de melatonina',
       'Promove relaxamento muscular'
     ],
-    imageUrl: '/recipes/banana-almond-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 250,
       protein: 6,
@@ -244,7 +244,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Melhora a qualidade do sono',
       'Auxilia na digestão'
     ],
-    imageUrl: '/recipes/lemon-balm-passion-fruit-tea.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 25,
       protein: 0,
@@ -280,7 +280,7 @@ export const sleepSupportRecipes: Recipe[] = [
       'Melhora a qualidade do sono',
       'Auxilia na digestão'
     ],
-    imageUrl: '/recipes/turmeric-ginger-milk.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 120,
       protein: 2,

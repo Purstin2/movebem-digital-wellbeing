@@ -26,7 +26,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Aumenta a energia',
       'Melhora o humor'
     ],
-    imageUrl: '/recipes/maca-tea.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 50,
       protein: 1,
@@ -62,7 +62,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Auxilia no equilíbrio hormonal',
       'Fornece energia sustentável'
     ],
-    imageUrl: '/recipes/fruit-bowl.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 280,
       protein: 12,
@@ -98,7 +98,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Fonte de magnésio e zinco',
       'Melhora a energia e o humor'
     ],
-    imageUrl: '/recipes/maca-cacao-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 280,
       protein: 8,
@@ -139,7 +139,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Fonte de proteínas vegetais',
       'Rica em minerais essenciais'
     ],
-    imageUrl: '/recipes/cruciferous-quinoa.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 320,
       protein: 12,
@@ -175,7 +175,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Fonte de minerais essenciais',
       'Melhora a digestão'
     ],
-    imageUrl: '/recipes/seeds-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 280,
       protein: 8,
@@ -214,7 +214,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Fonte de minerais essenciais',
       'Melhora a digestão'
     ],
-    imageUrl: '/recipes/seeds-salad.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 320,
       protein: 10,
@@ -249,7 +249,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Aumenta a energia',
       'Reduz inflamação'
     ],
-    imageUrl: '/recipes/fenugreek-tea.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 30,
       protein: 1,
@@ -290,7 +290,7 @@ export const hormonalBalanceRecipes: Recipe[] = [
       'Fonte de proteínas vegetais',
       'Rica em minerais essenciais'
     ],
-    imageUrl: '/recipes/cruciferous-quinoa.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 320,
       protein: 12,

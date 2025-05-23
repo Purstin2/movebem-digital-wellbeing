@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Recipe } from "@/data/types";
 import { DeepGlassCard } from "@/components/ui/deep-glass-card";
 import { Button } from "@/components/ui/button";
-import { Clock, ChevronRight, Leaf, Info, Heart } from "lucide-react";
+import { Clock, ChevronRight, Leaf, Info, Heart, Star } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,7 @@ interface RecipeCardProps extends React.HTMLAttributes<HTMLDivElement> {
   showDetails?: boolean;
   isFavorite?: boolean;
   onToggleFavorite?: () => void;
+  isRecommended?: boolean;
 }
 
 export const RecipeCard: React.FC<RecipeCardProps> = ({
@@ -27,10 +28,16 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
   showDetails = false,
   isFavorite = false,
   onToggleFavorite,
+  isRecommended = false,
   className,
   ...props
 }) => {
   const [showFullDetails, setShowFullDetails] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   return (
     <DeepGlassCard
@@ -44,15 +51,21 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
     >
       <div className="relative aspect-video overflow-hidden rounded-t-lg">
         <img
-          src={recipe.imageUrl}
+          src={imageError ? "/images/nutrition/placeholder-recipe.jpg" : recipe.imageUrl}
           alt={recipe.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={handleImageError}
         />
         {variant === "featured" && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         )}
         {variant === "recommended" && (
           <div className="absolute inset-0 bg-gradient-to-t from-fenjes-yellow/20 to-transparent" />
+        )}
+        {isRecommended && (
+          <div className="absolute top-2 left-2 bg-fenjes-yellow text-xs font-bold px-2 py-1 rounded flex items-center gap-1 shadow">
+            <Star size={14} className="text-fenjes-purple" /> Recomendada
+          </div>
         )}
       </div>
 

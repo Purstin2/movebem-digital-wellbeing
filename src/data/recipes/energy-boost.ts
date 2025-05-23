@@ -27,7 +27,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Rico em vitaminas e minerais',
       'Auxilia na recuperação muscular'
     ],
-    imageUrl: '/recipes/green-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 220,
       protein: 8,
@@ -64,7 +64,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Rico em proteínas e fibras',
       'Ideal para lanches rápidos'
     ],
-    imageUrl: '/recipes/energy-bar.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 180,
       protein: 6,
@@ -104,7 +104,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Alto teor de vitaminas e minerais',
       'Auxilia na recuperação muscular'
     ],
-    imageUrl: '/recipes/acai-bowl.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 350,
       protein: 10,
@@ -147,7 +147,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Alta concentração de nutrientes',
       'Auxilia na recuperação muscular'
     ],
-    imageUrl: '/recipes/quinoa-tofu.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 380,
       protein: 18,
@@ -182,7 +182,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Alto teor de antioxidantes',
       'Auxilia na recuperação muscular'
     ],
-    imageUrl: '/recipes/banana-cacao-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 280,
       protein: 8,
@@ -221,7 +221,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Alto teor de vitaminas e minerais',
       'Auxilia na saciedade'
     ],
-    imageUrl: '/recipes/oatmeal-bowl.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 320,
       protein: 10,
@@ -261,7 +261,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Alta concentração de nutrientes',
       'Fonte de fibras'
     ],
-    imageUrl: '/recipes/chickpea-wrap.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 380,
       protein: 15,
@@ -296,7 +296,7 @@ export const energyBoostRecipes: Recipe[] = [
       'Alto teor de antioxidantes',
       'Auxilia na hidratação'
     ],
-    imageUrl: '/recipes/mango-smoothie.jpg',
+    imageUrl: '/images/nutrition/placeholder-recipe.jpg',
     nutritionalInfo: {
       calories: 250,
       protein: 4,

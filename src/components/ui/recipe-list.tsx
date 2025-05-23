@@ -16,6 +16,7 @@ interface RecipeListProps {
   layout?: "grid" | "list";
   favoriteRecipes?: string[];
   onToggleFavorite?: (recipeId: string) => void;
+  recommendedIds?: string[];
 }
 
 export const RecipeList: React.FC<RecipeListProps> = ({
@@ -27,7 +28,8 @@ export const RecipeList: React.FC<RecipeListProps> = ({
   className,
   layout = "grid",
   favoriteRecipes = [],
-  onToggleFavorite
+  onToggleFavorite,
+  recommendedIds = []
 }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
@@ -143,6 +145,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({
             recipe={recipe}
             isFavorite={favoriteRecipes.includes(recipe.id)}
             onToggleFavorite={() => onToggleFavorite?.(recipe.id)}
+            isRecommended={recommendedIds.includes(recipe.id)}
           />
         ))}
       </div>

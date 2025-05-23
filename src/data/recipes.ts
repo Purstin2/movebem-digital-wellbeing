@@ -16,7 +16,7 @@ export const allRecipes: Recipe[] = [
   ...energyBoostingRecipes,
   ...hormonalBalanceRecipes,
   ...sleepRelaxationRecipes
-];
+]; 
 
 // Export the recommendation function
 export const getRecommendedRecipes = (
