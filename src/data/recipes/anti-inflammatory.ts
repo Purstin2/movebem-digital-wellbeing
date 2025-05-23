@@ -154,5 +154,164 @@ export const antiInflammatoryRecipes: Recipe[] = [
       carbs: 15,
       fat: 25
     }
+  },
+  {
+    id: 'anti-inflammatory-5',
+    name: 'Sopa de Lentilha com Cúrcuma',
+    description: 'Sopa rica em proteínas e anti-inflamatórios naturais.',
+    difficulty: 'beginner',
+    duration: 30,
+    category: 'anti-inflammatory',
+    ingredients: [
+      '1 xícara de lentilha vermelha',
+      '1 cebola média picada',
+      '2 dentes de alho picados',
+      '1 cenoura picada',
+      '1 colher de sopa de cúrcuma em pó',
+      '1 colher de chá de cominho em pó',
+      '1 colher de chá de gengibre ralado',
+      '4 xícaras de caldo de legumes',
+      '1 colher de sopa de azeite',
+      'Suco de 1 limão',
+      'Sal e pimenta a gosto',
+      'Coentro picado para decorar'
+    ],
+    steps: [
+      'Refogue a cebola e o alho no azeite',
+      'Adicione a cenoura e tempere com cúrcuma, cominho e gengibre',
+      'Acrescente a lentilha e o caldo',
+      'Cozinhe até a lentilha ficar macia',
+      'Tempere com suco de limão, sal e pimenta',
+      'Decore com coentro picado'
+    ],
+    benefits: [
+      'Rica em proteínas vegetais',
+      'Alta concentração de curcumina',
+      'Auxilia na redução de inflamação',
+      'Fonte de fibras e minerais'
+    ],
+    imageUrl: '/recipes/lentil-soup.jpg',
+    nutritionalInfo: {
+      calories: 220,
+      protein: 15,
+      carbs: 35,
+      fat: 5
+    }
+  },
+  {
+    id: 'anti-inflammatory-6',
+    name: 'Salada de Grão-de-bico com Cúrcuma',
+    description: 'Salada rica em proteínas e anti-inflamatórios.',
+    difficulty: 'beginner',
+    duration: 20,
+    category: 'anti-inflammatory',
+    ingredients: [
+      '2 xícaras de grão-de-bico cozido',
+      '1/2 xícara de tomate cereja',
+      '1/2 xícara de pepino picado',
+      '1/4 xícara de cebola roxa picada',
+      '1/4 xícara de salsinha picada',
+      '1 colher de sopa de cúrcuma em pó',
+      '1 colher de sopa de azeite extra virgem',
+      'Suco de 1 limão',
+      '1 colher de chá de cominho em pó',
+      'Sal e pimenta a gosto'
+    ],
+    steps: [
+      'Misture o grão-de-bico com os vegetais picados',
+      'Prepare o molho com azeite, limão, cúrcuma e cominho',
+      'Tempere com sal e pimenta',
+      'Misture bem e decore com salsinha'
+    ],
+    benefits: [
+      'Rica em proteínas vegetais',
+      'Alta concentração de curcumina',
+      'Auxilia na redução de inflamação',
+      'Fonte de fibras e minerais'
+    ],
+    imageUrl: '/recipes/chickpea-salad.jpg',
+    nutritionalInfo: {
+      calories: 280,
+      protein: 12,
+      carbs: 40,
+      fat: 10
+    }
+  },
+  {
+    id: 'anti-inflammatory-7',
+    name: 'Smoothie de Frutas Vermelhas com Gengibre',
+    description: 'Smoothie rico em antioxidantes e anti-inflamatórios.',
+    difficulty: 'beginner',
+    duration: 10,
+    category: 'anti-inflammatory',
+    ingredients: [
+      '1 xícara de mix de frutas vermelhas (morango, framboesa, amora)',
+      '1 banana',
+      '1 colher de sopa de gengibre ralado',
+      '1 colher de sopa de cúrcuma em pó',
+      '1 colher de sopa de mel',
+      '1 xícara de leite de amêndoas',
+      '1 colher de sopa de sementes de chia'
+    ],
+    steps: [
+      'Adicione todos os ingredientes no liquidificador',
+      'Bata até ficar homogêneo',
+      'Sirva imediatamente'
+    ],
+    benefits: [
+      'Rico em antioxidantes',
+      'Alta concentração de curcumina',
+      'Auxilia na redução de inflamação',
+      'Fonte de vitaminas e minerais'
+    ],
+    imageUrl: '/recipes/berry-smoothie.jpg',
+    nutritionalInfo: {
+      calories: 250,
+      protein: 6,
+      carbs: 45,
+      fat: 8
+    }
+  },
+  {
+    id: 'anti-inflammatory-8',
+    name: 'Quinoa com Vegetais e Cúrcuma',
+    description: 'Prato completo rico em proteínas e anti-inflamatórios.',
+    difficulty: 'beginner',
+    duration: 25,
+    category: 'anti-inflammatory',
+    ingredients: [
+      '1 xícara de quinoa cozida',
+      '1 xícara de brócolis picado',
+      '1 xícara de cenoura picada',
+      '1/2 xícara de pimentão vermelho picado',
+      '1 colher de sopa de cúrcuma em pó',
+      '1 colher de chá de cominho em pó',
+      '2 colheres de sopa de azeite',
+      '2 dentes de alho picados',
+      'Suco de 1 limão',
+      'Sal e pimenta a gosto',
+      'Coentro picado para decorar'
+    ],
+    steps: [
+      'Cozinhe a quinoa conforme as instruções',
+      'Refogue o alho no azeite',
+      'Adicione os vegetais e tempere com cúrcuma e cominho',
+      'Misture com a quinoa',
+      'Tempere com suco de limão, sal e pimenta',
+      'Decore com coentro picado'
+    ],
+    benefits: [
+      'Rica em proteínas vegetais',
+      'Alta concentração de curcumina',
+      'Auxilia na redução de inflamação',
+      'Fonte de fibras e minerais'
+    ],
+    imageUrl: '/recipes/quinoa-vegetables.jpg',
+    nutritionalInfo: {
+      calories: 320,
+      protein: 12,
+      carbs: 45,
+      fat: 12
+    }
   }
 ]; 

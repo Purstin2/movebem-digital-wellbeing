@@ -45,7 +45,8 @@ export const NutritionDashboard: React.FC<NutritionDashboardProps> = ({ userProf
     <div className="container mx-auto px-4 py-8">
       <MedicalDisclaimer />
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6">
+        {/* Recomendações Diárias */}
         <Card className="col-span-full">
           <CardHeader>
             <CardTitle>Recomendações Diárias</CardTitle>
@@ -58,55 +59,66 @@ export const NutritionDashboard: React.FC<NutritionDashboardProps> = ({ userProf
           </CardContent>
         </Card>
 
+        {/* Biblioteca de Receitas */}
         <Card className="col-span-full">
           <CardHeader>
-            <CardTitle>Receitas Anti-inflamatórias</CardTitle>
+            <CardTitle>Biblioteca de Receitas</CardTitle>
           </CardHeader>
           <CardContent>
-            <RecipeList 
-              recipes={antiInflammatoryRecipes}
-              favoriteRecipes={favoriteRecipes}
-              onToggleFavorite={toggleFavorite}
-            />
-          </CardContent>
-        </Card>
+            <Tabs defaultValue="all" className="w-full">
+              <TabsList className="grid w-full grid-cols-5">
+                <TabsTrigger value="all">Todas</TabsTrigger>
+                <TabsTrigger value="anti-inflammatory">Anti-inflamatórias</TabsTrigger>
+                <TabsTrigger value="energy-boost">Energéticas</TabsTrigger>
+                <TabsTrigger value="hormonal-balance">Hormonais</TabsTrigger>
+                <TabsTrigger value="sleep-support">Sono</TabsTrigger>
+              </TabsList>
 
-        <Card className="col-span-full">
-          <CardHeader>
-            <CardTitle>Receitas Energéticas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RecipeList 
-              recipes={energyBoostingRecipes}
-              favoriteRecipes={favoriteRecipes}
-              onToggleFavorite={toggleFavorite}
-            />
-          </CardContent>
-        </Card>
+              <TabsContent value="all" className="mt-6">
+                <RecipeList 
+                  recipes={allRecipes}
+                  favoriteRecipes={favoriteRecipes}
+                  onToggleFavorite={toggleFavorite}
+                  showFilter={true}
+                />
+              </TabsContent>
 
-        <Card className="col-span-full">
-          <CardHeader>
-            <CardTitle>Receitas para Equilíbrio Hormonal</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RecipeList 
-              recipes={hormonalBalanceRecipes}
-              favoriteRecipes={favoriteRecipes}
-              onToggleFavorite={toggleFavorite}
-            />
-          </CardContent>
-        </Card>
+              <TabsContent value="anti-inflammatory" className="mt-6">
+                <RecipeList 
+                  recipes={antiInflammatoryRecipes}
+                  favoriteRecipes={favoriteRecipes}
+                  onToggleFavorite={toggleFavorite}
+                  showFilter={true}
+                />
+              </TabsContent>
 
-        <Card className="col-span-full">
-          <CardHeader>
-            <CardTitle>Receitas para Sono e Relaxamento</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RecipeList 
-              recipes={sleepRelaxationRecipes}
-              favoriteRecipes={favoriteRecipes}
-              onToggleFavorite={toggleFavorite}
-            />
+              <TabsContent value="energy-boost" className="mt-6">
+                <RecipeList 
+                  recipes={energyBoostingRecipes}
+                  favoriteRecipes={favoriteRecipes}
+                  onToggleFavorite={toggleFavorite}
+                  showFilter={true}
+                />
+              </TabsContent>
+
+              <TabsContent value="hormonal-balance" className="mt-6">
+                <RecipeList 
+                  recipes={hormonalBalanceRecipes}
+                  favoriteRecipes={favoriteRecipes}
+                  onToggleFavorite={toggleFavorite}
+                  showFilter={true}
+                />
+              </TabsContent>
+
+              <TabsContent value="sleep-support" className="mt-6">
+                <RecipeList 
+                  recipes={sleepRelaxationRecipes}
+                  favoriteRecipes={favoriteRecipes}
+                  onToggleFavorite={toggleFavorite}
+                  showFilter={true}
+                />
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>
