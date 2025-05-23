@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Filter, ChevronDown, CircleX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { EmptyState } from "@/components/ui/empty-state";
+import { useNavigate } from "react-router-dom";
 
 interface ChairExerciseListProps {
   exercises: ChairYogaExercise[];
@@ -18,6 +19,7 @@ interface ChairExerciseListProps {
   onToggleFavorite?: (exerciseId: string) => void;
   onExerciseSelect?: (exerciseId: string) => void;
   gridCols?: number;
+  userProfile?: any;
 }
 
 export function ChairExerciseList({
@@ -32,7 +34,9 @@ export function ChairExerciseList({
   onToggleFavorite,
   onExerciseSelect,
   gridCols = 3,
+  userProfile,
 }: ChairExerciseListProps) {
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<BodyCategory | null>(null);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -99,8 +103,12 @@ export function ChairExerciseList({
   };
 
   const handleExerciseClick = (exercise: ChairYogaExercise) => {
+    // Se houver um manipulador personalizado, use-o
     if (onExerciseSelect) {
       onExerciseSelect(exercise.id);
+    } else {
+      // Caso contrário, navegue para a página de detalhes do exercício
+      navigate(`/exercicio/${exercise.id}`);
     }
   };
 
@@ -179,7 +187,7 @@ export function ChairExerciseList({
               exercise={exercise}
               variant={favoriteExercises.includes(exercise.id) ? "featured" : "default"}
               onClick={() => handleExerciseClick(exercise)}
-              className="cursor-pointer"
+              className="cursor-pointer hover:shadow-md transition-shadow"
             />
           ))}
         </div>

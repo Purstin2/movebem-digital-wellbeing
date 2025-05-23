@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Home, Library, Activity, Utensils, Gift, User, X, Menu } from 'lucide-react';
+import { Home, Library, Activity, Utensils, Gift, User, X, Menu, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/context/SidebarContext';
 import { UserProfile } from '@/types/onboarding';
@@ -15,6 +15,7 @@ interface SidebarProps {
 export function Sidebar({ className, userProfile }: SidebarProps) {
   const { expanded, toggleSidebar } = useSidebar();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [hasEbookAccess, setHasEbookAccess] = useState(false);
   const location = useLocation();
   
   useEffect(() => {
@@ -25,6 +26,16 @@ export function Sidebar({ className, userProfile }: SidebarProps) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Verificar se o usuário tem acesso ao e-book
+  useEffect(() => {
+    try {
+      const claimedRewards = JSON.parse(localStorage.getItem('claimed-rewards') || '{}');
+      setHasEbookAccess(claimedRewards['reward-motivation-book'] || false);
+    } catch (error) {
+      console.error("Erro ao verificar acesso ao e-book:", error);
+    }
+  }, [location.pathname]); // Atualizar quando o caminho mudar para refletir reivindicações recentes
   
   return (
     <div className={cn("h-full pb-12", className)}>
@@ -113,7 +124,7 @@ export function Sidebar({ className, userProfile }: SidebarProps) {
           </h2>
           <div className="space-y-1">
             <NavLink
-              to="/evolucao-pessoal"
+              to="/conquistas"
               className={({ isActive }) =>
                 cn(
                   "group flex items-center rounded-md px-2 md:px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground touch-target",
@@ -136,6 +147,22 @@ export function Sidebar({ className, userProfile }: SidebarProps) {
               <Icons.profile className="mr-2 h-4 w-4" />
               <span>Meu Perfil</span>
             </NavLink>
+
+            {hasEbookAccess && (
+              <NavLink
+                to="/ebook-forca-mental"
+                className={({ isActive }) =>
+                  cn(
+                    "group flex items-center rounded-md px-2 md:px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground touch-target",
+                    isActive ? "bg-accent" : "transparent",
+                    "border border-fenjes-purple/20 bg-fenjes-purple/5"
+                  )
+                }
+              >
+                <BookOpen className="mr-2 h-4 w-4 text-fenjes-purple" />
+                <span>E-book: Força Mental</span>
+              </NavLink>
+            )}
           </div>
         </div>
         <div className="px-2 md:px-3 py-2">

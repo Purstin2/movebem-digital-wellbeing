@@ -1,0 +1,157 @@
+:root {
+  --background: 250 250 250;
+  --foreground: 20 20 20;
+  
+  /* Cores atualizadas para corresponder à landing page */
+  --fenjes-purple: 113 63 220; /* Roxo principal mais vibrante */
+  --fenjes-purple-light: 144 107 238; /* Roxo secundário ajustado */
+  --fenjes-purple-dark: 83 37 183; /* Roxo escuro para hover */
+  
+  --fenjes-cream: 255 252 240;
+  --fenjes-cream-light: 255 255 252;
+
+  --fenjes-green: 53 181 121;
+  --fenjes-green-dark: 44 160 105;
+
+  --fenjes-yellow: 245 199 85;
+  --fenjes-yellow-dark: 220 179 76;
+  
+  --fenjes-orange: 255 144 85;
+  --fenjes-blue: 84 136 255;
+  --fenjes-gold: 220 175 50;
+  
+  --fenjes-bg-light: 248 249 255;
+
+  --card: 255 255 255;
+  --card-foreground: 10 10 10;
+ 
+  --popover: 255 255 255;
+  --popover-foreground: 10 10 10;
+ 
+  --primary: 113 63 220; /* Corresponde ao roxo principal */
+  --primary-foreground: 255 255 255;
+ 
+  --secondary: 220 220 250;
+  --secondary-foreground: 60 40 170;
+ 
+  --muted: 240 240 245;
+  --muted-foreground: 115 115 135;
+ 
+  --accent: 240 240 250;
+  --accent-foreground: 70 70 90;
+ 
+  --destructive: 235 70 70;
+  --destructive-foreground: 255 255 255;
+ 
+  --border: 220 220 230;
+  --input: 220 220 230;
+  --ring: 113 63 220; /* Corresponde ao roxo principal */
+ 
+  --radius: 0.5rem;
+}
+ 
+.dark {
+  /* Tema escuro atualizado com cores baseadas em roxo ao invés de preto puro */
+  --background: 260 30% 12%; /* Roxo escuro para fundo */
+  --foreground: 260 15% 90%; /* Texto claro com matiz roxo suave */
+ 
+  --card: 260 25% 16%; /* Roxo para cards, um pouco mais claro que o fundo */
+  --card-foreground: 260 15% 95%;
+ 
+  --popover: 260 25% 16%;
+  --popover-foreground: 260 15% 95%;
+ 
+  --primary: 264 70% 70%; /* Roxo principal mais vibrante para dark mode */
+  --primary-foreground: 260 15% 98%;
+ 
+  --secondary: 260 35% 20%;
+  --secondary-foreground: 260 15% 90%;
+ 
+  --muted: 260 30% 20%;
+  --muted-foreground: 260 15% 65%;
+ 
+  --accent: 264 40% 25%;
+  --accent-foreground: 260 15% 90%;
+ 
+  --destructive: 0 70% 60%;
+  --destructive-foreground: 260 15% 95%;
+ 
+  --border: 260 20% 25%;
+  --input: 260 20% 25%;
+  --ring: 264 70% 70%;
+}
+
+/* Estilo para botões gradientes como na landing page */
+.btn-gradient-primary {
+  background: linear-gradient(to right, rgb(var(--fenjes-purple)) 0%, rgb(var(--fenjes-purple-light)) 100%);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(var(--fenjes-purple) / 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-gradient-primary:hover {
+  box-shadow: 0 6px 16px rgba(var(--fenjes-purple) / 0.35);
+  transform: translateY(-1px);
+}
+
+/* Estilo para seções com fundo gradiente como na landing page */
+.section-gradient-primary {
+  background: linear-gradient(to right, rgb(var(--fenjes-purple)) 0%, rgb(var(--fenjes-purple-light)) 100%);
+  color: white;
+}
+
+/* Estilo para destaques como na landing page */
+.highlight-box {
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(var(--fenjes-purple) / 0.15);
+  border: 1px solid rgba(var(--fenjes-purple) / 0.1);
+  transition: all 0.3s ease;
+}
+
+.highlight-box:hover {
+  box-shadow: 0 6px 24px rgba(var(--fenjes-purple) / 0.25);
+  transform: translateY(-2px);
+}
+
+/* Estilo para badges como na landing page */
+.badge-colored {
+  background-color: rgba(var(--fenjes-purple) / 0.1);
+  color: rgb(var(--fenjes-purple));
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+
+/* Ajustes para o modo escuro */
+.dark .badge-colored {
+  background-color: rgba(var(--fenjes-purple-light) / 0.2);
+  color: hsl(260, 15%, 95%);
+}
+
+.dark .highlight-box {
+  box-shadow: 0 4px 20px rgba(var(--fenjes-purple-light) / 0.25);
+  border: 1px solid rgba(var(--fenjes-purple-light) / 0.2);
+}
+
+.dark .card,
+.dark .bg-white {
+  background-color: hsl(260, 25%, 16%);
+  color: hsl(260, 15%, 95%);
+}
+
+/* Fontes da landing page */
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .feature-title, .heading-emphasis {
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+  font-weight: 600;
+}
+
+.cta-button {
+  font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  font-weight: 700;
+} 

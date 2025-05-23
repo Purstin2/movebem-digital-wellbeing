@@ -16,6 +16,12 @@ import OnboardingPage from "./pages/OnboardingPage";
 import HomePage from "./pages/HomePage";
 import ChairYogaPage from "./pages/ChairYogaPage";
 import ChairYogaExercisePage from "./pages/ChairYogaExercisePage";
+import DiaryPage from "./pages/DiaryPage";
+import AboutPage from "./pages/AboutPage";
+import HelpPage from "./pages/HelpPage";
+import FavoritesPage from "./pages/FavoritesPage";
+import AchievementsPage from "./pages/AchievementsPage";
+import EbookPage from "./pages/EbookPage";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +36,7 @@ const App = () => (
             <Route path="/" element={<HomePage />} />
             <Route path="/momentos-de-liberdade" element={<ExercisesPage />} />
             <Route path="/exercises/:id" element={<ExerciseDetailPage />} />
-            <Route path="/conquistas" element={<ProgressPage />} />
+            <Route path="/conquistas" element={<AchievementsPage />} />
             <Route path="/alimentos-que-curam" element={<NutritionPage />} />
             <Route path="/tesouros-exclusivos" element={<BonusPage />} />
             <Route path="/evolucao-pessoal" element={<ProfilePage />} />
@@ -38,6 +44,12 @@ const App = () => (
             <Route path="/nutrition" element={<NutritionPage />} />
             <Route path="/chair-yoga" element={<ChairYogaPage />} />
             <Route path="/exercicio/:id" element={<ChairYogaExercisePage />} />
+            <Route path="/diary" element={<DiaryPage />} />
+            <Route path="/sobre" element={<AboutPage />} />
+            <Route path="/help" element={<HelpPage />} />
+            <Route path="/perfil" element={<ProfilePage />} />
+            <Route path="/favoritos" element={<FavoritesPage />} />
+            <Route path="/ebook-forca-mental" element={<EbookPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

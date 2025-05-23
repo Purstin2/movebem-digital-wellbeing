@@ -8,64 +8,122 @@ import { useSidebar } from "@/context/SidebarContext";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 interface AppLayoutProps {
   children: ReactNode;
+  className?: string;
+  showHeader?: boolean;
+  showSidebar?: boolean;
+  userProfile?: UserProfile;
 }
 
-export function AppLayout({ children }: AppLayoutProps) {
+export function AppLayout({ children, className, showHeader = true, showSidebar = true, userProfile: propUserProfile }: AppLayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const { expanded } = useSidebar();
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(propUserProfile || null);
+  const { expanded, toggleSidebar } = useSidebar();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [onboardingToastShown, setOnboardingToastShown] = useState(false);
 
-  // Handle resize events
+  // Detectar tamanho de tela para responsividade
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 640);
     };
     
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Verificar dark mode
+  useEffect(() => {
+    try {
+      const savedSettings = localStorage.getItem('userSettings');
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        setIsDarkMode(settings.darkMode || false);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar configurações de tema:", error);
+    }
+  }, []);
+
+  // Aplicar dark mode ao elemento raiz
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   // Load user profile from session storage if exists
   useEffect(() => {
+    // Se já temos um perfil de usuário das props, não precisamos carregar do sessionStorage
+    if (propUserProfile) {
+      setUserProfile(propUserProfile);
+      return;
+    }
+    
     try {
       const storedProfile = sessionStorage.getItem('userProfile');
       if (storedProfile) {
         setUserProfile(JSON.parse(storedProfile));
+      } else {
+        // Se não existir perfil, criar um mock para testes
+        const mockProfile: UserProfile = {
+          firstName: "Usuário",
+          currentDay: 1,
+          painLevel: "medium" as const,
+          primaryPain: "back" as const,
+          mobilityLevel: "moderate" as const,
+          trackAssigned: "adaptive" as const,
+          goals: ["reduce_pain", "improve_posture"],
+          age: "30-45",
+          conditions: ["sedentary"],
+          experience: "beginner" as const
+        };
+        sessionStorage.setItem('userProfile', JSON.stringify(mockProfile));
+        setUserProfile(mockProfile);
       }
     } catch (error) {
       console.error("Error loading profile:", error);
     }
-  }, []);
+  }, [propUserProfile]);
 
-  // Redirect to onboarding if no profile exists and not already on onboarding page
+  // Mostrar toast de onboarding apenas uma vez por sessão
   useEffect(() => {
-    if (!userProfile && location.pathname !== '/onboarding' && 
-        !location.pathname.startsWith('/exercises/')) {
-      // Uncomment for production
-      // navigate('/onboarding');
+    // Verificar se o usuário já completou onboarding ou se toast já foi mostrado
+    const onboardingCompleted = sessionStorage.getItem('onboardingCompleted');
+    
+    if (!onboardingCompleted && !onboardingToastShown && location.pathname !== '/onboarding') {
+      // Marcar que o toast foi mostrado para não repetir
+      setOnboardingToastShown(true);
       
-      // Just show a toast for now
       toast({
-        title: "Personalização recomendada",
-        description: "Complete o quiz de onboarding para uma experiência personalizada",
+        title: "Plano Prático de 21 Dias",
+        description: "Complete o quiz inicial para personalizar sua jornada de 21 dias",
         action: (
           <button
-            onClick={() => navigate('/onboarding')}
+            onClick={() => {
+              navigate('/onboarding');
+              // Marcar que o usuário foi para o onboarding
+              sessionStorage.setItem('onboardingCompleted', 'true');
+            }}
             className="bg-fenjes-purple text-white px-3 py-1 rounded text-xs hover:bg-fenjes-purple-dark"
           >
-            Ir para Quiz
+            Iniciar Jornada
           </button>
         )
       });
     }
-  }, [userProfile, location.pathname, navigate, toast]);
+  }, [userProfile, location.pathname, navigate, toast, onboardingToastShown]);
 
   // Notificação de mudança de página e reset de scroll
   useEffect(() => {
@@ -112,55 +170,54 @@ export function AppLayout({ children }: AppLayoutProps) {
   const personalizedTrack = getPersonalizedGreeting();
 
   return (
-    <div className="flex min-h-screen bg-fenjes-bg-light overflow-x-hidden">
-      {/* Desktop Sidebar - hidden on mobile */}
-      <div className="hidden md:block">
-        <Sidebar userProfile={userProfile} />
-      </div>
+    <div className={cn(
+      "min-h-screen flex flex-col bg-background text-foreground",
+      isDarkMode && "dark"
+    )}>
+      {showHeader && <Header userProfile={userProfile} />}
+
+      {personalizedTrack && location.pathname === "/" && (
+        <div className="bg-fenjes-purple-light/20 p-2 md:p-3 text-center border-b text-fenjes-purple-dark animate-fade-in text-sm md:text-base">
+          <span className="font-medium">
+            Plano Prático de 21 Dias • Dia {userProfile?.currentDay || 1}/21 • {personalizedTrack}
+          </span>
+        </div>
+      )}
       
-      {/* Mobile Sidebar with Sheet component */}
-      <div className="md:hidden">
-        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-          <SheetTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="fixed top-4 left-4 z-50 bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white"
-              aria-label="Menu"
-            >
-              <Menu size={24} className="text-fenjes-purple" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent 
-            side="left" 
-            className="p-0 w-4/5 max-w-xs border-r border-fenjes-purple-light/20"
-            onClose={() => setIsSheetOpen(false)}
-            onPointerDownOutside={() => setIsSheetOpen(false)}
-          >
-            <Sidebar userProfile={userProfile} />
-          </SheetContent>
-        </Sheet>
-      </div>
-      
-      <div className="flex flex-col flex-1 w-full">
-        <Header userProfile={userProfile} />
-        
-        {personalizedTrack && location.pathname === "/" && (
-          <div className="bg-fenjes-purple-light/20 p-2 md:p-3 text-center border-b text-fenjes-purple-dark animate-fade-in text-sm md:text-base">
-            <span className="font-medium">
-              Você está na {personalizedTrack} • Dia {userProfile?.currentDay || 4} de 21
-            </span>
+      <div className="flex-1 flex">
+        {showSidebar && (
+          <div className={cn(
+            "fixed inset-y-0 z-20 flex-shrink-0 transition-all duration-300 mt-16",
+            "md:w-64 md:left-0 md:relative md:mt-0",
+            expanded ? "left-0" : "-left-full",
+            (isMobile && expanded) && "w-64 bg-background bg-opacity-100"
+          )}>
+            <Sidebar userProfile={userProfile} className="border-r min-h-screen py-4" />
+            
+            {/* Overlay em dispositivos móveis */}
+            {isMobile && expanded && (
+              <div 
+                className="fixed inset-0 bg-black/50 z-[-1] md:hidden"
+                onClick={toggleSidebar}
+              />
+            )}
           </div>
         )}
         
-        <main className="flex-1 p-3 md:p-6 overflow-y-auto overflow-x-hidden animate-fade-in">
+        <main className={cn(
+          "flex-1 w-full transition-all duration-300 overflow-auto p-3 md:p-6",
+          showSidebar && "md:ml-0",
+          className
+        )}>
           {children}
         </main>
-        
-        <footer className="p-3 md:p-4 border-t text-center text-xs md:text-sm text-gray-500 animate-fade-in">
-          © 2025 Fenjes - Todos os direitos reservados
-        </footer>
       </div>
+
+      <footer className="p-3 md:p-4 border-t text-center text-xs md:text-sm text-muted-foreground">
+        © 2025 Fenjes - Todos os direitos reservados
+      </footer>
+      
+      <Toaster />
     </div>
   );
 }
