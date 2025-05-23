@@ -2,102 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* @tailwind base; - Moved to globals.css */
+/* @tailwind components; - Moved to globals.css */
+/* @tailwind utilities; - Moved to globals.css */
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    /* Updated primary to use Fenjes purple */
-    --primary: 270 100% 64%;
-    --primary-foreground: 210 40% 98%;
-
-    /* Updated secondary to match Fenjes light purple */
-    --secondary: 270 100% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 270 100% 64%;
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 270 60% 30%;
-    --sidebar-primary: 270 100% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 270 100% 96%;
-    --sidebar-accent-foreground: 270 60% 25%;
-    --sidebar-border: 270 30% 90%;
-    --sidebar-ring: 270 100% 64%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 270 100% 64%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 270 30% 15%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 270 100% 70%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-fenjes-bg-light font-montserrat text-fenjes-text-warm;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-quicksand font-semibold;
-  }
-  
-  .quote {
-    @apply font-playfair italic;
-  }
-}
+/* Removed conflicting @layer base definitions for :root, .dark, *, body, h1-h6 */
+/* The theme (colors, fonts) is now primarily controlled by globals.css and tailwind.config.ts */
 
 @layer utilities {
   .animate-in {
