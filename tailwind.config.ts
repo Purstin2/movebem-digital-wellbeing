@@ -26,7 +26,17 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					'50': '#f0f9ff',
+					'100': '#e0f2fe',
+					'200': '#bae6fd',
+					'300': '#7dd3fc',
+					'400': '#38bdf8',
+					'500': '#0ea5e9',
+					'600': '#0284c7',
+					'700': '#0369a1',
+					'800': '#075985',
+					'900': '#0c4a6e',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -97,7 +107,7 @@ export default {
                 }
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
+				lg: '1rem',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
@@ -148,7 +158,9 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
                 'fade-in': 'fade-in 0.6s ease-out',
                 'progress-fill': 'progress-fill 1.2s ease-out',
-                'glass-hover': 'glass-hover 0.3s ease-out forwards'
+                'glass-hover': 'glass-hover 0.3s ease-out forwards',
+                'fade': 'fadeIn 0.5s ease-in-out',
+                'slide': 'slideIn 0.5s ease-in-out',
 			},
             fontFamily: {
                 'montserrat': ['Montserrat', 'sans-serif'],
@@ -158,7 +170,24 @@ export default {
             backgroundImage: {
                 'hero-gradient': 'linear-gradient(135deg, #7432B4 0%, #9747FF 100%)',
                 'glass-gradient': 'linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
-            }
+            },
+            fontSize: {
+                'base': '1.125rem',
+                'lg': '1.25rem',
+                'xl': '1.5rem',
+                '2xl': '1.75rem',
+                '3xl': '2rem',
+            },
+            spacing: {
+                'button': '3rem',
+                'input': '3rem',
+            },
+            padding: {
+                'button': '1.25rem',
+            },
+            transitionDuration: {
+                'default': '300ms',
+            },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
