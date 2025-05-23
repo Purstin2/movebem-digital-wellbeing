@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +10,8 @@ import { StepIndicator } from "@/components/ui/step-indicator";
 import { useToast } from "@/hooks/use-toast";
 import { QuizAnswer, UserProfile } from "@/types/onboarding";
 import QuizResults from "./QuizResults";
+import { QuizQuestion } from "@/types/quiz";
+import { ChairYogaProfile } from "@/types/chair-yoga";
 
 const OnboardingQuiz = () => {
   const navigate = useNavigate();
@@ -20,93 +21,107 @@ const OnboardingQuiz = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const questions = [
+  const quizQuestions: QuizQuestion[] = [
     {
       id: "pain_intensity",
-      title: "Como você descreveria seu nível de dor no dia a dia?",
-      subtitle: "Seja honesta, isso nos ajuda a personalizar sua experiência",
-      type: "single",
+      title: "Em uma escala de 1 a 10, qual é sua dor atual?",
+      subtitle: "1 = sem dor, 10 = dor extrema",
+      type: "slider",
+      options: Array.from({length: 10}, (_, i) => ({
+        value: String(i + 1),
+        label: String(i + 1),
+        description: i === 0 ? "Sem dor" : i === 9 ? "Dor extrema" : ""
+      }))
+    },
+    {
+      id: "pain_locations",
+      title: "Onde você sente dor? (selecione todas que se aplicam)",
+      subtitle: "Isso nos ajuda a personalizar seus exercícios",
+      type: "multiple",
       options: [
-        { value: "low", label: "Desconforto leve (1-3)", description: "Tensão ocasional, rigidez matinal", weight: 1 },
-        { value: "medium", label: "Dor moderada (4-6)", description: "Dor constante que atrapalha atividades", weight: 2 },
-        { value: "high", label: "Dor intensa (7-10)", description: "Dor que limita muito meu movimento", weight: 3 }
+        { value: "neck", label: "Pescoço", description: "Região cervical" },
+        { value: "shoulders", label: "Ombros", description: "Incluindo escápulas" },
+        { value: "upper_back", label: "Parte superior das costas", description: "Região torácica" },
+        { value: "lower_back", label: "Parte inferior das costas", description: "Região lombar" },
+        { value: "hips", label: "Quadril", description: "Incluindo região pélvica" },
+        { value: "knees", label: "Joelhos", description: "Articulação do joelho" },
+        { value: "general", label: "Dor generalizada", description: "Múltiplas áreas" }
       ]
     },
     {
-      id: "primary_pain",
-      title: "Onde você sente mais dor ou desconforto?",
-      subtitle: "Escolha a área que mais te incomoda",
+      id: "pain_frequency",
+      title: "Com que frequência você sente dor?",
+      subtitle: "Escolha a opção que melhor descreve sua situação",
       type: "single",
       options: [
-        { value: "neck", label: "Pescoço e Nuca", description: "Tensão, dor de cabeça, torcicolo", weight: 1 },
-        { value: "shoulders", label: "Ombros e Braços", description: "Ombros travados, dor nos braços", weight: 1 },
-        { value: "back", label: "Costas e Lombar", description: "Dor nas costas, lombar, ciático", weight: 1 },
-        { value: "hips", label: "Quadril e Pernas", description: "Quadril rígido, dor nas pernas", weight: 1 },
-        { value: "general", label: "Corpo Todo", description: "Dor generalizada, fibromialgia", weight: 2 }
+        { value: "constant", label: "Constante", description: "Presente a maior parte do tempo" },
+        { value: "intermittent", label: "Intermitente", description: "Vai e volta durante o dia" },
+        { value: "occasional", label: "Ocasional", description: "Alguns dias da semana" }
       ]
     },
     {
-      id: "mobility_level",
-      title: "Como está sua mobilidade atual?",
-      subtitle: "Isso nos ajuda a criar exercícios seguros para você",
-      type: "single",
+      id: "pain_triggers",
+      title: "O que costuma piorar sua dor?",
+      subtitle: "Selecione todos que se aplicam",
+      type: "multiple",
       options: [
-        { value: "limited", label: "Bem limitada", description: "Dificuldade para me mover, levantar, agachar", weight: 3 },
-        { value: "moderate", label: "Moderada", description: "Consigo me mover mas com desconforto", weight: 2 },
-        { value: "good", label: "Boa", description: "Me movo bem, só sinto rigidez às vezes", weight: 1 }
+        { value: "sitting", label: "Sentar por muito tempo", description: "" },
+        { value: "standing", label: "Ficar em pé", description: "" },
+        { value: "movement", label: "Certos movimentos", description: "" },
+        { value: "stress", label: "Estresse/Ansiedade", description: "" },
+        { value: "weather", label: "Mudança de clima", description: "" },
+        { value: "sleep", label: "Dormir mal", description: "" }
+      ]
+    },
+    {
+      id: "mobility_limitations",
+      title: "Quais movimentos são difíceis para você?",
+      subtitle: "Isso nos ajuda a adaptar os exercícios",
+      type: "multiple",
+      options: [
+        { value: "neck_rotation", label: "Girar o pescoço", description: "" },
+        { value: "arm_raising", label: "Levantar os braços", description: "" },
+        { value: "bending", label: "Curvar-se para frente", description: "" },
+        { value: "twisting", label: "Fazer rotação do tronco", description: "" },
+        { value: "hip_movement", label: "Movimentar o quadril", description: "" }
       ]
     },
     {
       id: "health_conditions",
-      title: "Você tem alguma dessas condições? (pode marcar várias)",
-      subtitle: "Isso nos permite adaptar os exercícios com total segurança",
+      title: "Você tem alguma dessas condições?",
+      subtitle: "Selecione todas que se aplicam",
       type: "multiple",
       options: [
-        { value: "arthritis", label: "Artrite ou Artrose", description: "", weight: 2 },
-        { value: "fibromyalgia", label: "Fibromialgia", description: "", weight: 3 },
-        { value: "herniated_disc", label: "Hérnia de Disco", description: "", weight: 3 },
-        { value: "anxiety", label: "Ansiedade ou Estresse", description: "", weight: 1 },
-        { value: "overweight", label: "Sobrepeso", description: "", weight: 1 },
-        { value: "diabetes", label: "Diabetes", description: "", weight: 1 },
-        { value: "none", label: "Nenhuma das anteriores", description: "", weight: 0 }
+        { value: "arthritis", label: "Artrite/Artrose", description: "Inflamação articular" },
+        { value: "osteoporosis", label: "Osteoporose", description: "Fragilidade óssea" },
+        { value: "fibromyalgia", label: "Fibromialgia", description: "Dor crônica" },
+        { value: "herniated_disc", label: "Hérnia de Disco", description: "Problema na coluna" },
+        { value: "hypertension", label: "Hipertensão", description: "Pressão alta" },
+        { value: "diabetes", label: "Diabetes", description: "Tipo 1 ou 2" },
+        { value: "none", label: "Nenhuma das anteriores", description: "" }
       ]
     },
     {
-      id: "main_goals",
-      title: "Quais são seus principais objetivos? (pode marcar várias)",
-      subtitle: "Vamos focar no que é mais importante para você",
-      type: "multiple",
-      options: [
-        { value: "pain_relief", label: "Diminuir as dores", description: "Viver sem dor constante", weight: 3 },
-        { value: "mobility", label: "Melhorar mobilidade", description: "Me mover com mais facilidade", weight: 2 },
-        { value: "weight_loss", label: "Perder peso", description: "Emagrecer de forma saudável", weight: 1 },
-        { value: "anxiety", label: "Reduzir ansiedade", description: "Mais calma e relaxamento", weight: 1 },
-        { value: "energy", label: "Ter mais energia", description: "Disposição para o dia a dia", weight: 1 },
-        { value: "posture", label: "Melhorar postura", description: "Postura mais ereta e elegante", weight: 1 }
-      ]
-    },
-    {
-      id: "experience",
+      id: "experience_level",
       title: "Qual sua experiência com exercícios?",
-      subtitle: "Sem julgamentos! Queremos criar o plano perfeito para você",
+      subtitle: "Seja sincero - vamos começar no nível certo",
       type: "single",
       options: [
-        { value: "beginner", label: "Iniciante total", description: "Nunca fiz exercícios regulares", weight: 3 },
-        { value: "some", label: "Já tentei algumas vezes", description: "Já fiz academia/yoga mas parei", weight: 2 },
-        { value: "experienced", label: "Tenho experiência", description: "Pratico exercícios regularmente", weight: 1 }
+        { value: "beginner", label: "Iniciante", description: "Primeira vez ou retornando" },
+        { value: "intermediate", label: "Intermediário", description: "Pratica ocasionalmente" },
+        { value: "advanced", label: "Avançado", description: "Pratica regularmente" }
       ]
     },
     {
-      id: "age_range",
-      title: "Qual sua faixa etária?",
-      subtitle: "Nos ajuda a personalizar exercícios e dicas",
-      type: "single",
+      id: "preferences",
+      title: "Preferências de acessibilidade",
+      subtitle: "Personalize sua experiência",
+      type: "multiple",
       options: [
-        { value: "25-35", label: "25-35 anos", description: "", weight: 1 },
-        { value: "36-45", label: "36-45 anos", description: "", weight: 1 },
-        { value: "46-55", label: "46-55 anos", description: "", weight: 2 },
-        { value: "56-65", label: "56-65 anos", description: "", weight: 2 },
-        { value: "65+", label: "Mais de 65 anos", description: "", weight: 3 }
+        { value: "high_contrast", label: "Alto Contraste", description: "Melhor visibilidade" },
+        { value: "large_text", label: "Texto Grande", description: "Facilita leitura" },
+        { value: "reduced_motion", label: "Reduzir Animações", description: "Menos movimento na tela" },
+        { value: "sound_off", label: "Desativar Sons", description: "Modo silencioso" }
       ]
     }
   ];
@@ -170,7 +185,7 @@ const OnboardingQuiz = () => {
   };
 
   const nextStep = () => {
-    if (currentStep < questions.length - 1) {
+    if (currentStep < quizQuestions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
       setIsSubmitting(true);
@@ -211,7 +226,7 @@ const OnboardingQuiz = () => {
     navigate('/');
   };
 
-  const progress = ((currentStep + 1) / (questions.length + 1)) * 100;
+  const progress = ((currentStep + 1) / (quizQuestions.length + 1)) * 100;
 
   if (profile) {
     return (
@@ -222,7 +237,7 @@ const OnboardingQuiz = () => {
     );
   }
 
-  const currentQuestion = questions[currentStep];
+  const currentQuestion = quizQuestions[currentStep];
   const isQuestionAnswered = currentQuestion.type === "single" 
     ? answers.some(a => a.questionId === currentQuestion.id)
     : answers.some(a => a.questionId.startsWith(currentQuestion.id + "_"));
@@ -232,7 +247,7 @@ const OnboardingQuiz = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm text-gray-500">
-            Pergunta {currentStep + 1} de {questions.length}
+            Pergunta {currentStep + 1} de {quizQuestions.length}
           </span>
           <span className="text-sm font-medium text-movebem-purple">
             {Math.round(progress)}% concluído
@@ -243,7 +258,7 @@ const OnboardingQuiz = () => {
         <div className="mt-4">
           <StepIndicator 
             currentStep={currentStep + 1} 
-            totalSteps={questions.length} 
+            totalSteps={quizQuestions.length} 
             onStepClick={(step) => setCurrentStep(step - 1)}
           />
         </div>
@@ -336,7 +351,7 @@ const OnboardingQuiz = () => {
           className="bg-movebem-purple hover:bg-movebem-purple-dark transition-all hover:scale-105"
           disabled={!isQuestionAnswered || isSubmitting}
         >
-          {isSubmitting ? "Processando..." : currentStep === questions.length - 1 ? "Ver Meu Plano" : "Próxima"}
+          {isSubmitting ? "Processando..." : currentStep === quizQuestions.length - 1 ? "Ver Meu Plano" : "Próxima"}
         </Button>
       </div>
     </div>

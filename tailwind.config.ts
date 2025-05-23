@@ -104,12 +104,76 @@ export default {
                     green: {
                         DEFAULT: '#4ADE80',
                     }
-                }
+                },
+                // High contrast color palette
+                primary: {
+                    DEFAULT: '#1a5f7a',
+                    dark: '#134557',
+                    light: '#2286b3',
+                    contrast: '#ffffff',
+                },
+                secondary: {
+                    DEFAULT: '#2c666e',
+                    dark: '#1e464c',
+                    light: '#3a8690',
+                    contrast: '#ffffff',
+                },
+                accent: {
+                    DEFAULT: '#90b77d',
+                    dark: '#658355',
+                    light: '#b2cf9f',
+                    contrast: '#000000',
+                },
+                neutral: {
+                    100: '#ffffff',
+                    200: '#f3f4f6',
+                    300: '#e5e7eb',
+                    400: '#d1d5db',
+                    500: '#6b7280',
+                    600: '#4b5563',
+                    700: '#374151',
+                    800: '#1f2937',
+                    900: '#111827',
+                },
+                // High contrast mode colors
+                'high-contrast': {
+                    text: '#000000',
+                    'text-secondary': '#1a1a1a',
+                    background: '#ffffff',
+                    'background-alt': '#f0f0f0',
+                    primary: '#0000ee',
+                    secondary: '#551a8b',
+                    accent: '#ee0000',
+                    border: '#000000',
+                },
+                highContrast: {
+                    text: '#000000',
+                    background: '#ffffff',
+                    primary: '#0000EE',
+                    secondary: '#551A8B',
+                    error: '#D32F2F',
+                    success: '#2E7D32',
+                },
+				'gray': {
+					50: '#f8f9fa',
+					100: '#f1f3f5',
+					200: '#e9ecef',
+					300: '#dee2e6',
+					400: '#ced4da',
+					500: '#adb5bd',
+					600: '#868e96',
+					700: '#495057',
+					800: '#343a40',
+					900: '#212529',
+				},
 			},
 			borderRadius: {
 				lg: '1rem',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				xl: '1.5rem',
+				'focus': '0.375rem',
+				'2xl': '1.5rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -151,7 +215,10 @@ export default {
                         backdropFilter: 'blur(12px)', 
                         background: 'rgba(255,255,255,0.2)' 
                     }
-                }
+                },
+				'fade': 'fade 0.5s ease-in-out',
+				'slide': 'slide 0.5s ease-out',
+				'slide-up': 'slide-up 0.5s ease-out',
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -159,8 +226,13 @@ export default {
                 'fade-in': 'fade-in 0.6s ease-out',
                 'progress-fill': 'progress-fill 1.2s ease-out',
                 'glass-hover': 'glass-hover 0.3s ease-out forwards',
-                'fade': 'fadeIn 0.5s ease-in-out',
-                'slide': 'slideIn 0.5s ease-in-out',
+                'fade': 'fade 0.5s ease-in-out',
+                'slide': 'slide 0.5s ease-out',
+                'slide-up': 'slide-up 0.5s ease-out',
+                'slow-spin': 'spin 2s linear infinite',
+                'slow-pulse': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'fade-reduced': 'fade 0.5s ease-in-out',
+                'slide-reduced': 'slide 0.5s ease-in-out',
 			},
             fontFamily: {
                 'montserrat': ['Montserrat', 'sans-serif'],
@@ -172,23 +244,75 @@ export default {
                 'glass-gradient': 'linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
             },
             fontSize: {
-                'base': '1.125rem',
-                'lg': '1.25rem',
-                'xl': '1.5rem',
-                '2xl': '1.75rem',
-                '3xl': '2rem',
+                'xs': '1rem',      // 16px minimum
+                'sm': '1.125rem',  // 18px
+                'base': '1.25rem', // 20px
+                'lg': '1.375rem',  // 22px
+                'xl': '1.5rem',    // 24px
+                '2xl': '1.75rem',  // 28px
+                '3xl': '2rem',     // 32px
+                '4xl': '2.25rem',
+                'large-base': '1.125rem',
+                'large-lg': '1.25rem',
+                'large-xl': '1.5rem',
+                'large-2xl': '1.875rem',
+                'large-3xl': '2.25rem',
+                'large-4xl': '2.75rem',
+                'xl-base': '1.25rem',
+                'xl-lg': '1.5rem',
+                'xl-xl': '1.875rem',
+                'xl-2xl': '2.25rem',
+                'xl-3xl': '2.75rem',
+                'xl-4xl': '3.25rem',
             },
             spacing: {
+                'touch-target': '2.75rem', // 44px minimum touch target
                 'button': '3rem',
                 'input': '3rem',
+                'nav-item': '3rem',
+                'card-padding': '1.5rem',
+                'icon': '2.75rem',
+                'touch': '44px',
+                'touch-lg': '48px',
+                'touch-normal': '2.5rem',
+                'touch-large': '3rem',
             },
             padding: {
                 'button': '1.25rem',
             },
             transitionDuration: {
                 'default': '300ms',
+                '400': '400ms',
+                'reduced': '0.5s',
             },
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function({ addVariant }: any) {
+			addVariant('data-font-size-large', '&[data-font-size="large"]');
+			addVariant('data-font-size-xl', '&[data-font-size="extra-large"]');
+			addVariant('data-contrast-high', '&[data-contrast="high"]');
+			addVariant('data-animations-reduced', '&[data-animations="reduced"]');
+			addVariant('data-touch-large', '&[data-touch-targets="large"]');
+		},
+		require('@tailwindcss/forms')({
+			strategy: 'class',
+		}),
+	],
+	variants: {
+		extend: {
+			animation: ['motion-safe', 'motion-reduce'],
+			opacity: ['disabled'],
+			cursor: ['disabled'],
+			backgroundColor: ['active', 'disabled'],
+			textColor: ['active', 'disabled'],
+			fontSize: ['data-font-size-large', 'data-font-size-xl'],
+			colors: ['data-contrast-high'],
+			padding: ['data-touch-large'],
+			margin: ['data-touch-large'],
+			height: ['data-touch-large'],
+			width: ['data-touch-large'],
+		},
+	},
 } satisfies Config;
