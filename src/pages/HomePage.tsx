@@ -106,29 +106,26 @@ const HomePage = () => {
     <AppLayout showSidebar={true} showHeader={true}>
       <div className="min-h-screen bg-gradient-to-br from-fenjes-white to-fenjes-blue/10">
         {/* Hero Section */}
-        <section className="py-8 sm:py-16 md:py-24 text-center bg-fenjes-purple text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-fenjes-purple via-fenjes-purple-dark to-fenjes-blue opacity-70"></div>
-          <div className="absolute inset-0 pattern-cross pattern-white pattern-bg-transparent pattern-opacity-10 pattern-size-12"></div>
-          
+        <section className="py-8 sm:py-16 md:py-24 text-center bg-white text-gray-800 relative overflow-hidden">
           <div className="container mx-auto px-4 sm:px-6 relative z-10">
             {userProfile && (
-              <Avatar className="h-16 w-16 sm:h-20 sm:w-20 mx-auto mb-4 sm:mb-6 border-4 border-white shadow-lg">
+              <Avatar className="h-16 w-16 sm:h-20 sm:w-20 mx-auto mb-4 sm:mb-6 border-4 border-fenjes-purple shadow-lg">
                 <AvatarImage src={undefined} alt={userProfile.firstName || 'Usuário'} />
                 <AvatarFallback className="text-xl sm:text-2xl bg-fenjes-blue-light text-fenjes-purple-dark">
                   {userProfile.firstName ? userProfile.firstName.substring(0,1).toUpperCase() : 'U'}
                 </AvatarFallback>
               </Avatar>
             )}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-5 text-fenjes-neutral-900">
               {greeting}{userProfile?.firstName ? `, ${userProfile.firstName}` : ''}!
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-fenjes-blue/30 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+            <p className="text-lg sm:text-xl md:text-2xl text-fenjes-neutral-700 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed">
               Seu refúgio diário para alívio, movimento e nutrição. Redescubra o bem-estar com Fenjes.
             </p>
             {nextStep && (
               <Button
                 size="lg"
-                className="bg-white text-fenjes-purple hover:bg-gray-100 shadow-lg transform hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
+                className="px-8 py-3 bg-fenjes-purple text-white font-semibold hover:bg-fenjes-purple-dark shadow-lg transform hover:scale-105 transition-transform duration-300 w-full sm:w-auto rounded-lg"
                 onClick={() => navigate(nextStep.link)}
               >
                 {nextStep.ctaText} <ArrowRight className="ml-2 h-5 w-5" />

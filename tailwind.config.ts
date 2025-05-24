@@ -4,9 +4,11 @@ export default {
 	darkMode: ["class"],
 	content: [
 		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+		"!./src/components/DailyLog.tsx",
+		"!./src/components/Calendar.tsx",
+		"!./src/components/Statistics.tsx"
 	],
 	prefix: "",
 	theme: {

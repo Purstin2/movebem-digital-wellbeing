@@ -23,9 +23,9 @@ export const SimpleProgress: React.FC<SimpleProgressProps> = ({
         {/* Redução da Dor */}
         <div>
           <h3 className="text-lg font-medium mb-2">Redução da Dor</h3>
-          <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
+          <div className="relative h-4 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
             <div
-              className="absolute left-0 top-0 h-full bg-blue-600 transition-all duration-500"
+              className="absolute left-0 top-0 h-full bg-fenjes-yellow transition-all duration-500"
               style={{ width: `${painReduction}%` }}
             />
           </div>
@@ -35,9 +35,9 @@ export const SimpleProgress: React.FC<SimpleProgressProps> = ({
         {/* Melhora na Mobilidade */}
         <div>
           <h3 className="text-lg font-medium mb-2">Melhora na Mobilidade</h3>
-          <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
+          <div className="relative h-4 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
             <div
-              className="absolute left-0 top-0 h-full bg-green-600 transition-all duration-500"
+              className="absolute left-0 top-0 h-full bg-fenjes-yellow transition-all duration-500"
               style={{ width: `${mobilityImprovement}%` }}
             />
           </div>
@@ -47,9 +47,9 @@ export const SimpleProgress: React.FC<SimpleProgressProps> = ({
         {/* Taxa de Aderência */}
         <div>
           <h3 className="text-lg font-medium mb-2">Taxa de Aderência</h3>
-          <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
+          <div className="relative h-4 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
             <div
-              className="absolute left-0 top-0 h-full bg-purple-600 transition-all duration-500"
+              className="absolute left-0 top-0 h-full bg-fenjes-yellow transition-all duration-500"
               style={{ width: `${adherenceRate}%` }}
             />
           </div>

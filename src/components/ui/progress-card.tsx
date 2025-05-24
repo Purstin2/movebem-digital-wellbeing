@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { GlassCard } from "@/components/ui/glass-card";
 
@@ -16,7 +15,7 @@ export function ProgressCard({
   title,
   currentValue,
   maxValue,
-  color = "bg-fenjes-purple", // Changed from movebem to fenjes
+  color = "bg-fenjes-yellow",
   icon,
   message,
   className
@@ -42,7 +41,7 @@ export function ProgressCard({
         </div>
         
         <div className="mt-4">
-          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-2 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
             <div 
               className={cn("h-full rounded-full transition-all duration-500", color)}
               style={{ width: `${percentage}%` }} 

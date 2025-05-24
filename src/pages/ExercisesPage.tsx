@@ -10,13 +10,15 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { UserProfile } from "@/types/onboarding";
+import { UserProfile, Exercise } from "@/types/onboarding";
 import { specializedExercises, trackSystem, getTrackInfo } from "@/utils/trackSystem";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ExercisesPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   
   // Check if there's a category in URL parameters
   const categoryParam = searchParams.get('category');
@@ -48,61 +50,53 @@ const ExercisesPage = () => {
     { id: 'relaxation', label: 'Relaxamento', icon: <CategoryIllustration category="relaxation" size={16} /> },
   ];
 
-  // Update the interface for mapped exercises to include originalId
-  interface MappedExercise {
+  interface MappedExercise extends Omit<Exercise, 'id' | 'steps' | 'adaptations' | 'contraindications' | 'conditions' | 'benefits' | 'safetyTips'> {
     id: number;
-    originalId?: string; // Add this property as optional
-    title: string;
-    duration: string;
+    originalId?: string;
     pose: string;
     completed: boolean;
-    category: string;
-    difficulty: string;
     isSpecialized?: boolean;
-    description?: string;
+    imageUrl?: string;
   }
 
-  // Convert specialized exercises to match the local exercise format
   const specializedExercisesMapped: MappedExercise[] = specializedExercises.map((exercise, index) => ({
-    id: index + 1,
+    ...exercise,
+    id: index + specializedExercises.length + 100,
     originalId: exercise.id,
-    title: exercise.title,
-    duration: exercise.duration,
-    pose: exercise.steps[0].pose,
+    pose: exercise.steps[0]?.pose || "default",
     completed: false,
-    category: exercise.category,
-    difficulty: exercise.difficulty,
     isSpecialized: true,
-    description: exercise.description,
   }));
 
-  // Combine with existing exercises
   const defaultExercises: MappedExercise[] = [
-    { id: 1, title: "Alongamento de Pescoço", duration: "5 min", pose: "default", completed: false, category: "neck", difficulty: "beginner" },
-    { id: 2, title: "Rotação de Ombros", duration: "7 min", pose: "arms-up", completed: true, category: "shoulders", difficulty: "beginner" },
-    { id: 3, title: "Inclinação Lateral", duration: "8 min", pose: "side-bend", completed: false, category: "back", difficulty: "beginner" },
-    { id: 4, title: "Torção Suave", duration: "10 min", pose: "twist", completed: false, category: "back", difficulty: "intermediate" },
-    { id: 5, title: "Alongamento de Quadril", duration: "6 min", pose: "default", completed: true, category: "hips", difficulty: "beginner" },
-    { id: 6, title: "Exercício de Foco", duration: "12 min", pose: "default", completed: false, category: "focus", difficulty: "intermediate" },
-    { id: 7, title: "Relaxamento Profundo", duration: "15 min", pose: "default", completed: false, category: "relaxation", difficulty: "beginner" },
-    { id: 8, title: "Alongamento de Punhos", duration: "3 min", pose: "arms-up", completed: false, category: "shoulders", difficulty: "beginner" },
-    { id: 9, title: "Mobilidade de Coluna", duration: "9 min", pose: "twist", completed: false, category: "back", difficulty: "intermediate" },
+    { id: 1, title: "Alongamento de Pescoço", description: "Solte a tensão do pescoço com este alongamento suave.", duration: "5 min", pose: "default", completed: false, category: "neck", difficulty: "beginner", targetAreas: ["Pescoço"] },
+    { id: 2, title: "Rotação de Ombros", description: "Mobilize seus ombros e alivie a rigidez.", duration: "7 min", pose: "arms-up", completed: true, category: "shoulders", difficulty: "beginner", targetAreas: ["Ombros"] },
+    { id: 3, title: "Inclinação Lateral", description: "Alongue as laterais do tronco para maior flexibilidade.", duration: "8 min", pose: "side-bend", completed: false, category: "back", difficulty: "beginner", targetAreas: ["Costas"] },
+    { id: 4, title: "Torção Suave", description: "Melhore a flexibilidade da coluna com uma torção gentil.", duration: "10 min", pose: "twist", completed: false, category: "back", difficulty: "intermediate", targetAreas: ["Costas"] },
+    { id: 5, title: "Alongamento de Quadril", description: "Solte a rigidez do quadril e melhore a mobilidade.", duration: "6 min", pose: "default", completed: true, category: "hips", difficulty: "beginner", targetAreas: ["Quadril"] },
+    { id: 6, title: "Exercício de Foco", description: "Acalme sua mente e melhore sua concentração.", duration: "12 min", pose: "default", completed: false, category: "focus", difficulty: "intermediate", targetAreas: ["Mente"] },
+    { id: 7, title: "Relaxamento Profundo", description: "Relaxe todo o corpo e alivie o estresse.", duration: "15 min", pose: "default", completed: false, category: "relaxation", difficulty: "beginner", targetAreas: ["Corpo Todo"] },
+    { id: 8, title: "Alongamento de Punhos", description: "Previna dores nos punhos com alongamentos simples.", duration: "3 min", pose: "arms-up", completed: false, category: "shoulders", difficulty: "beginner", targetAreas: ["Braços", "Punhos"] },
+    { id: 9, title: "Mobilidade de Coluna", description: "Mantenha sua coluna saudável e flexível.", duration: "9 min", pose: "twist", completed: false, category: "back", difficulty: "intermediate", targetAreas: ["Costas"] },
   ];
 
-  // Get all exercises, prioritizing the specialized ones
   const allExercises = [...specializedExercisesMapped, ...defaultExercises.filter(e => 
-    !specializedExercisesMapped.some(se => se.title === e.title))];
+    !specializedExercisesMapped.some(se => se.title === e.title || se.originalId === e.originalId))
+  ];
 
-  const toggleFavorite = (id: number) => {
+  const toggleFavorite = (exerciseId: number) => {
+    const exercise = allExercises.find(e => e.id === exerciseId);
+    if (!exercise) return;
+
     setFavorites(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id) 
-        : [...prev, id]
+      prev.includes(exerciseId) 
+        ? prev.filter(item => item !== exerciseId) 
+        : [...prev, exerciseId]
     );
     
     toast({
-      title: favorites.includes(id) ? "Removido dos favoritos" : "Adicionado aos favoritos",
-      description: `O exercício foi ${favorites.includes(id) ? "removido dos" : "adicionado aos"} seus favoritos.`,
+      title: favorites.includes(exerciseId) ? "Removido dos favoritos" : "Adicionado aos favoritos",
+      description: `${exercise.title} foi ${favorites.includes(exerciseId) ? "removido dos" : "adicionado aos"} seus favoritos.`,
     });
   };
 
@@ -110,7 +104,6 @@ const ExercisesPage = () => {
     const matchesCategory = activeCategory === null || activeCategory === "all" || exercise.category === activeCategory;
     const matchesSearch = searchQuery === "" || 
       exercise.title.toLowerCase().includes(searchQuery.toLowerCase());
-    
     return matchesCategory && matchesSearch;
   });
   
@@ -120,24 +113,14 @@ const ExercisesPage = () => {
 
   const getTrackExercises = () => {
     if (!userProfile?.trackAssigned) return [];
-    
     const trackId = userProfile.trackAssigned;
     const track = trackSystem.find(t => t.id === trackId);
-    
     if (!track) return [];
-    
-    // Get exercise IDs from the current week (based on currentDay)
     const currentWeek = Math.ceil((userProfile.currentDay || 1) / 7);
     const weekData = track.weeks[Math.min(currentWeek - 1, track.weeks.length - 1)];
-    
     if (!weekData) return [];
-    
-    // Get the exercises for the current week
     return allExercises.filter(exercise => 
-      specializedExercises.some(specEx => 
-        specEx.id === (exercise.originalId || "") && 
-        weekData.exercises.includes(specEx.id)
-      )
+      weekData.exercises.includes(exercise.originalId || `non-specialized-${exercise.id}`)
     );
   };
 
@@ -146,14 +129,10 @@ const ExercisesPage = () => {
 
   const getTrackIcon = (trackId?: string) => {
     switch(trackId) {
-      case 'therapeutic':
-        return <Heart className="text-red-500" />;
-      case 'adaptive':
-        return <CheckCircle2 className="text-blue-500" />;
-      case 'wellness':
-        return <Zap className="text-green-500" />;
-      default:
-        return null;
+      case 'therapeutic': return <Heart className="text-red-500" />;
+      case 'adaptive': return <CheckCircle2 className="text-blue-500" />;
+      case 'wellness': return <Zap className="text-green-500" />;
+      default: return null;
     }
   };
 
@@ -169,7 +148,6 @@ const ExercisesPage = () => {
           </p>
         </header>
 
-        {/* User Track Section */}
         {userProfile?.trackAssigned && trackInfo && trackExercises.length > 0 && (
           <div className="mb-6 sm:mb-8">
             <div className="flex items-center gap-2 mb-3 sm:mb-4">
@@ -191,18 +169,12 @@ const ExercisesPage = () => {
                 </div>
               </CardHeader>
               <CardContent className="p-4 sm:p-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                   {trackExercises.slice(0, 3).map((exercise) => (
                     <ExerciseCard
                       key={exercise.id}
-                      title={exercise.title}
-                      duration={exercise.duration}
-                      completed={exercise.completed}
-                      favorite={favorites.includes(exercise.id)}
-                      onFavoriteToggle={() => toggleFavorite(exercise.id)}
-                      onClick={() => navigate(`/exercises/${exercise.id}`)}
-                      image={<YogaIllustration pose={exercise.pose as any} />}
-                      className="border-l-4 border-l-movebem-purple"
+                      exercise={exercise as unknown as Exercise}
+                      compact={isMobile}
                     />
                   ))}
                 </div>
@@ -211,63 +183,49 @@ const ExercisesPage = () => {
           </div>
         )}
 
-        {/* Search and filters */}
-        <div className="bg-white rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 border shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <Input
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mb-4">
+            <div className="relative w-full sm:max-w-xs">
+              <Input 
                 placeholder="Buscar exercícios..."
-                className="pl-10 h-10 sm:h-12 text-sm sm:text-base"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
               />
-            </div>
-            <div className="flex items-center gap-2">
-              <Filter size={18} className="text-gray-500" />
-              <span className="text-xs sm:text-sm text-gray-500">Filtros:</span>
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             </div>
           </div>
 
-          {/* Categories */}
-          <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
-            {categories.map((category) => (
+          <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
+            {categories.map(category => (
               <CategoryBadge
                 key={category.id}
                 icon={category.icon}
                 label={category.label}
                 active={activeCategory === category.id}
                 onClick={() => handleCategoryClick(category.id)}
-                className="text-xs sm:text-sm py-1 sm:py-1.5 px-2 sm:px-3"
               />
             ))}
           </div>
         </div>
 
-        {/* Exercises Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {filteredExercises.length > 0 ? (
-            filteredExercises.map((exercise) => (
+        
+        {filteredExercises.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {filteredExercises.map((exercise) => (
               <ExerciseCard
                 key={exercise.id}
-                title={exercise.title}
-                duration={exercise.duration}
-                completed={exercise.completed}
-                favorite={favorites.includes(exercise.id)}
-                onFavoriteToggle={() => toggleFavorite(exercise.id)}
-                onClick={() => navigate(`/exercises/${exercise.id}`)}
-                image={<YogaIllustration pose={exercise.pose as any} />}
-                className="h-full"
+                exercise={exercise as unknown as Exercise}
+                compact={isMobile}
               />
-            ))
-          ) : (
-            <div className="col-span-full text-center py-8">
-              <p className="text-gray-500 text-sm sm:text-base">
-                Nenhum exercício encontrado com os filtros atuais.
-              </p>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10">
+            <YogaIllustration pose="default" className="mx-auto mb-4 w-32 h-32 text-gray-300" />
+            <p className="text-gray-500">Nenhum exercício encontrado. Tente um termo de busca ou filtro diferente.</p>
+          </div>
+        )}
       </div>
     </AppLayout>
   );

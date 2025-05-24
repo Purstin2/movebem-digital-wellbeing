@@ -116,21 +116,6 @@ export function Sidebar({ className, userProfile }: SidebarProps) {
               <Icons.nutrition className="mr-2 h-4 w-4" />
               <span>Nutrição Curativa</span>
             </NavLink>
-            <NavLink
-              to="/diary"
-              className={({ isActive }) =>
-                cn(
-                  "group flex items-center rounded-md px-2 md:px-3 py-2 text-sm font-medium transition-colors",
-                  "hover:bg-sidebar-hover hover:text-sidebar-foreground touch-target",
-                  isActive 
-                    ? "bg-sidebar-active text-sidebar-active-text" 
-                    : "text-sidebar-foreground"
-                )
-              }
-            >
-              <Icons.diary className="mr-2 h-4 w-4" />
-              <span>Diário de Alívio</span>
-            </NavLink>
           </div>
         </div>
         <div className="px-2 md:px-3 py-2">

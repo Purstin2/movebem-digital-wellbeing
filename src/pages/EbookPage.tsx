@@ -538,9 +538,9 @@ const EbookPage = () => {
                   {Math.round(((activeChapter + 1) / chapters.length) * 100)}% completo
                 </span>
               </div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-2 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-fenjes-purple rounded-full"
+                  className="h-full bg-fenjes-yellow rounded-full"
                   style={{width: `${((activeChapter + 1) / chapters.length) * 100}%`}}
                 ></div>
               </div>
@@ -552,4 +552,4 @@ const EbookPage = () => {
   );
 };
 
-export default EbookPage; 
+export default EbookPage;

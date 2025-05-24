@@ -228,9 +228,9 @@ export const PersonalizedProgram: React.FC<PersonalizedProgramProps> = ({
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Seu Progresso</h2>
           <div className="flex items-center space-x-2 mb-4">
-            <div className="flex-1 h-2 bg-gray-200 rounded-full">
+            <div className="flex-1 h-2 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full">
               <div 
-                className="h-full bg-green-500 rounded-full"
+                className="h-full bg-fenjes-yellow rounded-full"
                 style={{ width: `${(currentDay / 21) * 100}%` }}
               />
             </div>

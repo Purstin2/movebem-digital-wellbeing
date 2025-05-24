@@ -67,9 +67,9 @@ export const ProgressionProgram: React.FC<ProgressionProgramProps> = ({
 
       {/* Progress Overview */}
       <div className="mb-8">
-        <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-2 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
           <div
-            className="h-full bg-blue-600 transition-all duration-500"
+            className="h-full bg-fenjes-yellow transition-all duration-500"
             style={{ width: `${(currentDay / 21) * 100}%` }}
           />
         </div>
@@ -195,6 +195,20 @@ export const ProgressionProgram: React.FC<ProgressionProgramProps> = ({
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Barra de Progresso (This one was at the bottom of the file in search results) */}
+      <div className="mt-8">
+        <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <span>Progresso Geral</span>
+          <span>{Math.round((currentDay / 21) * 100)}%</span>
+        </div>
+        <div className="h-2 bg-fenjes-neutral-300 dark:bg-fenjes-neutral-700 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-fenjes-yellow transition-all duration-500"
+            style={{ width: `${(currentDay / 21) * 100}%` }}
+          />
+        </div>
       </div>
     </div>
   );
