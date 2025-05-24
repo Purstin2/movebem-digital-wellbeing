@@ -4,23 +4,20 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "./context/SidebarContext";
-import Index from "./pages/Index";
+import HomePage from "./pages/HomePage";
 import ExercisesPage from "./pages/ExercisesPage";
 import ExerciseDetailPage from "./pages/ExerciseDetailPage";
-import ProgressPage from "./pages/ProgressPage";
+import AchievementsPage from "./pages/AchievementsPage";
 import NutritionPage from "./pages/NutritionPage";
 import BonusPage from "./pages/BonusPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 import OnboardingPage from "./pages/OnboardingPage";
-import HomePage from "./pages/HomePage";
 import ChairYogaPage from "./pages/ChairYogaPage";
 import ChairYogaExercisePage from "./pages/ChairYogaExercisePage";
-import DiaryPage from "./pages/DiaryPage";
 import AboutPage from "./pages/AboutPage";
 import HelpPage from "./pages/HelpPage";
 import FavoritesPage from "./pages/FavoritesPage";
-import AchievementsPage from "./pages/AchievementsPage";
 import EbookPage from "./pages/EbookPage";
 
 const queryClient = new QueryClient();
@@ -44,7 +41,6 @@ const App = () => (
             <Route path="/nutrition" element={<NutritionPage />} />
             <Route path="/chair-yoga" element={<ChairYogaPage />} />
             <Route path="/exercicio/:id" element={<ChairYogaExercisePage />} />
-            <Route path="/diary" element={<DiaryPage />} />
             <Route path="/sobre" element={<AboutPage />} />
             <Route path="/help" element={<HelpPage />} />
             <Route path="/perfil" element={<ProfilePage />} />
